@@ -1,0 +1,116 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+:root {
+  --bg-primary: #FAF8F5;
+  --bg-card: #F5F2EB;
+  --text-dark: #1C1917;
+  --accent-green: #1E3524;
+  --accent-green-dark: #152519;
+  --accent-gold: #D4A017;
+  --border-sand: #E5E0D8;
+  --muted-text: #5A655A;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-dark);
+  font-family: var(--font-sans), 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+}
+
+.font-serif {
+  font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E0D8;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1E3524;
+}
+
+@layer utilities {
+  .glass-nav {
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(229, 224, 216, 0.8);
+  }
+
+  .glass-card {
+    background: rgba(245, 242, 235, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid #E5E0D8;
+  }
+
+  .nav-link-animated {
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link-animated::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    background-color: #1E3524;
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%);
+  }
+
+  .nav-link-animated:hover::after {
+    width: 100%;
+  }
+
+  .curved-card {
+    border-radius: 2rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .curved-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(27, 46, 30, 0.08);
+  }
+
+  .btn-treelogy {
+    background-color: #1E3524;
+    color: #FAF8F5;
+    border-radius: 9999px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-treelogy:hover {
+    background-color: #152519;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px -5px rgba(30, 53, 36, 0.25);
+  }
+}
+
+
