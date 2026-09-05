@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: indian-agri
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.14.0
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_LICENSE_URI
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: NEXT_PUBLIC_MERCHANT_UPI_ID
+        sync: false
+      - key: LICENSE_KEY
+        sync: false
+      - key: LICENSE_MASTER_SECRET
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: MANUAL_UPI_ID
+        sync: false
+      - key: MANUAL_UPI_NAME
+        sync: false
+      - key: MANUAL_UPI_QR_URL
+        sync: false
+      - key: BANK_ACCOUNT_NAME
+        sync: false
+      - key: BANK_ACCOUNT_NUMBER
+        sync: false
+      - key: BANK_IFSC_CODE
+        sync: false
+      - key: BANK_NAME
+        sync: false
+      - key: LICENSE_SUPPORT_PHONE
+        sync: false
+      - key: LICENSE_SUPPORT_EMAIL
+        sync: false
