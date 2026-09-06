@@ -2426,7 +2426,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
 
       {/* Footer */}
       <footer className="bg-white border-t border-[#E8EDF2] py-6 px-4 text-center text-xs text-[#64748B]">
-        Admin Portal — INDIAN AGRICULTURE Management System | GSTIN: 33AAOCB0453D1Z3
+        Admin Portal — INDIAN AGRICULTURE Management System | GSTIN: 33CQHPP4937J1ZG
       </footer>
     </div>
   );

@@ -214,7 +214,7 @@ export async function POST(request: NextRequest) {
       customerPhone: customerPhone.trim() || '0000000000',
       customerEmail: (customerEmail.trim() === 'pos@indianagriculture.online' || customerEmail.trim() === 'pos@beeshubfarmland.com') ? '' : customerEmail.trim(),
       shippingAddress: 'INDIAN AGRICULTURE Counter Sale',
-      pincode: '629501',
+      pincode: '624211',
       items: verifiedItems,
       subtotal: calculatedSubtotal,
       totalGst: calculatedTotalGst,

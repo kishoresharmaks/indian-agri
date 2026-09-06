@@ -501,36 +501,36 @@ export default function AllProductsPage() {
 
       {/* Sticky Floating Pill Header Nav */}
       <header className="sticky top-0 z-40 transition-all duration-300" style={{ background: 'transparent' }}>
-        <div className="px-2.5 sm:px-6 pt-2 pb-1.5">
+        <div className="px-3 sm:px-5 pt-2.5 pb-2">
         <div
-          className="mx-auto flex items-center justify-between gap-2 sm:gap-6 px-3 sm:px-6 lg:px-8"
+          className="mx-auto flex items-center justify-between gap-3 sm:gap-6 px-3 sm:px-5 lg:px-7"
           style={{
-            height: '3.25rem',
-            background: 'rgba(250, 248, 245, 0.95)',
-            backdropFilter: 'blur(22px)',
-            WebkitBackdropFilter: 'blur(22px)',
-            borderRadius: 'clamp(1.25rem, 3vw, 9999px)',
-            border: '1px solid rgba(229, 224, 216, 0.9)',
-            boxShadow: '0 4px 28px -4px rgba(27,46,30,0.12), 0 1px 0 0 rgba(212,160,23,0.10)',
+            height: '4rem',
+            background: 'rgba(250, 248, 245, 0.96)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '3rem',
+            border: '1.5px solid rgba(229, 224, 216, 0.95)',
+            boxShadow: '0 2px 20px -2px rgba(27,46,30,0.10)',
             maxWidth: '1200px',
           }}
         >
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-[#183B24] ring-2 ring-[#55753F]/20 bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0 p-0.5">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-[#1E3524]/60 bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
               <img
                 src="/logo.jpg"
                 alt="Indian Agriculture Logo"
-                className="w-full h-full object-contain rounded-full"
+                className="w-full h-full object-cover rounded-full"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = '/logo.jpg';
                 }}
               />
             </div>
             <div className="min-w-0">
-              <span className="font-serif font-extrabold text-sm sm:text-xl tracking-tight text-[#1B2E1E] block leading-tight truncate">
+              <span className="font-serif font-extrabold text-[13px] sm:text-[17px] tracking-tight text-[#1B2E1E] block leading-none">
                 INDIAN AGRICULTURE
               </span>
-              <span className="hidden sm:block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#5A655A] font-bold mt-0.5">
+              <span className="hidden sm:block text-[9px] uppercase tracking-[0.18em] text-[#7A8F7A] font-semibold mt-1">
                 PREMIUM B2B ORGANIC
               </span>
             </div>

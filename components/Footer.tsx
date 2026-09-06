@@ -282,7 +282,7 @@ export default function Footer({ products: initialProducts = [], onOpenTrackModa
 
             <div className="flex items-start gap-2 text-xs text-[#c5d6c7] font-medium pt-1">
               <MapPin className="w-4 h-4 text-[#D4A017] shrink-0 mt-0.5" />
-              <span>Nagercoil, Kanyakumari Dist, Tamil Nadu – 629501</span>
+              <span>No 3/101, Mandukovil Street, S.Thummalapatti, Batlagundu – 624211, Tamil Nadu</span>
             </div>
           </div>
 
