@@ -151,7 +151,7 @@ export default function CustomerStore() {
   });
 
   const [merchantUpiId, setMerchantUpiId] = useState(
-    process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'beeshubfarmland@upi'
+    process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'indianagriculturepvtltd@okicici'
   );
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [submittingOrder, setSubmittingOrder] = useState(false);
@@ -564,7 +564,7 @@ export default function CustomerStore() {
   };
 
   const getWhatsAppSupportLink = (order: any) => {
-    if (!order) return 'https://wa.me/919578784431';
+    if (!order) return 'https://wa.me/919597250344';
     const itemsList = order.items
       ? order.items.map((it: any) => `• ${it.name} x ${it.quantity} (₹${(it.price * it.quantity).toLocaleString('en-IN')})`).join('\n')
       : '';
@@ -584,7 +584,7 @@ ${itemsList}
 ${order.transactionId ? `🔢 *UTR / Ref:* ${order.transactionId}\n` : ''}${order.status ? `📦 *Status:* ${order.status}\n` : ''}
 Please assist me with this order. Thank you!`;
 
-    return `https://wa.me/919578784431?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/919597250344?text=${encodeURIComponent(text)}`;
   };
 
   const getWhatsAppProductShareLink = (product: Product, variant?: ProductVariant) => {
@@ -647,22 +647,38 @@ ${productUrl}
         </div>
       )}
 
-      {/* Top Announcement Bar (Treelogy Dark Olive Header) */}
-      <div className="bg-[#1B2E1E] text-[#FAF8F5] text-[10px] sm:text-xs py-2 px-3 text-center font-medium tracking-wide border-b border-[#2A402D]">
+      {/* Top Announcement Bar */}
+      <div
+        className="bg-[#1B2E1E] text-[#FAF8F5] text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 text-center font-bold tracking-wide"
+        style={{ borderRadius: '0 0 1.1rem 1.1rem' }}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-center">
-          <p className="w-full text-center flex items-center justify-center gap-1.5 flex-wrap leading-tight">
-            <span>We accept UPI · Credit Cards · Net Banking · e-Wallet · Cash on Delivery</span>
-            <span className="hidden sm:inline text-[#D4A017] font-semibold">★ Direct Farm Shipping Across India</span>
+          <p className="w-full text-center flex items-center justify-center gap-1.5 sm:gap-2 flex-nowrap leading-tight overflow-hidden">
+            <span className="truncate">🌱 <span className="hidden xs:inline">100% Pure Organic · </span>Direct Farm Supply Across India</span>
+            <span className="hidden md:inline text-[#D4A017] font-bold flex-shrink-0">&nbsp;★ GST & Lab COA Certified</span>
           </p>
         </div>
       </div>
 
-      {/* Sticky Glassmorphism Header Nav */}
-      <header className="sticky top-0 z-40 glass-nav transition-all duration-300">
-        <div className="w-full px-3 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
-          {/* Brand Wordmark (Serif Treelogy Style) */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-[#183B24] ring-2 ring-[#55753F]/25 bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0 p-0.5">
+      {/* Sticky Floating Pill Header Nav */}
+      <header className="sticky top-0 z-40 transition-all duration-300" style={{ background: 'transparent' }}>
+        <div className="px-2.5 sm:px-6 pt-2 pb-1.5">
+        <div
+          className="mx-auto flex items-center justify-between gap-2 sm:gap-6 px-3 sm:px-6 lg:px-8"
+          style={{
+            height: '3.25rem',
+            background: 'rgba(250, 248, 245, 0.95)',
+            backdropFilter: 'blur(22px)',
+            WebkitBackdropFilter: 'blur(22px)',
+            borderRadius: 'clamp(1.25rem, 3vw, 9999px)',
+            border: '1px solid rgba(229, 224, 216, 0.9)',
+            boxShadow: '0 4px 28px -4px rgba(27,46,30,0.12), 0 1px 0 0 rgba(212,160,23,0.10)',
+            maxWidth: '1200px',
+          }}
+        >
+          {/* Brand Wordmark */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-[#183B24] ring-2 ring-[#55753F]/20 bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0 p-0.5">
               <img
                 src="/logo.jpg"
                 alt="Indian Agriculture Logo"
@@ -673,51 +689,60 @@ ${productUrl}
               />
             </div>
             <div className="min-w-0">
-              <span className="font-serif font-bold text-base sm:text-2xl tracking-tight text-[#1B2E1E] block leading-tight truncate">
+              <span className="font-serif font-extrabold text-sm sm:text-xl tracking-tight text-[#1B2E1E] block leading-tight truncate">
                 INDIAN AGRICULTURE
               </span>
-              <span className="hidden sm:block text-[8.5px] uppercase tracking-[0.25em] text-[#5A655A] font-semibold mt-0.5">
-                PREMIUM ORGANIC SOLUTIONS
+              <span className="hidden sm:block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#5A655A] font-bold mt-0.5">
+                PREMIUM ORGANIC MORINGA
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links with Generous Spacing */}
-          <nav className="hidden lg:flex items-center gap-10 xl:gap-14 text-xs font-sans font-semibold uppercase tracking-[0.12em] text-[#1C1917]">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-sans font-bold uppercase tracking-[0.12em] text-[#1C1917]">
             <a href="#products-section" className="whitespace-nowrap nav-link-animated py-1 text-[#1C1917] hover:text-[#1E3524]">
-              Shop Products
+              Products
             </a>
             <a href="#story-section" className="whitespace-nowrap nav-link-animated py-1 text-[#1C1917] hover:text-[#1E3524]">
               Our Story
             </a>
             <a href="#benefits-section" className="whitespace-nowrap nav-link-animated py-1 text-[#1C1917] hover:text-[#1E3524]">
-              Benefits
+              Advantages
             </a>
-            <a href="#reviews-section" className="whitespace-nowrap nav-link-animated py-1 text-[#1C1917] hover:text-[#1E3524]">
-              Reviews
+            <a href="#b2b-rfq-section" className="whitespace-nowrap nav-link-animated py-1 text-[#1C1917] hover:text-[#1E3524]">
+              Get Quote
             </a>
           </nav>
 
-          {/* Header Actions (Pushed to far right) */}
-          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          {/* Header Actions */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            {/* Request Quote Button */}
+            <a
+              href="#b2b-rfq-section"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2 sm:py-2.5 bg-[#1E3524] hover:bg-[#152519] text-[#FAF8F5] rounded-full transition-all duration-300 shadow-sm active:scale-95 border border-[#D4A017]/40"
+            >
+              <Leaf className="w-3.5 h-3.5 text-[#D4A017]" />
+              <span className="hidden xs:inline sm:inline">Request Quote</span>
+            </a>
+
             {/* Track Order Button */}
             <button
               onClick={() => setIsTrackModalOpen(true)}
-              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#1E3524] hover:text-[#FAF8F5] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all duration-300 shadow-xs active:scale-95"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#E5E0D8] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all duration-300 shadow-xs active:scale-95"
             >
               <PackageCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1E3524]" />
-              <span className="hidden xs:inline sm:inline">Track Order</span>
+              <span className="hidden sm:inline">Track Order</span>
             </button>
 
             {/* Cart Button with Count Badge */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 sm:p-3 bg-[#1E3524] text-[#FAF8F5] rounded-full hover:bg-[#152519] transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg"
+              className="relative p-2.5 sm:p-3 bg-[#1E3524] text-[#FAF8F5] rounded-full hover:bg-[#152519] transition-all duration-300 active:scale-95 shadow-md"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#D4A017] text-[#1B2E1E] font-bold text-[10px] w-5 h-5 sm:w-5.5 sm:h-5.5 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                <span className="absolute -top-1.5 -right-1.5 bg-[#D4A017] text-[#1B2E1E] font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">
                   {cartItemCount}
                 </span>
               )}
@@ -726,59 +751,66 @@ ${productUrl}
             {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2.5 sm:p-3 rounded-full bg-[#F5F2EB] text-[#1B2E1E] hover:bg-[#E5E0D8] transition-colors"
+              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-[#F5F2EB] text-[#1B2E1E] hover:bg-[#1E3524] hover:text-[#FAF8F5] transition-all duration-200 border border-[#E5E0D8] flex-shrink-0"
               aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
+              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
+        </div>
 
-        {/* Responsive Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer — Smooth Glassmorphism Card */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-[#FAF8F5] border-b border-[#E5E0D8] px-6 py-6 space-y-4 shadow-xl animate-in slide-in-from-top duration-300">
-            {/* Mobile Search Bar */}
-            <div className="relative w-full mb-4">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A655A]" />
-              <input
-                type="text"
-                placeholder="Search organic solutions..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-[#F5F2EB] border border-[#E5E0D8] rounded-full text-xs text-[#1C1917] placeholder-[#5A655A] focus:outline-none focus:border-[#1E3524]"
-              />
-            </div>
+          <div className="lg:hidden px-2.5 pt-1 pb-2">
+            <div
+              style={{
+                background: 'rgba(250, 248, 245, 0.97)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderRadius: '1.5rem',
+                border: '1px solid rgba(229, 224, 216, 0.9)',
+                boxShadow: '0 8px 32px -8px rgba(27,46,30,0.15)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Search Bar */}
+              <div className="px-4 pt-4 pb-3">
+                <div className="relative w-full">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#5A655A]" />
+                  <input
+                    type="text"
+                    placeholder="Search organic solutions..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2.5 bg-[#F5F2EB] border border-[#E5E0D8] rounded-full text-xs text-[#1C1917] placeholder-[#5A655A] focus:outline-none focus:border-[#1E3524] transition-colors"
+                  />
+                </div>
+              </div>
 
-            <nav className="flex flex-col space-y-3 font-sans text-xs font-semibold uppercase tracking-wider text-[#1C1917]">
-              <a
-                href="#products-section"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2 border-b border-[#E5E0D8]/60 hover:text-[#1E3524]"
-              >
-                Shop Products
-              </a>
-              <a
-                href="#story-section"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2 border-b border-[#E5E0D8]/60 hover:text-[#1E3524]"
-              >
-                Our Story
-              </a>
-              <a
-                href="#benefits-section"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2 border-b border-[#E5E0D8]/60 hover:text-[#1E3524]"
-              >
-                Benefits
-              </a>
-              <a
-                href="#reviews-section"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2 hover:text-[#1E3524]"
-              >
-                Reviews
-              </a>
-            </nav>
+              {/* Nav Links */}
+              <nav className="px-3 pb-3 flex flex-col gap-1 font-sans text-xs font-bold uppercase tracking-wider">
+                {[
+                  { label: 'Products', href: '#products-section' },
+                  { label: 'Our Story', href: '#story-section' },
+                  { label: 'Advantages', href: '#benefits-section' },
+                  { label: 'Get Quote', href: '#b2b-rfq-section', gold: true },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 ${
+                      item.gold
+                        ? 'bg-[#1E3524] text-[#D4A017] hover:bg-[#152519]'
+                        : 'text-[#1C1917] hover:bg-[#F5F2EB] hover:text-[#1E3524]'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
           </div>
         )}
       </header>
@@ -786,7 +818,7 @@ ${productUrl}
       {/* Main Content Area */}
       <main className="flex-1">
 
-        {/* REDESIGNED MORINGA HERO SECTION (Desktop & Mobile Reference Replica) */}
+        {/* MORINGA HERO SECTION */}
         <MoringaHero
           products={products}
           banners={banners}
@@ -796,268 +828,366 @@ ${productUrl}
         {/* OUR COMMITMENT SECTION */}
         <CommitmentSection />
 
-        {/* ORGANIC HARVEST CATALOG SECTION (EDITORIAL CATALOG REPLICA) */}
+        {/* ORGANIC HARVEST CATALOG SECTION */}
         <OrganicCatalogSection
           products={products}
           onAddToCart={(p, qty) => addToCart(p, qty)}
           onOpenProductModal={(p) => setSelectedProduct(p)}
         />
 
-        {/* PHILOSOPHY & STORY SECTION (Matching Reference Image Design) */}
+        {/* PHILOSOPHY & STORY SECTION */}
         <section id="story-section" className="py-16 sm:py-24 bg-[#F9F8F3] text-[#1C2A1E] relative overflow-hidden">
-          {/* Watermark leaf accent */}
-          <div className="absolute top-4 left-4 pointer-events-none opacity-20 hidden lg:block">
-            <svg className="w-36 h-36 text-[#C4922A]" viewBox="0 0 100 100" fill="currentColor">
-              <path d="M30,90 Q40,40 90,10 Q60,30 30,90 Z" />
-              <path d="M50,60 Q30,40 20,45 Q35,55 50,60 Z" />
-            </svg>
-          </div>
-
           <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 
-              {/* Left Side: Editorial Headline, Text, 4 Stat Cards & CTA */}
+              {/* Left Side */}
               <div className="lg:col-span-6 space-y-6 sm:space-y-8 text-left">
 
-                {/* Eyebrow */}
                 <div className="inline-flex items-center gap-2">
                   <Leaf className="w-4 h-4 text-[#C4922A]" />
                   <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#C4922A]">
                     OUR PHILOSOPHY
                   </span>
-                  <div className="w-12 h-[1.5px] bg-[#C4922A]" />
+                  <div className="w-12 h-[2px] bg-[#C4922A]" />
                 </div>
 
-                {/* Main Headline */}
                 <div className="space-y-1">
-                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1C2A1E] leading-[1.08] tracking-tight">
-                    Ancient Wisdom.
+                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1C2A1E] leading-[1.08] tracking-tight">
+                    Direct Farm Sourcing.
                   </h2>
-                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1C2A1E] leading-[1.08] tracking-tight">
-                    Modern Science.
+                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1C2A1E] leading-[1.08] tracking-tight">
+                    Pure Quality.
                   </h2>
-                  <h2 className="font-serif italic text-4xl sm:text-5xl lg:text-6xl font-normal text-[#C4922A] leading-[1.08] tracking-tight pt-1">
-                    Pure Wellness.
+                  <h2 className="font-serif italic text-4xl sm:text-5xl lg:text-6xl font-bold text-[#C4922A] leading-[1.08] tracking-tight pt-1">
+                    Certified Excellence.
                   </h2>
                 </div>
 
-                {/* Paragraph */}
-                <p className="text-sm sm:text-base text-[#4A554D] leading-relaxed max-w-xl font-normal">
-                  Oleifera (Moringa) — the Tree of Life — has nourished generations in India for centuries. At{' '}
-                  <strong className="text-[#1C2A1E] font-bold">Indian Agriculture</strong>, we blend traditional knowledge with cutting-edge science to bring you pure, stem-free, low-temperature dehydrated Moringa products — rich in nutrients, antioxidants, and natural goodness.
+                <p className="text-sm sm:text-base text-[#1C2A1E] leading-relaxed max-w-xl font-semibold font-sans">
+                  At <strong className="text-[#1C2A1E] font-bold">Indian Agriculture</strong>, we cultivate traditional organic produce with modern processing standards to provide top-quality Moringa Oleifera, farm produce, and natural raw ingredients.
                 </p>
 
                 {/* 4 Feature Stat Pills */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                  <div className="bg-white/90 border border-[#E6E2D8] rounded-2xl p-3 sm:p-3.5 shadow-2xs flex flex-col justify-between space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-[#486027] text-white flex items-center justify-center shrink-0">
-                        <Leaf className="w-4 h-4" />
-                      </div>
-                      <span className="font-serif font-bold text-xl sm:text-2xl text-[#1C2A1E]">92+</span>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 pt-3 sm:pt-4">
+                  {/* Card 1 */}
+                  <div className="bg-gradient-to-br from-white via-[#FDFCF9] to-[#F4F0E6] border border-[#C99A2E]/35 rounded-2xl p-4 shadow-sm hover:shadow-xl hover:border-[#183B24] transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden space-y-3">
+                    <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#C99A2E] to-transparent absolute top-0 inset-x-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-9 h-9 rounded-full bg-[#183B24] text-[#D4A017] flex items-center justify-center shrink-0 shadow-xs border border-[#C99A2E]/40 group-hover:scale-110 transition-transform">
+                      <Leaf className="w-4.5 h-4.5" />
                     </div>
-                    <p className="text-[11px] text-[#5C665E] font-medium leading-tight">
-                      Nutrients & Bio-compounds
-                    </p>
+                    <div>
+                      <div className="font-serif font-extrabold text-xl sm:text-2xl text-[#183B24] leading-tight">1,000+</div>
+                      <p className="text-[11px] font-extrabold text-[#4A554D] uppercase tracking-wider leading-tight font-sans mt-1">
+                        Organic Acres
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="bg-white/90 border border-[#E6E2D8] rounded-2xl p-3 sm:p-3.5 shadow-2xs flex flex-col justify-between space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-[#486027] text-white flex items-center justify-center shrink-0">
-                        <Sparkles className="w-4 h-4" />
-                      </div>
-                      <span className="font-serif font-bold text-xl sm:text-2xl text-[#1C2A1E]">46+</span>
+                  {/* Card 2 */}
+                  <div className="bg-gradient-to-br from-white via-[#FDFCF9] to-[#F4F0E6] border border-[#C99A2E]/35 rounded-2xl p-4 shadow-sm hover:shadow-xl hover:border-[#183B24] transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden space-y-3">
+                    <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#C99A2E] to-transparent absolute top-0 inset-x-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-9 h-9 rounded-full bg-[#183B24] text-[#D4A017] flex items-center justify-center shrink-0 shadow-xs border border-[#C99A2E]/40 group-hover:scale-110 transition-transform">
+                      <Sparkles className="w-4.5 h-4.5" />
                     </div>
-                    <p className="text-[11px] text-[#5C665E] font-medium leading-tight">
-                      Natural Antioxidants
-                    </p>
+                    <div>
+                      <div className="font-serif font-extrabold text-xl sm:text-2xl text-[#183B24] leading-tight">100%</div>
+                      <p className="text-[11px] font-extrabold text-[#4A554D] uppercase tracking-wider leading-tight font-sans mt-1">
+                        Lab Tested
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="bg-white/90 border border-[#E6E2D8] rounded-2xl p-3 sm:p-3.5 shadow-2xs flex flex-col justify-between space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-[#486027] text-white flex items-center justify-center shrink-0">
-                        <Feather className="w-4 h-4" />
-                      </div>
-                      <span className="font-serif font-bold text-xl sm:text-2xl text-[#1C2A1E]">100%</span>
+                  {/* Card 3 */}
+                  <div className="bg-gradient-to-br from-white via-[#FDFCF9] to-[#F4F0E6] border border-[#C99A2E]/35 rounded-2xl p-4 shadow-sm hover:shadow-xl hover:border-[#183B24] transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden space-y-3">
+                    <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#C99A2E] to-transparent absolute top-0 inset-x-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-9 h-9 rounded-full bg-[#183B24] text-[#D4A017] flex items-center justify-center shrink-0 shadow-xs border border-[#C99A2E]/40 group-hover:scale-110 transition-transform">
+                      <Feather className="w-4.5 h-4.5" />
                     </div>
-                    <p className="text-[11px] text-[#5C665E] font-medium leading-tight">
-                      Stem-Free Purity
-                    </p>
+                    <div>
+                      <div className="font-serif font-extrabold text-lg sm:text-xl text-[#183B24] leading-tight">Stem-Free</div>
+                      <p className="text-[11px] font-extrabold text-[#4A554D] uppercase tracking-wider leading-tight font-sans mt-1">
+                        Low Temp Dried
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="bg-white/90 border border-[#E6E2D8] rounded-2xl p-3 sm:p-3.5 shadow-2xs flex flex-col justify-between space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-[#486027] text-white flex items-center justify-center shrink-0">
-                        <Heart className="w-4 h-4" />
-                      </div>
-                      <span className="font-serif font-bold text-xl sm:text-2xl text-[#1C2A1E]">100%</span>
+                  {/* Card 4 */}
+                  <div className="bg-gradient-to-br from-white via-[#FDFCF9] to-[#F4F0E6] border border-[#C99A2E]/35 rounded-2xl p-4 shadow-sm hover:shadow-xl hover:border-[#183B24] transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden space-y-3">
+                    <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#C99A2E] to-transparent absolute top-0 inset-x-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-9 h-9 rounded-full bg-[#183B24] text-[#D4A017] flex items-center justify-center shrink-0 shadow-xs border border-[#C99A2E]/40 group-hover:scale-110 transition-transform">
+                      <Heart className="w-4.5 h-4.5" />
                     </div>
-                    <p className="text-[11px] text-[#5C665E] font-medium leading-tight">
-                      Organic & Chemical-Free
-                    </p>
+                    <div>
+                      <div className="font-serif font-extrabold text-lg sm:text-xl text-[#183B24] leading-tight">GST Invoice</div>
+                      <p className="text-[11px] font-extrabold text-[#4A554D] uppercase tracking-wider leading-tight font-sans mt-1">
+                        Tax Invoiced
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <div className="pt-2">
+                <div className="pt-4 sm:pt-6">
                   <a
-                    href="#products-section"
-                    className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#273B24] hover:bg-[#1E2E1C] text-white font-medium text-xs sm:text-sm tracking-wide transition-all shadow-md group"
+                    href="#b2b-rfq-section"
+                    className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[#1C2A1E] hover:bg-[#273B24] text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md group border border-[#D4A017]/40"
                   >
-                    <Leaf className="w-4 h-4 text-[#C4922A]" />
-                    <span>Discover Our Products</span>
+                    <Leaf className="w-4 h-4 text-[#D4A017]" />
+                    <span>Request Wholesale Quote</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>
 
               </div>
 
-              {/* Right Side: Seamless Image Canvas (Outer White Frame Removed) */}
+              {/* Right Side */}
               <div className="lg:col-span-6 relative">
-
-                {/* Soft ambient background glow */}
-                <div className="absolute -inset-4 bg-gradient-to-tr from-[#C4922A]/15 via-transparent to-[#486027]/15 rounded-[40px] blur-2xl pointer-events-none" />
-
-                {/* Main Image Frame directly on canvas */}
                 <div className="relative aspect-[4/3] sm:aspect-[1.12/1] rounded-[32px] overflow-hidden shadow-2xl border border-[#E6E2D8] bg-slate-100">
                   <img
                     src="/moringa_farm_philosophy.png"
                     alt="Indian Agriculture Organic Moringa Harvest"
-                    className="w-full h-full object-cover object-center scale-[1.01] hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover object-center"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/20 pointer-events-none" />
 
-                  {/* Gentle Vignette Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-white/30 pointer-events-none" />
-
-                  {/* LOGO OVERLAY CARD */}
-                  <div className="absolute top-5 left-5 max-w-[270px] sm:max-w-[320px] bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-xl z-10 hover:bg-white/95 transition-all duration-300">
-                    {/* Logo loaded from /logo.jpg */}
-                    <div className="bg-white p-2 sm:p-2.5 rounded-xl border border-slate-100 shadow-2xs inline-block">
+                  <div className="absolute top-5 left-5 max-w-[270px] bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-white/80 shadow-xl z-10">
+                    <div className="bg-white p-2 rounded-xl border border-slate-100 shadow-2xs inline-block">
                       <img
                         src="/logo.jpg"
                         alt="Indian Agriculture Logo"
-                        className="h-10 sm:h-14 w-auto object-contain"
+                        className="h-10 sm:h-12 w-auto object-contain"
                       />
                     </div>
-
-                    {/* Tagline text below logo */}
                     <div className="mt-3 border-l-2 border-[#C4922A] pl-3 py-0.5">
                       <p className="font-serif italic text-xs sm:text-sm text-[#1C2A1E] leading-relaxed">
-                        In harmony with Earth, Empowering farmers, Caring for future generations.
+                        Ethical cultivation, certified quality, and farm fresh supply across India.
                       </p>
                     </div>
                   </div>
-
-                  {/* BOTTOM-RIGHT BADGE */}
-                  <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#273B24]/90 text-white text-xs font-semibold shadow-xl backdrop-blur-md border border-white/20 hover:scale-105 transition-transform">
-                      <Leaf className="w-3.5 h-3.5 text-[#C4922A]" />
-                      <span>From Indian Farms to Your Home</span>
-                    </div>
-                  </div>
-
-                  {/* FLOATING RIGHT FEATURE STRIP (Frosted Glass Badges) */}
-                  <div className="absolute top-6 right-6 sm:top-8 sm:right-8 bg-white/85 backdrop-blur-xl rounded-[28px] p-3 sm:p-4 shadow-xl border border-white/90 space-y-4 sm:space-y-5 hidden xs:flex flex-col items-center text-center w-24 sm:w-28 z-20">
-                    <div className="flex flex-col items-center text-center space-y-1.5 group cursor-default">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#486027]/10 text-[#486027] flex items-center justify-center group-hover:bg-[#486027] group-hover:text-white transition-colors duration-300">
-                        <Sprout className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#2C382E] leading-tight">
-                        Sustainable Farming
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center space-y-1.5 group cursor-default">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#486027]/10 text-[#486027] flex items-center justify-center group-hover:bg-[#486027] group-hover:text-white transition-colors duration-300">
-                        <HeartHandshake className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#2C382E] leading-tight">
-                        Farmer Empowerment
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center space-y-1.5 group cursor-default">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#486027]/10 text-[#486027] flex items-center justify-center group-hover:bg-[#486027] group-hover:text-white transition-colors duration-300">
-                        <Leaf className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#2C382E] leading-tight">
-                        Pure & Natural
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center space-y-1.5 group cursor-default">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#486027]/10 text-[#486027] flex items-center justify-center group-hover:bg-[#486027] group-hover:text-white transition-colors duration-300">
-                        <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#2C382E] leading-tight">
-                        Safe & Trusted
-                      </span>
-                    </div>
-                  </div>
-
                 </div>
-
               </div>
 
             </div>
           </div>
         </section>
 
-        {/* CUSTOMER REVIEWS SECTION */}
+        {/* CLIENT TESTIMONIALS SECTION */}
         <section id="reviews-section" className="py-20 bg-[#FAF8F5]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#5A655A] font-semibold">Testimonials</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-light text-[#1B2E1E] mt-2 mb-12">
-              They Speak About It Better Than Us
+            <span className="text-xs uppercase tracking-[0.2em] text-[#1C2A1E] font-bold">Client Reviews</span>
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#1B2E1E] mt-2 mb-12">
+              Trusted Produce & Supply Quality
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4">
+              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4 shadow-sm">
                 <div className="flex text-[#D4A017] gap-1">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#D4A017]" />)}
                 </div>
-                <p className="text-xs text-[#5A655A] font-light leading-relaxed italic">
-                  "The quality of the Moringa powder is unmatched. You can immediately tell by the rich green color and fresh organic smell. Exceptional delivery speed!"
+                <p className="text-xs text-[#1B2E1E] font-medium leading-relaxed italic font-sans">
+                  "The quality of the Organic Moringa Leaf Powder is unmatched. Fresh green color, fine grinding, and prompt delivery."
                 </p>
-                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#1B2E1E]">Priya Sharma</span>
-                  <span className="text-[10px] text-[#1E3524] font-semibold bg-[#E5E0D8] px-2 py-0.5 rounded-full">Verified Buyer</span>
+                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs font-sans">
+                  <span className="font-bold text-[#1B2E1E]">Dr. V. K. Raman</span>
+                  <span className="text-[10px] text-[#FAF8F5] font-bold bg-[#1B2E1E] px-2.5 py-1 rounded-full">Verified Client</span>
                 </div>
               </div>
 
-              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4">
+              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4 shadow-sm">
                 <div className="flex text-[#D4A017] gap-1">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#D4A017]" />)}
                 </div>
-                <p className="text-xs text-[#5A655A] font-light leading-relaxed italic">
-                  "Ordered bulk produce for our organic kitchen. 100% natural, no stems, perfect fineness. Customer support on WhatsApp is super helpful."
+                <p className="text-xs text-[#1B2E1E] font-medium leading-relaxed italic font-sans">
+                  "Sourced bulk produce for our kitchen and retail. Zero stems, exact mesh fineness, and transparent pricing."
                 </p>
-                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs">
+                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs font-sans">
                   <span className="font-bold text-[#1B2E1E]">Rajesh Patel</span>
-                  <span className="text-[10px] text-[#1E3524] font-semibold bg-[#E5E0D8] px-2 py-0.5 rounded-full">Verified Buyer</span>
+                  <span className="text-[10px] text-[#FAF8F5] font-bold bg-[#1B2E1E] px-2.5 py-1 rounded-full">Bulk Buyer</span>
                 </div>
               </div>
 
-              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4">
+              <div className="p-8 rounded-3xl bg-[#F5F2EB] border border-[#E5E0D8] space-y-4 shadow-sm">
                 <div className="flex text-[#D4A017] gap-1">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#D4A017]" />)}
                 </div>
-                <p className="text-xs text-[#5A655A] font-light leading-relaxed italic">
-                  "Love the packaging and mission. Fresh organic produce shipped directly from farms. My energy levels have improved noticeably."
+                <p className="text-xs text-[#1B2E1E] font-medium leading-relaxed italic font-sans">
+                  "Fast response on WhatsApp, lab test certificates provided with every batch, and excellent eco-friendly packaging."
                 </p>
-                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs">
+                <div className="pt-4 border-t border-[#E5E0D8] flex items-center justify-between text-xs font-sans">
                   <span className="font-bold text-[#1B2E1E]">Ananya Iyer</span>
-                  <span className="text-[10px] text-[#1E3524] font-semibold bg-[#E5E0D8] px-2 py-0.5 rounded-full">Verified Buyer</span>
+                  <span className="text-[10px] text-[#FAF8F5] font-bold bg-[#1B2E1E] px-2.5 py-1 rounded-full">Verified Client</span>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* REQUEST FOR QUOTE (RFQ) SECTION — SEAMLESS DARK-GREEN TRANSITION */}
+        <section id="b2b-rfq-section" className="relative text-white overflow-hidden">
+
+          {/* TOP SMOOTH ORGANIC WAVE — cream (#FAF8F5) bg, dark fill */}
+          <div className="w-full overflow-hidden leading-none pointer-events-none" style={{ background: '#FAF8F5' }}>
+            <svg
+              className="relative block w-full"
+              style={{ height: '80px', display: 'block', fill: '#09180b' }}
+              viewBox="0 0 1440 80"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+            >
+              <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" />
+            </svg>
+          </div>
+
+          {/* MAIN RFQ CONTENT BLOCK */}
+          <div className="bg-[#09180b] py-10 sm:py-16 relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Text Box */}
+                <div className="lg:col-span-6 space-y-6 text-left">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1b3d22]/90 border border-[#D4A017]/40 text-[#D4A017] text-xs font-bold uppercase tracking-wider backdrop-blur-xs">
+                    <Leaf className="w-4 h-4 text-[#D4A017]" />
+                    <span>WHOLESALE &amp; BULK INQUIRY DESK</span>
+                  </div>
+
+                  <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight">
+                    Request Wholesale Pricing &amp; Produce Details
+                  </h2>
+
+                  <p className="text-sm sm:text-base text-white/90 font-medium leading-relaxed font-sans">
+                    Get direct farm-to-business quotes, batch lab test COAs, custom mesh sizes, and freight rates delivered to your WhatsApp.
+                  </p>
+
+                  <div className="space-y-3 pt-2 font-sans text-xs sm:text-sm font-bold text-white/95">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[#D4A017] shrink-0" />
+                      <span>Flexible MOQ from 5kg small packs to multi-ton loads</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[#D4A017] shrink-0" />
+                      <span>Custom OEM packaging and mesh fineness (60-120 mesh)</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[#D4A017] shrink-0" />
+                      <span>100% Tax Compliant GST Invoicing &amp; Express Freight</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Form Card */}
+                <div className="lg:col-span-6 bg-white text-[#1C2A1E] p-6 sm:p-10 rounded-3xl shadow-2xl border-2 border-[#D4A017]">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1C2A1E] mb-1">
+                    Get Wholesale Quote
+                  </h3>
+                  <p className="text-xs text-[#4A554D] font-medium mb-6 font-sans">
+                    Fill in your details below to send an instant quote request.
+                  </p>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const company = (form.elements.namedItem('company') as HTMLInputElement).value;
+                      const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+                      const product = (form.elements.namedItem('product') as HTMLSelectElement).value;
+                      const quantity = (form.elements.namedItem('quantity') as HTMLInputElement).value;
+
+                      const formattedMsg =
+                        `🌱 *INDIAN AGRICULTURE — QUOTE INQUIRY* 🌱\n` +
+                        `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+                        `🏢 *Company / Business:* ${company}\n` +
+                        `👤 *Contact Person:* ${name}\n` +
+                        `📦 *Target Product:* ${product}\n` +
+                        `📊 *Target Volume:* ${quantity}\n` +
+                        `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+                        `💬 *Inquiry:* Please share your wholesale rate card, batch COA test report, and dispatch schedule.\n\n` +
+                        `_Sent via Indian Agriculture Online Desk_`;
+
+                      window.open(`https://wa.me/919597250344?text=${encodeURIComponent(formattedMsg)}`, '_blank');
+                    }}
+                    className="space-y-4"
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Company / Brand *</label>
+                        <input
+                          name="company"
+                          type="text"
+                          required
+                          placeholder="e.g. Hand India"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F5F2EB] border border-[#E5E0D8] text-xs font-bold text-[#1C2A1E] focus:outline-none focus:border-[#1C2A1E] font-sans"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Contact Name *</label>
+                        <input
+                          name="name"
+                          type="text"
+                          required
+                          placeholder="Your full name"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F5F2EB] border border-[#E5E0D8] text-xs font-bold text-[#1C2A1E] focus:outline-none focus:border-[#1C2A1E] font-sans"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Target Product *</label>
+                        <select
+                          name="product"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F5F2EB] border border-[#E5E0D8] text-xs font-bold text-[#1C2A1E] focus:outline-none focus:border-[#1C2A1E] font-sans"
+                        >
+                          {products && products.length > 0 ? (
+                            products.map((p) => (
+                              <option key={p._id} value={p.name}>
+                                {p.name}
+                              </option>
+                            ))
+                          ) : categories && categories.length > 0 ? (
+                            <>
+                              <option value="General Organic Produce Inquiry">Select Target Category / Produce</option>
+                              {categories.map((c) => (
+                                <option key={c._id} value={c.name}>
+                                  {c.name}
+                                </option>
+                              ))}
+                            </>
+                          ) : (
+                            <option value="General Organic Farm Produce">General Organic Farm Produce Inquiry</option>
+                          )}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Volume (Kg / Tons) *</label>
+                        <input
+                          name="quantity"
+                          type="text"
+                          required
+                          placeholder="e.g. 25kg, 500kg, 5 Tons"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F5F2EB] border border-[#E5E0D8] text-xs font-bold text-[#1C2A1E] focus:outline-none focus:border-[#1C2A1E] font-sans"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-4 rounded-xl bg-[#1C2A1E] hover:bg-[#253D28] text-white font-bold text-xs uppercase tracking-wider shadow-xl flex items-center justify-center gap-2 transition-all border border-[#D4A017] font-sans"
+                    >
+                      <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                      <span>Submit Quote Request via WhatsApp</span>
+                    </button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </section>
 
       </main>
 
       {/* FOOTER SECTION */}
-      <Footer onOpenTrackModal={() => setIsTrackModalOpen(true)} />
+      <Footer products={products} onOpenTrackModal={() => setIsTrackModalOpen(true)} />
 
       {/* SHOPPING CART SLIDE-OVER DRAWER */}
       {isCartOpen && (
@@ -1185,12 +1315,12 @@ ${productUrl}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-[#183B24]/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
           <div className="bg-[#FAF8F2] text-[#1C1917] w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-[#C99A2E]/40 my-auto max-h-[90vh] flex flex-col transition-all">
-            
+
             {/* Modal Top Header Bar (Fixed / Sticky Header) */}
             <div className="p-4 sm:p-5 bg-[#183B24] text-white flex items-center justify-between border-b border-[#C99A2E]/30 relative overflow-hidden shrink-0">
               {/* Background ambient glow */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#C99A2E]/10 blur-3xl rounded-full pointer-events-none" />
-              
+
               <div className="space-y-0.5 relative z-10">
                 <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold uppercase tracking-wider text-[#C99A2E] font-sans">
                   <Leaf className="w-3 h-3 text-[#C99A2E]" />
@@ -1309,11 +1439,10 @@ ${productUrl}
                   {paymentSettings.enableUPI && (
                     <div
                       onClick={() => setCheckoutForm({ ...checkoutForm, paymentMethod: 'UPI' })}
-                      className={`p-4 rounded-2xl border cursor-pointer flex flex-col gap-2 transition-all font-sans ${
-                        checkoutForm.paymentMethod === 'UPI'
+                      className={`p-4 rounded-2xl border cursor-pointer flex flex-col gap-2 transition-all font-sans ${checkoutForm.paymentMethod === 'UPI'
                           ? 'bg-[#183B24] text-white border-[#183B24] shadow-md ring-2 ring-[#C99A2E]/50'
                           : 'bg-[#F4F0E6]/80 text-[#183B24] border-[#E5E0D8] hover:border-[#C99A2E]/60'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-xs sm:text-sm">Instant UPI Payment</span>
@@ -1328,11 +1457,10 @@ ${productUrl}
                   {paymentSettings.enableCOD && (
                     <div
                       onClick={() => setCheckoutForm({ ...checkoutForm, paymentMethod: 'COD' })}
-                      className={`p-4 rounded-2xl border cursor-pointer flex flex-col gap-2 transition-all font-sans ${
-                        checkoutForm.paymentMethod === 'COD'
+                      className={`p-4 rounded-2xl border cursor-pointer flex flex-col gap-2 transition-all font-sans ${checkoutForm.paymentMethod === 'COD'
                           ? 'bg-[#183B24] text-white border-[#183B24] shadow-md ring-2 ring-[#C99A2E]/50'
                           : 'bg-[#F4F0E6]/80 text-[#183B24] border-[#E5E0D8] hover:border-[#C99A2E]/60'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-xs sm:text-sm">Cash on Delivery</span>
@@ -1357,7 +1485,7 @@ ${productUrl}
                       <div className="space-y-2 text-center sm:text-left flex-1 min-w-0">
                         <p className="font-sans font-bold text-sm sm:text-base text-[#183B24]">Scan QR Code with any UPI App</p>
                         <p className="text-xs text-[#5C665E]">Works with GPay, PhonePe, Paytm, BHIM & All Indian Banks</p>
-                        
+
                         <div className="inline-flex flex-wrap items-center gap-2 pt-1 justify-center sm:justify-start">
                           <div className="px-3 py-1.5 rounded-xl bg-[#F4F0E6] border border-[#E5E0D8] text-xs text-[#183B24]">
                             <span className="text-[#5C665E] font-normal">UPI ID: </span>
@@ -1492,7 +1620,7 @@ ${productUrl}
       {orderSuccess && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-[#183B24]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-[#FAF8F2] text-[#1C1917] w-full max-w-lg rounded-3xl shadow-2xl p-6 sm:p-8 text-center space-y-6 border border-[#C99A2E]/40 transition-all">
-            
+
             {/* Top Success Badge Icon */}
             <div className="w-16 h-16 mx-auto rounded-full bg-[#183B24] text-[#C99A2E] flex items-center justify-center shadow-lg border-2 border-[#C99A2E]/40">
               <CheckCircle2 className="w-9 h-9" />

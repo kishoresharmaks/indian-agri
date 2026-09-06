@@ -124,7 +124,7 @@ export default function AllProductsPage() {
   });
 
   const [merchantUpiId, setMerchantUpiId] = useState(
-    process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'beeshubfarmland@upi'
+    process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'indianagriculturepvtltd@okicici'
   );
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [submittingOrder, setSubmittingOrder] = useState(false);
@@ -487,20 +487,36 @@ export default function AllProductsPage() {
       )}
 
       {/* Top Announcement Bar */}
-      <div className="bg-[#1B2E1E] text-[#FAF8F5] text-[10px] sm:text-xs py-2 px-3 text-center font-medium tracking-wide border-b border-[#2A402D]">
+      <div
+        className="bg-[#1B2E1E] text-[#FAF8F5] text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 text-center font-medium tracking-wide"
+        style={{ borderRadius: '0 0 1.1rem 1.1rem' }}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-center">
-          <p className="w-full text-center flex items-center justify-center gap-1.5 flex-wrap leading-tight">
-            <span>We accept UPI · Credit Cards · Net Banking · e-Wallet · Cash on Delivery</span>
-            <span className="hidden sm:inline text-[#D4A017] font-semibold">★ Direct Farm Shipping Across India</span>
+          <p className="w-full text-center flex items-center justify-center gap-1.5 flex-nowrap leading-tight overflow-hidden">
+            <span className="truncate">UPI · Cards · Net Banking · <span className="hidden xs:inline">e-Wallet · </span>COD Accepted</span>
+            <span className="hidden md:inline text-[#D4A017] font-semibold flex-shrink-0">&nbsp;★ Direct Farm Shipping</span>
           </p>
         </div>
       </div>
 
-      {/* Sticky Header Nav */}
-      <header className="sticky top-0 z-40 glass-nav transition-all duration-300">
-        <div className="w-full px-3 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-[#183B24] ring-2 ring-[#55753F]/25 bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0 p-0.5">
+      {/* Sticky Floating Pill Header Nav */}
+      <header className="sticky top-0 z-40 transition-all duration-300" style={{ background: 'transparent' }}>
+        <div className="px-2.5 sm:px-6 pt-2 pb-1.5">
+        <div
+          className="mx-auto flex items-center justify-between gap-2 sm:gap-6 px-3 sm:px-6 lg:px-8"
+          style={{
+            height: '3.25rem',
+            background: 'rgba(250, 248, 245, 0.95)',
+            backdropFilter: 'blur(22px)',
+            WebkitBackdropFilter: 'blur(22px)',
+            borderRadius: 'clamp(1.25rem, 3vw, 9999px)',
+            border: '1px solid rgba(229, 224, 216, 0.9)',
+            boxShadow: '0 4px 28px -4px rgba(27,46,30,0.12), 0 1px 0 0 rgba(212,160,23,0.10)',
+            maxWidth: '1200px',
+          }}
+        >
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-[#183B24] ring-2 ring-[#55753F]/20 bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0 p-0.5">
               <img
                 src="/logo.jpg"
                 alt="Indian Agriculture Logo"
@@ -511,27 +527,27 @@ export default function AllProductsPage() {
               />
             </div>
             <div className="min-w-0">
-              <span className="font-serif font-bold text-base sm:text-2xl tracking-tight text-[#1B2E1E] block leading-tight truncate">
+              <span className="font-serif font-extrabold text-sm sm:text-xl tracking-tight text-[#1B2E1E] block leading-tight truncate">
                 INDIAN AGRICULTURE
               </span>
-              <span className="hidden sm:block text-[8.5px] uppercase tracking-[0.25em] text-[#5A655A] font-semibold mt-0.5">
-                PREMIUM ORGANIC SOLUTIONS
+              <span className="hidden sm:block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#5A655A] font-bold mt-0.5">
+                PREMIUM B2B ORGANIC
               </span>
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-10 xl:gap-14 text-xs font-sans font-semibold uppercase tracking-[0.12em] text-[#1C1917]">
+          <nav className="hidden lg:flex items-center gap-8 xl:gap-12 text-xs font-sans font-extrabold uppercase tracking-[0.14em] text-[#1C1917]">
             <Link href="/" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">Home</Link>
-            <Link href="/products" className="whitespace-nowrap nav-link-animated py-1 text-[#1E3524]">All Products</Link>
-            <Link href="/#story-section" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">Our Story</Link>
-            <Link href="/#benefits-section" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">Benefits</Link>
-            <Link href="/#reviews-section" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">Reviews</Link>
+            <Link href="/products" className="whitespace-nowrap nav-link-animated py-1 text-[#1E3524]">Bulk Catalog</Link>
+            <Link href="/#story-section" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">B2B Sourcing</Link>
+            <Link href="/#benefits-section" className="whitespace-nowrap nav-link-animated py-1 hover:text-[#1E3524]">Advantages</Link>
+            <a href="https://wa.me/919578784431?text=Hello%20Indian%20Agriculture%20B2B%20Desk%2C%20I%20want%20a%20wholesale%20quote." target="_blank" rel="noreferrer" className="whitespace-nowrap nav-link-animated py-1 text-[#D4A017] hover:text-[#1E3524]">Request Quote</a>
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
             <button
               onClick={() => setIsTrackModalOpen(true)}
-              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#1E3524] hover:text-[#FAF8F5] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all shadow-xs"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#1E3524] hover:text-[#FAF8F5] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all shadow-xs"
             >
               <PackageCheck className="w-4 h-4 text-[#1E3524]" />
               <span className="hidden sm:inline">Track Order</span>
@@ -552,23 +568,53 @@ export default function AllProductsPage() {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2.5 sm:p-3 rounded-full bg-[#F5F2EB] text-[#1B2E1E] hover:bg-[#E5E0D8] transition-colors"
+              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-[#F5F2EB] text-[#1B2E1E] hover:bg-[#1E3524] hover:text-[#FAF8F5] transition-all duration-200 border border-[#E5E0D8] flex-shrink-0"
               aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
+              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
+        </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer — Smooth Glassmorphism Card */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-[#FAF8F5] border-b border-[#E5E0D8] px-6 py-6 space-y-4 shadow-xl">
-            <nav className="flex flex-col space-y-3 font-sans text-xs font-semibold uppercase tracking-wider text-[#1C1917]">
-              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-[#E5E0D8]/60">Home</Link>
-              <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-[#E5E0D8]/60 text-[#1E3524]">All Products</Link>
-              <Link href="/#story-section" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-[#E5E0D8]/60">Our Story</Link>
-              <Link href="/#reviews-section" onClick={() => setIsMobileMenuOpen(false)} className="py-2">Reviews</Link>
-            </nav>
+          <div className="lg:hidden px-2.5 pt-1 pb-2">
+            <div
+              style={{
+                background: 'rgba(250, 248, 245, 0.97)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderRadius: '1.5rem',
+                border: '1px solid rgba(229, 224, 216, 0.9)',
+                boxShadow: '0 8px 32px -8px rgba(27,46,30,0.15)',
+                overflow: 'hidden',
+              }}
+            >
+              <nav className="px-3 py-3 flex flex-col gap-1 font-sans text-xs font-bold uppercase tracking-wider">
+                {[
+                  { label: 'Home', href: '/' },
+                  { label: 'Bulk Catalog', href: '/products', active: true },
+                  { label: 'B2B Sourcing', href: '/#story-section' },
+                  { label: 'Request Quote', href: '/#b2b-rfq-section', gold: true },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 ${
+                      item.gold
+                        ? 'bg-[#1E3524] text-[#D4A017] hover:bg-[#152519]'
+                        : item.active
+                        ? 'bg-[#F5F2EB] text-[#1E3524]'
+                        : 'text-[#1C1917] hover:bg-[#F5F2EB] hover:text-[#1E3524]'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
         )}
       </header>
@@ -578,21 +624,21 @@ export default function AllProductsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs text-[#5A655A] mb-6">
+          <div className="flex items-center gap-2 text-xs text-[#1B2E1E] mb-6 font-bold">
             <Link href="/" className="hover:text-[#1E3524]">Home</Link>
             <span>/</span>
-            <span className="font-medium text-[#1B2E1E]">All Products</span>
+            <span className="font-extrabold text-[#1B2E1E]">B2B Bulk Products</span>
           </div>
 
           {/* Page Heading & Search Toolbar */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-[#E5E0D8]">
             <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-[#D4A017] font-bold">Catalogue</span>
-              <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#1B2E1E] mt-1">
-                All Organic Products
+              <span className="text-xs uppercase tracking-[0.2em] text-[#D4A017] font-extrabold">B2B Wholesale Catalog</span>
+              <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#1B2E1E] mt-1">
+                All Bulk Organic Products & Raw Supplies
               </h1>
-              <p className="text-xs sm:text-sm text-[#5A655A] font-light mt-1">
-                Explore our full range of 100% regeneratively farmed produce & moringa solutions.
+              <p className="text-xs sm:text-sm text-[#1B2E1E] font-bold mt-1 font-sans">
+                Explore our full range of 100% regeneratively farmed produce, bulk raw Moringa Oleifera, and OEM private label options.
               </p>
             </div>
 
@@ -794,7 +840,7 @@ export default function AllProductsPage() {
       </main>
 
       {/* Unified Customer Footer */}
-      <Footer onOpenTrackModal={() => setIsTrackModalOpen(true)} />
+      <Footer products={products} onOpenTrackModal={() => setIsTrackModalOpen(true)} />
 
       {/* SLIDE-OVER CART DRAWER MODAL */}
       {isCartOpen && (

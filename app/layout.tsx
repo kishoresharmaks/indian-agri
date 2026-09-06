@@ -16,36 +16,38 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "INDIAN AGRICULTURE | Premium Organic Solutions & Farm Produce",
+  title: "INDIAN AGRICULTURE | Premier B2B Organic Supplier & Wholesale Bulk Produce",
   description:
-    "Nourish your crops & health from inside and out with Premium Organic Solutions from INDIAN AGRICULTURE. Regeneratively farmed and ethically crafted in India. Fast delivery across India.",
+    "Direct farm-to-business supplier of premium Organic Moringa Oleifera, bulk agricultural raw materials, and natural farm produce in India. Custom OEM, white-labeling, lab certified COA, and global export shipping.",
   keywords: [
-    "INDIAN AGRICULTURE",
-    "INDIANAGRICULTURE.online",
-    "Premium Organic Moringa",
-    "Organic Farm Produce",
-    "Regenerative Agriculture India",
-    "Natural Organic Fertilizer",
+    "INDIAN AGRICULTURE B2B",
+    "B2B Organic Moringa Supplier",
+    "Wholesale Moringa Powder Bulk",
+    "Bulk Organic Farm Produce India",
+    "Moringa OEM White Labeling",
+    "Contract Farming Organic India",
+    "Raw Moringa Bulk Exporter",
+    "Commercial Organic Agriculture Supplier",
   ],
-  authors: [{ name: "INDIAN AGRICULTURE" }],
+  authors: [{ name: "INDIAN AGRICULTURE B2B" }],
   creator: "INDIAN AGRICULTURE",
-  publisher: "INDIAN AGRICULTURE",
+  publisher: "INDIAN AGRICULTURE B2B Wholesale",
   icons: {
     icon: "/logo.jpg",
     apple: "/logo.jpg",
   },
   openGraph: {
-    title: "INDIAN AGRICULTURE — Premium Organic Produce & Moringa Solutions",
+    title: "INDIAN AGRICULTURE — Premier B2B Organic & Wholesale Moringa Supplier",
     description:
-      "Nourish your crops and health from inside & out with our Premium Organic Produce regeneratively farmed and ethically crafted in India.",
+      "Direct farm-to-business bulk supply of premium organic moringa, agricultural raw materials, and enterprise white-label solutions. Pan-India & Global Export.",
     url: "https://INDIANAGRICULTURE.online",
-    siteName: "INDIAN AGRICULTURE",
+    siteName: "INDIAN AGRICULTURE B2B",
     images: [
       {
         url: "/logo.jpg",
         width: 800,
         height: 800,
-        alt: "INDIAN AGRICULTURE Logo",
+        alt: "INDIAN AGRICULTURE B2B Logo",
       },
     ],
     locale: "en_IN",
@@ -53,8 +55,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "INDIAN AGRICULTURE",
-    description: "Premium organic produce & moringa solutions regeneratively farmed in India.",
+    title: "INDIAN AGRICULTURE B2B Wholesale",
+    description: "Premier B2B organic raw materials & moringa bulk supplier direct from Indian farms.",
     images: ["/logo.jpg"],
   },
   metadataBase: new URL("https://INDIANAGRICULTURE.online"),

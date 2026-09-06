@@ -4,175 +4,114 @@ import React from 'react';
 import {
   Leaf,
   Sprout,
-  Feather,
   ShieldCheck,
+  Award,
   Recycle,
   HeartHandshake,
   Users,
+  Sparkles,
 } from 'lucide-react';
 
-interface CommitmentItem {
+interface FeatureCard {
   icon: React.ElementType;
   title: string;
+  badge: string;
   description: string;
 }
 
-const commitments: CommitmentItem[] = [
+const commitmentFeatures: FeatureCard[] = [
   {
     icon: Leaf,
-    title: 'Regenerative Farming',
+    title: 'Sustainable Sourcing',
+    badge: '100% Regenerative',
     description:
-      'Cultivated using holistic agricultural methods that restore soil biology and retain natural moisture.',
-  },
-  {
-    icon: Sprout,
-    title: '100% Organic',
-    description:
-      'Zero chemical pesticides or synthetic growth enhancers. Pure, nutrient-rich produce guaranteed.',
-  },
-  {
-    icon: Feather,
-    title: 'Stem-Free Handcrafted',
-    description:
-      'Carefully selected leaves processed at low temperatures to lock in vibrant green chlorophyll & minerals.',
+      'Cultivated using ethical farming practices across thousands of organic acres with zero synthetic chemicals.',
   },
   {
     icon: ShieldCheck,
-    title: 'Ethically Crafted',
+    title: 'Guaranteed Quality',
+    badge: 'Lab COA Certified',
     description:
-      'Direct partnership with local farm communities ensuring fair livelihood and eco-friendly packaging.',
-  },
-];
-
-const bottomValues = [
-  {
-    icon: Leaf,
-    title: 'Sustainable',
-    subtitle: 'Better for the planet',
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Better Quality',
-    subtitle: 'Pure. Safe. Effective.',
+      'Stem-free low-temperature dehydration. Every batch verified by accredited laboratory quality reports.',
   },
   {
     icon: Users,
-    title: 'Community Driven',
-    subtitle: 'Empowering local farmers',
+    title: 'Direct Farmer Support',
+    badge: 'Fair Trade Value',
+    description:
+      'Empowering local Indian agricultural communities with direct farm contracts and transparent fair pricing.',
   },
   {
     icon: Recycle,
-    title: 'Eco-Friendly',
-    subtitle: 'Thoughtful at every step',
+    title: 'Eco-Friendly Packing',
+    badge: 'GST & Export Ready',
+    description:
+      'Custom OEM bulk drums, retail pouches, and tax-compliant invoicing with pan-India express freight.',
   },
 ];
 
 export default function CommitmentSection() {
   return (
-    <section id="benefits-section" className="py-16 sm:py-20 lg:py-28 bg-[#FAF8F3] text-[#123524] relative overflow-hidden transition-colors duration-500">
-      {/* Smooth Soft Gradient Divider Blend (Eliminates sharp border line) */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#FAF8F3] via-[#FAF8F3]/90 to-transparent pointer-events-none z-10" />
+    <section id="benefits-section" className="py-16 sm:py-24 lg:py-28 bg-[#FAF8F3] text-[#183B24] relative overflow-hidden">
 
-      {/* Background Organic Ambient Gradient */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#E5E9D9]/40 blur-[130px] rounded-full pointer-events-none -z-0" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#C9952E]/5 blur-[120px] rounded-full pointer-events-none -z-0" />
+      {/* Background Soft Glow Accents */}
+      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-[#EAE6DC]/50 blur-[130px] rounded-full pointer-events-none -z-0" />
+      <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#C99A2E]/5 blur-[120px] rounded-full pointer-events-none -z-0" />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-20 lg:space-y-24">
-        
-        {/* HERO / INTRO TWO-COLUMN EDITORIAL COMPOSITION */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
-          {/* LEFT SIDE: Typography & Messaging */}
-          <div className="lg:col-span-6 space-y-6 text-left">
-            
-            {/* Upper-Left Eyebrow Label with Botanical Leaf Icon */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#C9952E]/40 bg-[#FCFBF7] text-[#C9952E] shadow-2xs">
-              <Leaf className="w-3.5 h-3.5 text-[#C9952E]" />
-              <span className="text-[11px] uppercase tracking-[0.18em] font-semibold">
-                Our Commitment
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16 sm:space-y-20">
+
+        {/* HERO INTRO EDITORIAL SECTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+          {/* LEFT COLUMN: Messaging */}
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C99A2E] bg-[#183B24] text-[#D4A017] shadow-md">
+              <Sparkles className="w-4 h-4 text-[#D4A017]" />
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold font-sans">
+                OUR COMMITMENT TO EXCELLENCE
               </span>
             </div>
 
-            {/* Main Editorial Serif Headline */}
-            <h2 className="font-serif text-4xl sm:text-6xl lg:text-[5.2rem] xl:text-[5.8rem] font-light text-[#123524] leading-[1.04] tracking-tight">
-              Health From <br className="hidden sm:block" />
-              the Inside & Out
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-[4rem] font-bold text-[#183B24] leading-[1.08] tracking-tight">
+              Empowering Wellness With <br className="hidden sm:block" />
+              <em className="italic text-[#183B24] font-serif font-normal">Direct Farm Supply.</em>
             </h2>
 
-            {/* Gold Decorative Accent Line */}
-            <div className="w-16 h-[2px] bg-[#C9952E] rounded-full" />
+            <div className="flex items-center gap-2 pt-1">
+              <div className="w-14 h-[3px] bg-[#C99A2E] rounded-full" />
+              <Leaf className="w-4 h-4 text-[#C99A2E]" />
+            </div>
 
-            {/* Supporting Paragraph */}
-            <p className="text-base sm:text-lg text-[#5E685F] font-normal leading-relaxed max-w-lg">
-              We combine ancient wisdom with modern science to bring you pure, effective and planet-friendly products.
+            <p className="text-sm sm:text-base text-[#4A554D] font-semibold leading-relaxed max-w-lg font-sans">
+              We combine traditional agricultural wisdom with modern processing standards to deliver pure, lab-tested, and planet-friendly organic produce directly from Indian farmlands.
             </p>
           </div>
 
-          {/* RIGHT SIDE: Botanical Visual Area & Overlapping Commitment Panel */}
+          {/* RIGHT COLUMN: Visual Farm Story Container */}
           <div className="lg:col-span-6 relative">
             <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
-              
-              {/* Outer Top-Right Botanical Leaf Vine Accent */}
-              <div className="absolute -top-12 -right-8 pointer-events-none z-10 text-[#C9952E] hidden sm:block">
-                <svg className="w-40 h-40" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M20 120 C50 85 90 45 125 15"
-                    stroke="#C9952E"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    opacity="0.8"
-                  />
-                  <path
-                    d="M50 85 C35 70 45 55 58 68 C70 80 55 90 50 85 Z"
-                    stroke="#C9952E"
-                    strokeWidth="1.2"
-                    fill="#C9952E"
-                    fillOpacity="0.15"
-                    opacity="0.8"
-                  />
-                  <path
-                    d="M82 53 C68 38 78 22 90 35 C102 48 88 58 82 53 Z"
-                    stroke="#C9952E"
-                    strokeWidth="1.2"
-                    fill="#C9952E"
-                    fillOpacity="0.2"
-                    opacity="0.85"
-                  />
-                  <path
-                    d="M115 22 C108 12 118 2 125 9 C132 16 122 26 115 22 Z"
-                    stroke="#C9952E"
-                    strokeWidth="1.2"
-                    fill="#C9952E"
-                    fillOpacity="0.3"
-                    opacity="0.9"
-                  />
-                  <circle cx="128" cy="7" r="2.5" fill="#C9952E" opacity="0.9" />
-                </svg>
-              </div>
 
-              {/* Organic Curved Botanical Image Container */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full rounded-tl-[100px] rounded-br-[100px] sm:rounded-tl-[140px] sm:rounded-br-[140px] overflow-hidden bg-gradient-to-br from-[#123524] via-[#0D281C] to-[#1E4530] shadow-2xl border-2 border-[#C9952E]/30 group">
+              {/* Organic Curved Image Frame */}
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full rounded-3xl overflow-hidden bg-[#183B24] shadow-2xl border-2 border-[#C99A2E]/30 group">
                 <img
                   src="/moringa_farm_philosophy.png"
                   alt="Fresh Organic Moringa Oleifera Plantation"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-
-                {/* Gentle Gradient Shading Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D281C]/80 via-transparent to-black/10 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#183B24]/80 via-transparent to-black/10 pointer-events-none" />
               </div>
 
-              {/* OVERLAPPING CONTENT PANEL */}
-              <div className="bg-[#0D281C]/95 backdrop-blur-md text-[#FCFBF7] p-6 sm:p-7 rounded-2xl sm:rounded-3xl border border-[#C9952E]/30 shadow-2xl max-w-md w-full relative sm:absolute sm:-bottom-8 sm:left-6 z-20 mt-6 sm:mt-0 flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#123524] border border-[#C9952E]/40 text-[#C9952E] flex items-center justify-center flex-shrink-0 shadow-md">
-                  <Sprout className="w-6 h-6" />
+              {/* Overlapping Commitment Floating Card */}
+              <div className="bg-[#183B24]/95 backdrop-blur-md text-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#C99A2E]/40 shadow-2xl max-w-md w-full relative sm:absolute sm:-bottom-7 sm:left-6 z-20 mt-6 sm:mt-0 flex items-start gap-4">
+                <div className="w-11 h-11 rounded-full bg-[#142617] border border-[#C99A2E]/40 text-[#D4A017] flex items-center justify-center shrink-0 shadow-md">
+                  <Sprout className="w-5 h-5 text-[#D4A017]" />
                 </div>
                 <div>
-                  <span className="text-[#C9952E] text-[10px] font-bold uppercase tracking-[0.2em] block mb-1">
-                    OUR COMMITMENT
+                  <span className="text-[#D4A017] text-[10px] font-extrabold uppercase tracking-[0.2em] block mb-1 font-sans">
+                    OUR GUARANTEE
                   </span>
-                  <p className="text-xs sm:text-sm text-[#FCFBF7]/90 font-light leading-relaxed">
-                    We are committed to restoring soil health, supporting local communities and creating products that are good for you and the planet.
+                  <p className="text-xs sm:text-sm text-[#E0ECE1] font-medium leading-relaxed font-sans">
+                    Restoring soil health, empowering farmer communities, and delivering 100% pure organic produce you can trust.
                   </p>
                 </div>
               </div>
@@ -182,52 +121,49 @@ export default function CommitmentSection() {
 
         </div>
 
-        {/* FOUR COMMITMENT FEATURES EDITORIAL GRID */}
-        <div className="pt-8 lg:pt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0 lg:divide-x lg:divide-[#123524]/15">
-            {commitments.map((item, idx) => {
-              const IconComp = item.icon;
+        {/* 4 LUXURY COMMITMENT FEATURE CARDS WITH PERFECT SPACING */}
+        <div className="pt-6 sm:pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {commitmentFeatures.map((feature, idx) => {
+              const IconComp = feature.icon;
               return (
                 <div
                   key={idx}
-                  className="px-4 lg:px-8 text-center group flex flex-col items-center justify-between space-y-4"
+                  className="bg-gradient-to-br from-white via-[#FAF8F3] to-[#F4F0E6] border border-[#C99A2E]/30 rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-2xl hover:border-[#183B24] transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between space-y-5 group"
                 >
-                  <div className="relative">
-                    <div className="w-20 h-20 rounded-full bg-[#E5E9D9]/70 border border-[#C9952E]/30 text-[#123524] flex items-center justify-center shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#E5E9D9]">
-                      <IconComp className="w-9 h-9 stroke-[1.4]" />
+                  {/* Top Gold Foil Accent Bar */}
+                  <div className="w-full h-1 bg-gradient-to-r from-transparent via-[#C99A2E] to-transparent absolute top-0 inset-x-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="space-y-4">
+                    {/* Top Row: Icon Badge + Badge Pill */}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-[#183B24] text-[#D4A017] flex items-center justify-center border border-[#C99A2E]/40 shadow-md group-hover:scale-110 transition-transform shrink-0">
+                        <IconComp className="w-6 h-6 text-[#D4A017]" />
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-[#183B24]/10 border border-[#C99A2E]/30 text-[10px] font-extrabold text-[#183B24] uppercase tracking-wider font-sans">
+                        {feature.badge}
+                      </span>
                     </div>
-                    <div className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#C9952E]" />
+
+                    {/* Title & Description */}
+                    <div>
+                      <h3 className="font-serif text-lg sm:text-xl font-bold text-[#183B24] tracking-tight leading-snug">
+                        {feature.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A554D] font-medium leading-relaxed mt-2 font-sans">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-serif text-xl sm:text-2xl font-light text-[#123524] tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-[#5E685F] font-normal leading-relaxed mt-2 max-w-xs mx-auto">
-                      {item.description}
-                    </p>
+
+                  <div className="pt-2 border-t border-[#E5E0D8] flex items-center gap-1.5 text-[11px] font-extrabold text-[#183B24] uppercase tracking-wider font-sans">
+                    <Award className="w-3.5 h-3.5 text-[#C99A2E]" />
+                    <span>Verified Quality</span>
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
-
-        {/* BOTTOM ACCENT ROW */}
-        <div className="pt-10 border-t border-[#123524]/10 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {bottomValues.map((val, idx) => {
-            const IconComp = val.icon;
-            return (
-              <div key={idx} className="flex items-center gap-3 bg-[#FCFBF7] p-4 rounded-2xl border border-[#C9952E]/20">
-                <div className="w-10 h-10 rounded-full bg-[#E5E9D9]/60 text-[#C9952E] flex items-center justify-center shrink-0">
-                  <IconComp className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-serif text-sm font-semibold text-[#123524]">{val.title}</h4>
-                  <p className="text-[11px] text-[#5E685F] font-light">{val.subtitle}</p>
-                </div>
-              </div>
-            );
-          })}
         </div>
 
       </div>

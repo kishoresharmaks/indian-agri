@@ -364,7 +364,7 @@ export default function POSCounter({
               onSubmitPOS={handleSubmitPOS}
               isSubmitting={isSubmitting}
               isCartEmpty={cartItems.length === 0}
-              merchantUpiId={process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'indianagriculture@upi'}
+              merchantUpiId={process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'indianagriculturepvtltd@okicici'}
             />
           </div>
         </div>
