@@ -40,6 +40,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  if (!isAuthenticatedAdmin(request)) {
+    return unauthenticatedResponse();
+  }
+
   try {
     const cookieStore = cookies();
     const currentToken = cookieStore.get('admin_token')?.value;
