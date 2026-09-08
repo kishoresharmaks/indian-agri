@@ -3,9 +3,7 @@
  * Falls back to in-memory store if DB is unavailable.
  *
  * Usage:
- *   import { rateLimit, getClientIP } from '@/lib/rateLimit';
- *   const { success, remaining, reset } = rateLimit(ip);
- *   if (!success) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+ *   const { success, remaining, reset } = await rateLimit(ip);
  */
 
 import connectToDatabase from '@/lib/db';
