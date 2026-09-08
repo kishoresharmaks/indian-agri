@@ -94,10 +94,10 @@ interface Order {
   invoiceNumber?: string;
   orderType?: 'ONLINE' | 'POS';
   customerName: string;
-  customerPhone: string;
+  customerPhone?: string;
   customerEmail?: string;
-  shippingAddress: string;
-  pincode: string;
+  shippingAddress?: string;
+  pincode?: string;
   items: OrderItem[];
   subtotal: number;
   totalGst: number;

@@ -63,6 +63,9 @@ export async function GET(request: Request) {
     const orders = await Order.find({ $or: orConditions })
       .sort({ createdAt: -1 })
       .limit(10)
+      .select(
+        '-customerEmail -shippingAddress -customerPhone -transactionId -paymentScreenshot'
+      )
       .lean();
 
     return NextResponse.json({
