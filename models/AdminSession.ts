@@ -32,6 +32,15 @@ AdminSessionSchema.statics.findValid = function (this: Model<IAdminSession>, tok
   });
 };
 
+AdminSessionSchema.statics.cleanupExpired = function () {
+  return this.deleteMany({
+    $or: [
+      { expiresAt: { $lt: new Date() } },
+      { isRevoked: true },
+    ],
+  });
+};
+
 const AdminSession: Model<IAdminSession> =
   mongoose.models.AdminSession ||
   mongoose.model<IAdminSession>('AdminSession', AdminSessionSchema);
