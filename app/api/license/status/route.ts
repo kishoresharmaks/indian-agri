@@ -50,14 +50,12 @@ export async function GET(request: NextRequest) {
     const licensingServerUrl = getLicensingServerUrl();
     const host = request.headers.get('host') || 'localhost';
 
-    const supportEmail =
-      process.env.LICENSE_SUPPORT_EMAIL ||
-      process.env.NEXT_PUBLIC_LICENSE_SUPPORT_EMAIL ||
-      'krishkishoreks@gmail.com';
-    const supportPhone =
-      process.env.LICENSE_SUPPORT_PHONE ||
-      process.env.NEXT_PUBLIC_LICENSE_SUPPORT_PHONE ||
-      '+917695946750';
+    // Support contacts: require explicit env vars — never hardcode personal info
+    const supportEmail = process.env.LICENSE_SUPPORT_EMAIL;
+    const supportPhone = process.env.LICENSE_SUPPORT_PHONE;
+    if (!supportEmail || !supportPhone) {
+      console.warn('LICENSE_SUPPORT_EMAIL and LICENSE_SUPPORT_PHONE are not set in environment variables.');
+    }
 
     let plans = [...DEFAULT_FALLBACK_PLANS];
     let razorpayKeyId = '';

@@ -3,8 +3,10 @@ import connectToDatabase from '@/lib/db';
 import LicenseSetting from '@/models/LicenseSetting';
 import { getLicensingServerUrl, computeClientLicenseState } from '@/lib/licensing/licenseClient';
 import { invalidateLicenseCache } from '@/lib/licensing/validateLicenseRoute';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function POST(request: NextRequest) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
   try {
     const body = await request.json();
     const { licenseKey } = body;
