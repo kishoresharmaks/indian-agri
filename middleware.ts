@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const CSP_HEADER = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https:",
-  "connect-src 'self'",
+  // 'self' covers same-origin API routes; Razorpay is called server-side
+  "connect-src 'self' https://api.razorpay.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -30,7 +31,7 @@ export function middleware(request: NextRequest) {
     // Lightweight auth check: cookie must exist and be a non-empty value
     // The authoritative per-session validation happens in API routes (lib/authCheck.ts)
     if (!pathname.startsWith('/admin/login')) {
-      const adminToken = request.cookies.get('admin_token')?.value;
+      const adminToken = request.cookies.get('__Host-admin_token')?.value;
       if (!adminToken || adminToken.length < 32) {
         const loginUrl = new URL('/admin/login', request.url);
         loginUrl.searchParams.set('from', pathname);

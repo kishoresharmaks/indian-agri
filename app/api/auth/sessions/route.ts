@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   }
   try {
     const cookieStore = cookies();
-    const currentToken = cookieStore.get('admin_token')?.value;
+    const currentToken = cookieStore.get('__Host-admin_token')?.value;
 
     const sessions = await AdminSession.find({
       isRevoked: false,
@@ -46,7 +46,7 @@ export async function DELETE(request: NextRequest) {
 
   try {
     const cookieStore = cookies();
-    const currentToken = cookieStore.get('admin_token')?.value;
+    const currentToken = cookieStore.get('__Host-admin_token')?.value;
 
     await AdminSession.updateMany(
       {

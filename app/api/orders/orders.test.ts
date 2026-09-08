@@ -40,7 +40,7 @@ describe('GET /api/orders authentication', () => {
     const request = new NextRequest('http://localhost/api/orders', {
       method: 'GET',
       headers: {
-        cookie: 'admin_token=fake_invalid_token',
+        cookie: '__Host-admin_token=fake_invalid_token',
       },
     });
 
