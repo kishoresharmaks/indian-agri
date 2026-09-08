@@ -21,6 +21,7 @@ import ExpenseTabContainer from '@/components/billing/expenses/ExpenseTabContain
 import ReportsTabContainer from '@/components/billing/reports/ReportsTabContainer';
 import PartyModal from '@/components/billing/shared/PartyModal';
 import CustomerLedgerModal from '@/components/billing/parties/CustomerLedgerModal';
+import { useRouter } from 'next/navigation';
 
 export default function AdminBillingPage() {
   const [activeTab, setActiveTab] = useState<'sales' | 'purchase' | 'expenses' | 'reports' | 'parties'>('sales');
@@ -32,6 +33,36 @@ export default function AdminBillingPage() {
   const [isPartyModalOpen, setIsPartyModalOpen] = useState(false);
   const [selectedPartyForLedger, setSelectedPartyForLedger] = useState<any>(null);
   const [editingParty, setEditingParty] = useState<any>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch('/api/auth/session', { cache: 'no-store' });
+        const data = await res.json();
+        if (data.authenticated) {
+          fetchInitialData();
+          fetchLicenseStatus();
+        } else {
+          router.replace('/admin/login');
+        }
+      } catch {
+        router.replace('/admin/login');
+      } finally {
+        setIsAuthChecking(false);
+      }
+    };
+    checkSession();
+  }, [router]);
+
+  const fetchLicenseStatus = async () => {
+    try {
+      const res = await fetch('/api/license/status', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && data.license) setLicenseState(data.license);
+    } catch { /* ignore */ }
+  };
 
   const fetchInitialData = async () => {
     try {
@@ -54,15 +85,18 @@ export default function AdminBillingPage() {
     }
   };
 
-  useEffect(() => {
-    fetchInitialData();
-    fetch('/api/license/status')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) setLicenseState(data.license);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-[#FFFCFB] flex items-center justify-center p-4">
+        <div className="text-center space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-[#FFF8F5] border border-[#ED3500]/20 flex items-center justify-center mx-auto text-[#ED3500]">
+            <RefreshCw className="w-6 h-6 animate-spin" />
+          </div>
+          <p className="text-xs font-bold text-[#163B5C] uppercase tracking-wider">Verifying Credentials...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FFFCFB] text-[#163B5C] flex flex-col justify-between">

@@ -1,18 +1,15 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-
-const ADMIN_SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN;
+import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protect all /admin routes except /admin/login
   if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
-    // If ADMIN_SESSION_TOKEN is not configured, redirect to login anyway
-    // (the login API will also fail if env vars are missing)
     const adminToken = request.cookies.get('admin_token')?.value;
 
-    if (adminToken !== ADMIN_SESSION_TOKEN) {
+    // Lightweight check: cookie must exist and be a non-empty value
+    // The authoritative per-session validation happens in API routes (lib/authCheck.ts)
+    if (!adminToken || adminToken.length < 32) {
       const loginUrl = new URL('/admin/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
