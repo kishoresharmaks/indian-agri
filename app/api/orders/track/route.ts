@@ -10,7 +10,7 @@ function escapeRegex(str: string): string {
 export async function GET(request: Request) {
   // Rate limit: 20 tracking queries per 5 minutes per IP
   const ip = getClientIP(request);
-  const { success, reset } = rateLimit(`track_${ip}`, 20, 5 * 60 * 1000);
+  const { success, reset } = await rateLimit(`track_${ip}`, 20, 5 * 60 * 1000);
   if (!success) {
     return NextResponse.json(
       {
@@ -63,6 +63,9 @@ export async function GET(request: Request) {
     const orders = await Order.find({ $or: orConditions })
       .sort({ createdAt: -1 })
       .limit(10)
+      .select(
+        '-customerEmail -shippingAddress -customerPhone -transactionId -paymentScreenshot'
+      )
       .lean();
 
     return NextResponse.json({
