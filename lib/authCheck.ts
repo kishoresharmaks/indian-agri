@@ -8,14 +8,21 @@ export async function isAuthenticatedAdmin(req: NextRequest | Request): Promise<
   let sessionToken: string | undefined;
 
   if ('cookies' in req && typeof (req as NextRequest).cookies?.get === 'function') {
-    sessionToken = (req as NextRequest).cookies.get('__Host-admin_token')?.value;
+    sessionToken =
+      (req as NextRequest).cookies.get('__Host-admin_token')?.value ||
+      (req as NextRequest).cookies.get('admin_token')?.value;
   }
 
   if (!sessionToken) {
     const cookieHeader = req.headers.get('cookie') || '';
-    const match = cookieHeader.match(/(?:^|;\s*)__Host-admin_token=([^;]+)/);
-    if (match && match[1]) {
-      sessionToken = decodeURIComponent(match[1]);
+    const hostMatch = cookieHeader.match(/(?:^|;\s*)__Host-admin_token=([^;]+)/);
+    if (hostMatch && hostMatch[1]) {
+      sessionToken = decodeURIComponent(hostMatch[1]);
+    } else {
+      const match = cookieHeader.match(/(?:^|;\s*)admin_token=([^;]+)/);
+      if (match && match[1]) {
+        sessionToken = decodeURIComponent(match[1]);
+      }
     }
   }
 

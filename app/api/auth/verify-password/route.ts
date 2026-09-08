@@ -4,7 +4,7 @@ import { rateLimit, getClientIP } from '@/lib/rateLimit';
 export async function POST(request: Request) {
   // Rate limit: 5 attempts per IP per 15 minutes
   const ip = getClientIP(request);
-  const { success, reset } = rateLimit(ip);
+  const { success, reset } = await rateLimit(ip);
 
   if (!success) {
     return NextResponse.json(

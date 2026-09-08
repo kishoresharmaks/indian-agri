@@ -203,12 +203,7 @@ export default function AdminDashboard() {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderStatusFilter, setOrderStatusFilter] = useState('All');
   const [orderPage, setOrderPage] = useState(1);
-  const [totalOrderPages, setTotalOrderPages] = useState(1);
   const ordersPerPage = 5;
-
-  useEffect(() => {
-    fetchOrders();
-  }, [orderPage, orderStatusFilter]);
 
   // Banners State
   const [banners, setBanners] = useState<BannerItem[]>([]);
@@ -247,6 +242,7 @@ export default function AdminDashboard() {
       await Promise.all([
         fetchProducts(),
         fetchCategories(),
+        fetchOrders(),
         fetchBanners(),
         fetchSettings(),
         fetchLicenseStatus(),
@@ -297,15 +293,10 @@ export default function AdminDashboard() {
   const fetchOrders = async () => {
     try {
       setLoadingOrders(true);
-      const params = new URLSearchParams();
-      if (orderStatusFilter !== 'All') params.set('status', orderStatusFilter);
-      params.set('page', String(orderPage));
-      params.set('limit', String(ordersPerPage));
-      const res = await fetch(`/api/orders?${params.toString()}`);
+      const res = await fetch(`/api/orders?t=${Date.now()}`, { cache: 'no-store' });
       const data = await res.json();
-      if (data.success) {
+      if (data.success && Array.isArray(data.data)) {
         setOrders(data.data);
-        setTotalOrderPages(data.pagination.totalPages);
       }
     } catch (err) {
       console.error(err);

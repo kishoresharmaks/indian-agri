@@ -31,7 +31,9 @@ export function middleware(request: NextRequest) {
     // Lightweight auth check: cookie must exist and be a non-empty value
     // The authoritative per-session validation happens in API routes (lib/authCheck.ts)
     if (!pathname.startsWith('/admin/login')) {
-      const adminToken = request.cookies.get('__Host-admin_token')?.value;
+      const adminToken =
+        request.cookies.get('__Host-admin_token')?.value ||
+        request.cookies.get('admin_token')?.value;
       if (!adminToken || adminToken.length < 32) {
         const loginUrl = new URL('/admin/login', request.url);
         loginUrl.searchParams.set('from', pathname);

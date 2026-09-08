@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export interface IRateLimit extends Document {
+export interface IRateLimit extends Document<string> {
   _id: string;
   count: number;
   expiresAt: Date;

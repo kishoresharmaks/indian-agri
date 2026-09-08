@@ -79,11 +79,22 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
+    const isProd = process.env.NODE_ENV === 'production';
+
     // Set __Host- prefixed cookie (always secure, path=/)
     response.cookies.set('__Host-admin_token', sessionToken, {
       httpOnly: true,
       sameSite: 'lax',
       secure: true,
+      path: '/',
+      maxAge: 8 * 60 * 60,
+    });
+
+    // Also set admin_token for non-HTTPS local development compatibility
+    response.cookies.set('admin_token', sessionToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: isProd,
       path: '/',
       maxAge: 8 * 60 * 60,
     });
