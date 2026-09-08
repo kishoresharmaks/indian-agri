@@ -3,6 +3,19 @@ import connectToDatabase from '@/lib/db';
 import Banner from '@/models/Banner';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
+/**
+ * Validate and sanitize a banner link.
+ * Only allows http(s) URLs or empty string. Blocks javascript:, data:, file:, etc.
+ */
+function sanitizeBannerLink(link: unknown): string {
+  if (typeof link !== 'string') return '';
+  const trimmed = link.trim();
+  if (!trimmed) return '';
+  // Only allow http(s) URLs
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return '';
+}
+
 export async function GET() {
   try {
     await connectToDatabase();
@@ -44,7 +57,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const banner = await Banner.create({ title, image, link: link || '' });
+    // Sanitize banner link: only allow http(s) URLs or empty string
+    const sanitizedLink = sanitizeBannerLink(link);
+
+    const banner = await Banner.create({ title, image, link: sanitizedLink });
     return NextResponse.json({ success: true, data: banner }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json(

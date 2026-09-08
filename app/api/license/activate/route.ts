@@ -3,8 +3,10 @@ import connectToDatabase from '@/lib/db';
 import LicenseSetting from '@/models/LicenseSetting';
 import { getLicensingServerUrl, computeClientLicenseState } from '@/lib/licensing/licenseClient';
 import { invalidateLicenseCache } from '@/lib/licensing/validateLicenseRoute';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function POST(request: NextRequest) {
+  if (!(await isAuthenticatedAdmin(request))) return unauthenticatedResponse();
   try {
     const body = await request.json();
     const { licenseKey } = body;
@@ -84,7 +86,8 @@ export async function POST(request: NextRequest) {
       token: updatedSetting.signedToken,
     });
 
-    console.log(`✅ Store activated with License Key: ${cleanKey} (${lic.businessName})`);
+    const maskedKey = cleanKey.length > 8 ? `${cleanKey.slice(0, 4)}****${cleanKey.slice(-4)}` : '****';
+    console.log(`✅ Store activated. Key: ${maskedKey} | Business: ${lic.businessName}`);
 
     return NextResponse.json({
       success: true,

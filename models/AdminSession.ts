@@ -13,7 +13,7 @@ export interface IAdminSession extends Document {
 const AdminSessionSchema: Schema = new Schema(
   {
     sessionToken: { type: String, required: true, unique: true, index: true },
-    expiresAt: { type: Date, required: true, index: true },
+    expiresAt: { type: Date, required: true },
     lastActivityAt: { type: Date, required: true, default: Date.now },
     ipAddress: { type: String, default: '' },
     userAgent: { type: String, default: '' },
@@ -23,8 +23,7 @@ const AdminSessionSchema: Schema = new Schema(
 );
 
 AdminSessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
-
-AdminSessionSchema.statics.findValid = function (token: string) {
+AdminSessionSchema.statics.findValid = function (this: Model<IAdminSession>, token: string) {
   return this.findOne({
     sessionToken: token,
     isRevoked: false,

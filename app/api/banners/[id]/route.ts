@@ -3,6 +3,21 @@ import connectToDatabase from '@/lib/db';
 import Banner from '@/models/Banner';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
+const ALLOWED_FIELDS = ['title', 'image', 'link'];
+
+/**
+ * Validate and sanitize a banner link.
+ * Only allows http(s) URLs or empty string. Blocks javascript:, data:, file:, etc.
+ */
+function sanitizeBannerLink(link: unknown): string {
+  if (typeof link !== 'string') return '';
+  const trimmed = link.trim();
+  if (!trimmed) return '';
+  // Only allow http(s) URLs
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return '';
+}
+
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
@@ -13,7 +28,18 @@ export async function PUT(
     await connectToDatabase();
     const body = await request.json();
 
-    const updatedBanner = await Banner.findByIdAndUpdate(params.id, body, {
+    // Only allow whitelisted fields to prevent mass-assignment
+    const update: Record<string, unknown> = {};
+    for (const field of ALLOWED_FIELDS) {
+      if (field in body) update[field] = body[field];
+    }
+
+    // Sanitize link if provided
+    if (update.link !== undefined) {
+      update.link = sanitizeBannerLink(update.link);
+    }
+
+    const updatedBanner = await Banner.findByIdAndUpdate(params.id, update, {
       new: true,
       runValidators: true,
     });

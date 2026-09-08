@@ -13,9 +13,11 @@ export function getLicensingServerUrl(): string {
 
 /**
  * Helper to get configured license key (returns empty string if unlicensed)
+ * SECURITY: Never read NEXT_PUBLIC_LICENSE_KEY — that would expose the key
+ * in every client-side JS bundle. Use server-side LICENSE_KEY only.
  */
 export function getConfiguredLicenseKey(): string {
-  return (process.env.LICENSE_KEY || process.env.NEXT_PUBLIC_LICENSE_KEY || '').trim().toUpperCase();
+  return (process.env.LICENSE_KEY || '').trim().toUpperCase();
 }
 
 /**

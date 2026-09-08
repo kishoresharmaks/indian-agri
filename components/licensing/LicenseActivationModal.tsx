@@ -47,9 +47,9 @@ export default function LicenseActivationModal({
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  // Fetch support contact details safely from ENV
-  const supportEmail = process.env.NEXT_PUBLIC_LICENSE_SUPPORT_EMAIL || 'krishkishoreks@gmail.com';
-  const supportPhone = process.env.NEXT_PUBLIC_LICENSE_SUPPORT_PHONE || '+917695946750';
+  // Fetch support contact details from ENV — no hardcoded fallbacks
+  const supportEmail = process.env.NEXT_PUBLIC_LICENSE_SUPPORT_EMAIL || '';
+  const supportPhone = process.env.NEXT_PUBLIC_LICENSE_SUPPORT_PHONE || '';
 
   const handleActivate = async (e: React.FormEvent) => {
     e.preventDefault();
