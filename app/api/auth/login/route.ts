@@ -8,8 +8,7 @@ import { enforceMaxSessions } from '@/lib/authCheck';
 
 export async function POST(request: Request) {
   const ip = getClientIP(request);
-  const { success, remaining, reset } = rateLimit(ip);
-
+  const { success, remaining, reset } = await rateLimit(ip);
   if (!success) {
     return NextResponse.json(
       {
