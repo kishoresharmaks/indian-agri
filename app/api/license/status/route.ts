@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import LicenseSetting from '@/models/LicenseSetting';
 import { getLicensingServerUrl, computeClientLicenseState } from '@/lib/licensing/licenseClient';
+import { getActiveDatabaseLicense } from '@/lib/licensing/licenseDb';
+import { invalidateLicenseCache } from '@/lib/licensing/validateLicenseRoute';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,8 +45,7 @@ const DEFAULT_FALLBACK_PLANS = [
 
 export async function GET(request: NextRequest) {
   try {
-    await connectToDatabase();
-    const savedSetting = await LicenseSetting.findOne({ key: 'current_license' });
+    const savedSetting = await getActiveDatabaseLicense();
 
     const licensingServerUrl = getLicensingServerUrl();
     const host = request.headers.get('host') || 'localhost';
@@ -61,8 +62,8 @@ export async function GET(request: NextRequest) {
     let plans = [...DEFAULT_FALLBACK_PLANS];
     let razorpayKeyId = '';
     let manualPaymentConfig: any = {
-      upiId: 'nexusproducts@upi',
-      upiName: 'NEXUS PRODUCTS',
+      upiId: process.env.MANUAL_UPI_ID || 'nexusproducts@upi',
+      upiName: process.env.MANUAL_UPI_NAME || 'NEXUS PRODUCTS',
       supportPhone,
       supportEmail,
     };
@@ -154,6 +155,7 @@ export async function GET(request: NextRequest) {
           savedSetting.lastPingAt = new Date();
           if (pingData.token) savedSetting.signedToken = pingData.token;
           await savedSetting.save();
+          invalidateLicenseCache();
         }
       } else {
         const pingData = await pingRes.json().catch(() => null);
@@ -162,13 +164,20 @@ export async function GET(request: NextRequest) {
         savedSetting.status = 'INVALID';
         savedSetting.lastPingAt = new Date();
         await savedSetting.save();
+        invalidateLicenseCache();
       }
     } catch (pingErr) {
       console.warn(`[License Client] Could not ping licensing authority at ${licensingServerUrl}:`, pingErr);
       isServerOnline = false;
-      liveStatus = 'INVALID';
-      serverMessage = 'Unable to connect to the NEXUS Licensing Service. Please verify your connection or contact support.';
-      savedSetting.status = 'INVALID';
+      const validUntilMs = savedSetting.validUntil ? new Date(savedSetting.validUntil).getTime() : 0;
+      if (savedSetting.status === 'ACTIVE' && validUntilMs > Date.now()) {
+        liveStatus = 'ACTIVE';
+        serverMessage = 'Licensing authority temporarily unreachable. Operating on verified active license.';
+      } else {
+        liveStatus = savedSetting.status || 'INVALID';
+        serverMessage = 'Unable to connect to the NEXUS Licensing Service. Please verify your connection or contact support.';
+      }
+      savedSetting.lastPingAt = new Date();
       await savedSetting.save().catch(() => null);
     }
 

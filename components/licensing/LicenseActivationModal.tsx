@@ -23,7 +23,7 @@ interface LicenseActivationModalProps {
 function maskEmail(email: string): string {
   if (!email || !email.includes('@')) return email;
   const [user, domain] = email.split('@');
-  if (user.length <= 2) return `${user[0]}***@${domain}`;
+  if (!user || user.length <= 2) return `${user![0]}***@${domain}`;
   return `${user.slice(0, 3)}*****@${domain}`;
 }
 

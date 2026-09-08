@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Order from '@/models/Order';
 import Product from '@/models/Product';
 import Party from '@/models/Party';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const orders = await Order.find({}).sort({ createdAt: -1 });

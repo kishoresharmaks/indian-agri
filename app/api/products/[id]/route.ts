@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Product from '@/models/Product';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function GET(
   request: Request,
@@ -29,6 +30,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const { id } = params;
@@ -58,6 +61,8 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const { id } = params;

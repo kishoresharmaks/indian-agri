@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/db';
-import LicenseSetting from '@/models/LicenseSetting';
 import { getConfiguredLicenseKey, getLicensingServerUrl } from '@/lib/licensing/licenseClient';
+import { getActiveDatabaseLicense } from '@/lib/licensing/licenseDb';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,10 +14,9 @@ export async function POST(request: NextRequest) {
       licenseKey,
     } = body;
 
-    // If licenseKey was not explicitly passed in body, lookup from saved DB setting
+    // If licenseKey was not explicitly passed in body, lookup from active DB setting
     if (!licenseKey) {
-      await connectToDatabase();
-      const savedSetting = await LicenseSetting.findOne({ key: 'current_license' });
+      const savedSetting = await getActiveDatabaseLicense();
       licenseKey = savedSetting?.licenseKey || getConfiguredLicenseKey();
     }
 

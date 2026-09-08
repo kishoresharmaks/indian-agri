@@ -3,9 +3,12 @@ import connectToDatabase from '@/lib/db';
 import Expense from '@/models/Expense';
 import { generateDocPrefix, generateNextDocNumber } from '@/lib/billingUtils';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
+import { validateLicenseRequest } from '@/lib/licensing/validateLicenseRoute';
 
 export async function GET(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const { searchParams } = new URL(req.url);
@@ -23,6 +26,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const body = await req.json();
@@ -58,6 +63,8 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const { searchParams } = new URL(req.url);

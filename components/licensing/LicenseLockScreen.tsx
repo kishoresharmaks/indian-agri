@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { IClientLicenseState } from '@/lib/licensing/licenseTypes';
 import ManualPaymentModal from './ManualPaymentModal';
+import { startLicenseHeartbeat } from '@/lib/licensing/licenseHeartbeat';
 
 interface LicenseLockScreenProps {
   license: IClientLicenseState | null;
@@ -65,6 +66,15 @@ export default function LicenseLockScreen({
       document.body.appendChild(script);
     }
   }, []);
+
+  // Start license heartbeat once license is confirmed active
+  useEffect(() => {
+    if (license && license.isActivated && !license.isLocked && license.status === 'ACTIVE') {
+      const token = license.licenseKey;
+      const stop = startLicenseHeartbeat(token);
+      return () => stop();
+    }
+  }, [license]);
 
   const handlePayRazorpay = async (plan: any) => {
     setFeedback(null);

@@ -2,9 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import ExpenseCategory from '@/models/ExpenseCategory';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
+import { validateLicenseRequest } from '@/lib/licensing/validateLicenseRoute';
 
 export async function GET(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     let categories = await ExpenseCategory.find().sort({ name: 1 }).lean();
@@ -31,6 +34,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const body = await req.json();

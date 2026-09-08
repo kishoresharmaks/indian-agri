@@ -122,7 +122,7 @@ export async function calculatePnL(startDate?: string, endDate?: string): Promis
 
   const expenseByCategory = Object.keys(categoryMap).map((cat) => ({
     category: cat,
-    amount: categoryMap[cat],
+    amount: categoryMap[cat] ?? 0,
   }));
 
   // 4. Net Profit / Loss

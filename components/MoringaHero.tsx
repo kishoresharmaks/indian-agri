@@ -10,7 +10,6 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Play,
 } from 'lucide-react';
 
 interface MoringaHeroProps {
@@ -63,7 +62,7 @@ export default function MoringaHero({
   const slides =
     banners && banners.length > 0
       ? banners.map((b, idx) => {
-        const fallback = defaultSlides[idx % defaultSlides.length] || defaultSlides[0];
+        const fallback = defaultSlides[idx % defaultSlides.length]!;
         return {
           id: b._id || idx,
           image: b.image || fallback.image,
@@ -101,6 +100,10 @@ export default function MoringaHero({
   };
 
   const featuredProduct = products.length > 0 ? products[0] : null;
+
+  const currentSlide = slides[currentSlideIndex] ?? slides[0];
+
+  if (!currentSlide || slides.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden pt-4 pb-14 sm:py-16 lg:py-24 bg-[#FAF8F3] text-[#1C2A1E]">
@@ -278,8 +281,8 @@ export default function MoringaHero({
               >
                 <img
                   key={currentSlideIndex}
-                  src={slides[currentSlideIndex].image}
-                  alt={slides[currentSlideIndex].title}
+                  src={currentSlide.image}
+                  alt={currentSlide.title}
                   className="w-full h-full object-cover transition-all duration-700 animate-in fade-in zoom-in-95"
                 />
 
@@ -293,15 +296,15 @@ export default function MoringaHero({
                   </div>
 
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-[#C4922A] block font-sans">
-                    {slides[currentSlideIndex].tagline}
+                    {currentSlide.tagline}
                   </span>
 
                   <h3 className="font-serif text-xl sm:text-3xl text-[#1C2A1E] font-normal leading-snug">
-                    {slides[currentSlideIndex].title}
+                    {currentSlide.title}
                   </h3>
 
                   <p className="text-xs sm:text-sm text-[#4A554D] font-light leading-relaxed font-sans">
-                    {slides[currentSlideIndex].subtitle}
+                    {currentSlide.subtitle}
                   </p>
                 </div>
 

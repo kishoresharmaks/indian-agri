@@ -61,7 +61,7 @@ export function computeClientLicenseState(data: {
       features: { posEnabled: false, invoicingEnabled: false },
       daysRemaining: 0,
       message: !serverOnline
-        ? 'NEXUS Licensing Authority Server is currently OFFLINE. Cannot verify store license.'
+        ? 'Licensing Authority Server is currently OFFLINE. Cannot verify store license.'
         : 'No license key activated. Please enter your license key to activate this store.',
     };
   }

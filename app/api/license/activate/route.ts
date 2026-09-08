@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import LicenseSetting from '@/models/LicenseSetting';
 import { getLicensingServerUrl, computeClientLicenseState } from '@/lib/licensing/licenseClient';
+import { invalidateLicenseCache } from '@/lib/licensing/validateLicenseRoute';
 
 export async function POST(request: NextRequest) {
   try {
@@ -69,6 +70,8 @@ export async function POST(request: NextRequest) {
       },
       { upsert: true, new: true }
     );
+
+    invalidateLicenseCache();
 
     const clientState = computeClientLicenseState({
       licenseKey: updatedSetting.licenseKey,

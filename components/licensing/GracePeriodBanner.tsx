@@ -57,7 +57,7 @@ export default function GracePeriodBanner({
               <strong className="font-bold text-amber-800">
                 {daysRemaining === 0 ? 'today' : `${daysRemaining} day${daysRemaining > 1 ? 's' : ''}`}
               </strong>{' '}
-              ({new Date(validUntil).toLocaleDateString('en-IN')}).
+              ({validUntil ? new Date(validUntil).toLocaleDateString('en-IN') : 'N/A'}).
             </span>
           </div>
           <button

@@ -103,7 +103,7 @@ export default function POSCounter({
 
       if (existingIdx > -1) {
         const updated = [...prev];
-        updated[existingIdx].quantity += 1;
+        updated[existingIdx]!.quantity += 1;
         return updated;
       } else {
         return [

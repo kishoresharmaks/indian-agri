@@ -4,9 +4,12 @@ import Product from '@/models/Product';
 import Order from '@/models/Order';
 import Party from '@/models/Party';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
+import { validateLicenseRequest } from '@/lib/licensing/validateLicenseRoute';
 
 export async function POST(request: NextRequest) {
   if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(request);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const body = await request.json();
@@ -212,7 +215,7 @@ export async function POST(request: NextRequest) {
       orderType: 'POS',
       customerName: customerName.trim() || 'Walk-in Guest',
       customerPhone: customerPhone.trim() || '0000000000',
-      customerEmail: (customerEmail.trim() === 'pos@indianagriculture.online' || customerEmail.trim() === 'pos@beeshubfarmland.com') ? '' : customerEmail.trim(),
+      customerEmail: customerEmail.trim() === 'pos@indianagriculture.online' ? '' : customerEmail.trim(),
       shippingAddress: 'INDIAN AGRICULTURE Counter Sale',
       pincode: '624211',
       items: verifiedItems,

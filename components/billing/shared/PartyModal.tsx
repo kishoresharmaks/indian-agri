@@ -23,7 +23,7 @@ export default function PartyModal({
   );
   const [name, setName] = useState(initialData?.name || '');
   const [phone, setPhone] = useState(initialData?.phone || '');
-  const [email, setEmail] = useState(initialData?.email === 'pos@indianagriculture.online' || initialData?.email === 'pos@beeshubfarmland.com' ? '' : (initialData?.email || ''));
+  const [email, setEmail] = useState(initialData?.email === 'pos@indianagriculture.online' ? '' : (initialData?.email || ''));
   const [address, setAddress] = useState(initialData?.address || '');
   const [gstin, setGstin] = useState(initialData?.gstin || '');
   const [openingBalance, setOpeningBalance] = useState(String(initialData?.openingBalance || 0));

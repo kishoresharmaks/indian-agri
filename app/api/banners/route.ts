@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Banner from '@/models/Banner';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function GET() {
   try {
     await connectToDatabase();
     try {
       await Banner.createIndexes();
-    } catch (e) {}
+    } catch {
+      // Indexes may already exist — ignore
+    }
 
     const banners = await Banner.find({}).sort({ createdAt: -1 }).allowDiskUse(true).lean();
     return NextResponse.json(
@@ -27,6 +30,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const body = await request.json();

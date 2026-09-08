@@ -25,10 +25,11 @@ async function resolveMongoUri(uri: string): Promise<string> {
     return uri;
   }
 
-  const match = uri.match(/^mongodb\+srv:\/\/([^:]+):([^@]+)@([^\/]+)\/?([^?]*)\??(.*)$/);
+  const match = uri.match(/^mongodb\+srv:\/\/([^:]+):([^@]+)@([^/]+)\/?([^?]*)\??(.*)$/);
   if (!match) return uri;
 
   const [, username, password, hostname, dbName, queryParams] = match;
+  if (!username || !password || !hostname) return uri;
 
   // 1. Try standard Node DNS SRV lookup first
   try {
@@ -79,10 +80,10 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongooseCache: MongooseCache | undefined;
+  var mongooseCache: MongooseCache | undefined; // eslint-disable-line no-var
 }
 
-let cached: MongooseCache = global.mongooseCache || { conn: null, promise: null };
+const cached: MongooseCache = global.mongooseCache || { conn: null, promise: null };
 
 if (!global.mongooseCache) {
   global.mongooseCache = cached;

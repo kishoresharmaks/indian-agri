@@ -54,9 +54,11 @@ export async function generateNextDocNumber(
   if (latest && latest[field]) {
     const parts = (latest[field] as string).split('-');
     const lastPart = parts[parts.length - 1];
-    const parsed = parseInt(lastPart, 10);
-    if (!isNaN(parsed)) {
-      nextSeq = parsed + 1;
+    if (lastPart) {
+      const parsed = parseInt(lastPart, 10);
+      if (!isNaN(parsed)) {
+        nextSeq = parsed + 1;
+      }
     }
   }
 

@@ -88,7 +88,7 @@ export default function CustomerLedgerModal({ party, onClose }: CustomerLedgerMo
                 <span className="flex items-center gap-1 font-semibold">
                   <Phone className="w-3.5 h-3.5 text-[#ED3500]" /> {party.phone}
                 </span>
-                {party.email && party.email !== 'pos@beeshubfarmland.com' && (
+                {party.email && party.email !== 'pos@indianagriculture.online' && (
                   <span className="flex items-center gap-1">
                     <Mail className="w-3.5 h-3.5 text-blue-500" /> {party.email}
                   </span>

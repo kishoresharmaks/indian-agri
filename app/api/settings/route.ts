@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Settings from '@/models/Settings';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function GET() {
   try {
     await connectToDatabase();
     let settings = await Settings.findOne({ key: 'global' }).lean();
     if (!settings) {
-      const created = await Settings.create({ key: 'global', enableUPI: true, enableCOD: true });
-      settings = created.toObject();
+      await Settings.create({ key: 'global', enableUPI: true, enableCOD: true });
+      settings = await Settings.findOne({ key: 'global' }).lean();
     }
     return NextResponse.json(
       { success: true, data: settings },
@@ -27,6 +28,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const body = await request.json();

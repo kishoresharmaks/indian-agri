@@ -380,7 +380,7 @@ export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProp
                           <p className="leading-relaxed font-sans">
                             {isPOS
                               ? 'Indian Agriculture Store Counter — In-Person Direct Purchase'
-                              : (ord.shippingAddress || 'Store Pickup / In-Store Sale').replace(/BeesHub\s*Farmland/gi, 'Indian Agriculture')}
+                              : (ord.shippingAddress || 'Store Pickup / In-Store Sale')}
                             {!isPOS && ord.pincode ? ` — ${ord.pincode}` : ''}
                           </p>
                           <p className="pt-1 font-sans">

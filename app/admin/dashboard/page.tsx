@@ -616,7 +616,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
   const handleUpdateVariantRow = (index: number, field: keyof ProductVariant, value: string) => {
     setProductForm((prev) => {
       const updated = [...prev.variants];
-      updated[index] = { ...updated[index], [field]: value };
+      updated[index] = { ...updated[index], [field]: value } as ProductVariant;
       return { ...prev, variants: updated };
     });
   };
@@ -651,7 +651,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
       price: '',
       quantity: '10',
       gst: '0',
-      category: categories.length > 0 ? categories[0].name : '',
+      category: categories.length > 0 ? categories[0]!.name : '',
       variants: [],
     });
     setImagePreview('');

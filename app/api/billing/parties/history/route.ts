@@ -5,9 +5,12 @@ import SaleDocument from '@/models/SaleDocument';
 import PurchaseDocument from '@/models/PurchaseDocument';
 import PaymentTransaction from '@/models/PaymentTransaction';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
+import { validateLicenseRequest } from '@/lib/licensing/validateLicenseRoute';
 
 export async function GET(req: NextRequest) {
   if (!isAuthenticatedAdmin(req)) return unauthenticatedResponse();
+  const license = await validateLicenseRequest(req);
+  if (license.error) return license.error;
   try {
     await connectToDatabase();
     const { searchParams } = new URL(req.url);

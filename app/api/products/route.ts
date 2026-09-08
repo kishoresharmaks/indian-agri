@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Product from '@/models/Product';
+import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -12,7 +13,7 @@ export async function GET(request: Request) {
     const query = searchParams.get('search');
     const category = searchParams.get('category');
 
-    let filter: any = {};
+    const filter: any = {};
     if (query) {
       filter.$or = [
         { name: { $regex: query, $options: 'i' } },
@@ -50,6 +51,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+
   try {
     await connectToDatabase();
     const body = await request.json();

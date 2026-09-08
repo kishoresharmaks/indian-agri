@@ -43,36 +43,15 @@ import {
   Sprout,
   HeartHandshake,
 } from 'lucide-react';
+import useCart from '@/hooks/useCart';
+import type { Product, ProductVariant } from '@/hooks/useCart';
 
 import CommitmentSection from '../components/CommitmentSection';
 import Footer from '../components/Footer';
 import MoringaHero from '../components/MoringaHero';
 import TrackOrderModal from '../components/TrackOrderModal';
 import OrganicCatalogSection from '../components/OrganicCatalogSection';
-
-interface ProductVariant {
-  _id?: string;
-  name: string;
-  mrp: number;
-  price: number;
-  quantity: number;
-  discount?: number;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  mrp: number;
-  price: number;
-  discount: number;
-  quantity: number;
-  gst: number;
-  category: string;
-  variants?: ProductVariant[];
-  createdAt?: string;
-}
+import LicenseGate from '../components/licensing/LicenseGate';
 
 interface CategoryItem {
   _id: string;
@@ -86,11 +65,6 @@ interface BannerItem {
   link?: string;
 }
 
-interface CartItem {
-  product: Product;
-  selectedVariant?: ProductVariant;
-  quantity: number;
-}
 
 interface TrackedOrder {
   _id: string;
@@ -126,9 +100,6 @@ export default function CustomerStore() {
   // Modals & Drawers State
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState<any | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -138,6 +109,27 @@ export default function CustomerStore() {
   const [trackedOrders, setTrackedOrders] = useState<TrackedOrder[]>([]);
   const [isSearchingOrders, setIsSearchingOrders] = useState(false);
   const [trackSearched, setTrackSearched] = useState(false);
+
+  // Cart state via shared hook (persistence handled internally)
+  const {
+    cart,
+    isCartOpen,
+    isCheckoutOpen,
+    totals,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    selectedVariants,
+    selectVariant,
+    openCart,
+    closeCart,
+    openCheckout,
+    closeCheckout,
+    toastMessage,
+    showToast,
+    clearToast,
+  } = useCart();
 
   // Customer Checkout Form
   const [checkoutForm, setCheckoutForm] = useState({
@@ -219,49 +211,7 @@ export default function CustomerStore() {
     return () => clearInterval(interval);
   }, [banners.length]);
 
-  // Restore Session State from localStorage on Mount
-  useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem('beeshub_cart');
-      if (savedCart) {
-        const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setCart(parsed);
-        }
-      }
-
-      const savedForm = localStorage.getItem('beeshub_checkout_form');
-      if (savedForm) {
-        setCheckoutForm((prev) => ({ ...prev, ...JSON.parse(savedForm) }));
-      }
-
-      const wasCheckoutOpen = localStorage.getItem('beeshub_checkout_open');
-      if (wasCheckoutOpen === 'true') {
-        setIsCheckoutOpen(true);
-      }
-    } catch (err) {
-      console.error('Error restoring session state:', err);
-    }
-  }, []);
-
-  // Persist Cart to localStorage
-  useEffect(() => {
-    try {
-      if (cart.length > 0) {
-        localStorage.setItem('beeshub_cart', JSON.stringify(cart));
-      } else {
-        localStorage.removeItem('beeshub_cart');
-      }
-    } catch (err) { }
-  }, [cart]);
-
-  // Persist Checkout Form & Modal state
-  useEffect(() => {
-    try {
-      localStorage.setItem('beeshub_checkout_form', JSON.stringify(checkoutForm));
-      localStorage.setItem('beeshub_checkout_open', isCheckoutOpen ? 'true' : 'false');
-    } catch (err) { }
-  }, [checkoutForm, isCheckoutOpen]);
+  // Cart state is managed by the shared useCart hook — persistence is handled internally
 
   // Fetch Dynamic Categories
   const fetchCategories = async () => {
@@ -353,109 +303,14 @@ export default function CustomerStore() {
       setIsSearchingOrders(false);
     }
   };
+  // Variant selection delegates to useCart hook
+  const handleSelectVariant = selectVariant;
 
-  // Selected Variant State per Product
-  const [selectedVariants, setSelectedVariants] = useState<{ [productId: string]: ProductVariant }>({});
-
-  const handleSelectVariant = (productId: string, variant: ProductVariant) => {
-    setSelectedVariants((prev) => ({ ...prev, [productId]: variant }));
-  };
-
-  // Toast Message State
-  const [toastMessage, setToastMessage] = useState('');
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage('');
-    }, 3000);
-  };
-
-  // Cart Management with Variant Support
-  const addToCart = (product: Product, quantityToAdd = 1, customVariant?: ProductVariant) => {
-    const activeVariant =
-      customVariant ||
-      selectedVariants[product._id] ||
-      (product.variants && product.variants.length > 0 ? product.variants[0] : undefined);
-
-    const activeStock = activeVariant ? activeVariant.quantity : product.quantity;
-
-    setCart((prevCart) => {
-      const existingIndex = prevCart.findIndex(
-        (item) =>
-          item.product._id === product._id &&
-          ((!item.selectedVariant && !activeVariant) ||
-            item.selectedVariant?.name === activeVariant?.name)
-      );
-
-      if (existingIndex > -1) {
-        const newQty = prevCart[existingIndex].quantity + quantityToAdd;
-        if (newQty > activeStock) {
-          alert(`Sorry, only ${activeStock} items available for ${activeVariant ? activeVariant.name : 'this product'}.`);
-          return prevCart;
-        }
-        const updated = [...prevCart];
-        updated[existingIndex] = { ...updated[existingIndex], quantity: newQty };
-        return updated;
-      } else {
-        if (quantityToAdd > activeStock) {
-          alert(`Sorry, only ${activeStock} items available in stock.`);
-          return prevCart;
-        }
-        return [...prevCart, { product, selectedVariant: activeVariant, quantity: quantityToAdd }];
-      }
-    });
-
-    const rawName = product.name || 'Product';
-    const cleanName = rawName.replace(/_Shyn&Dev/gi, '').trim();
-    const label = activeVariant ? `${cleanName} (${activeVariant.name})` : cleanName;
-    showToast(`Added "${label}" to cart!`);
-  };
-
-  const updateCartQty = (productId: string, variantName: string | undefined, newQty: number) => {
-    if (newQty <= 0) {
-      removeFromCart(productId, variantName);
-      return;
-    }
-    setCart((prevCart) =>
-      prevCart.map((item) => {
-        if (item.product._id === productId && item.selectedVariant?.name === variantName) {
-          const maxStock = item.selectedVariant ? item.selectedVariant.quantity : item.product.quantity;
-          if (newQty > maxStock) {
-            alert(`Only ${maxStock} units available.`);
-            return item;
-          }
-          return { ...item, quantity: newQty };
-        }
-        return item;
-      })
-    );
-  };
-
-  const removeFromCart = (productId: string, variantName?: string) => {
-    setCart((prevCart) =>
-      prevCart.filter(
-        (item) => !(item.product._id === productId && item.selectedVariant?.name === variantName)
-      )
-    );
-  };
-
-  // Calculations
-  const cartSubtotal = cart.reduce(
-    (sum, item) =>
-      sum + (item.selectedVariant ? item.selectedVariant.price : item.product.price) * item.quantity,
-    0
-  );
-  const cartGstTotal = cart.reduce(
-    (sum, item) => {
-      const unitPrice = item.selectedVariant ? item.selectedVariant.price : item.product.price;
-      const gstRate = item.product.gst !== undefined ? item.product.gst : 0;
-      return sum + ((unitPrice * item.quantity) * gstRate) / 100;
-    },
-    0
-  );
-  const cartGrandTotal = Math.round(cartSubtotal + cartGstTotal);
-  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  // Cart totals derived from useCart hook
+  const cartSubtotal = totals.subtotal;
+  const cartGstTotal = totals.gstTotal;
+  const cartGrandTotal = totals.grandTotal;
+  const cartItemCount = totals.itemCount;
 
   // Sorting & Pagination
   const sortedProducts = [...products].sort((a, b) => {
@@ -541,16 +396,18 @@ export default function CustomerStore() {
       const data = await res.json();
       if (data.success) {
         setOrderSuccess(data.data);
-        setCart([]);
-        setIsCheckoutOpen(false);
-        setIsCartOpen(false);
+        clearCart();
+        closeCheckout();
+        closeCart();
 
         // Clear local storage after successful checkout
         try {
-          localStorage.removeItem('beeshub_cart');
-          localStorage.removeItem('beeshub_checkout_form');
-          localStorage.removeItem('beeshub_checkout_open');
-        } catch (e) { }
+          localStorage.removeItem('indianagri_cart');
+          localStorage.removeItem('indianagri_checkout_form');
+          localStorage.removeItem('indianagri_checkout_open');
+        } catch {
+          // Silently ignore localStorage errors (private browsing, quota exceeded)
+        }
 
         fetchProducts(); // Refresh stock
       } else {
@@ -618,6 +475,7 @@ ${productUrl}
   const dynamicCategoryList = ['All', ...categories.map((c) => c.name)];
 
   return (
+    <LicenseGate>
     <div className="min-h-screen flex flex-col justify-between bg-[#FAF8F5] text-[#1C1917] selection:bg-[#1E3524] selection:text-[#FAF8F5]">
       {/* Toast Notification */}
       {toastMessage && (
@@ -630,14 +488,14 @@ ${productUrl}
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => openCart()}
               className="px-3 py-1.5 rounded-full bg-[#C99A2E] hover:bg-[#b08524] text-[#183B24] text-xs font-bold font-sans transition-colors flex items-center gap-1 shadow-xs"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>View Cart</span>
             </button>
             <button
-              onClick={() => setToastMessage('')}
+              onClick={() => clearToast()}
               className="text-[#FAF8F5]/70 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
               aria-label="Close notification"
             >
@@ -736,7 +594,7 @@ ${productUrl}
 
             {/* Cart Button with Count Badge */}
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => openCart()}
               className="relative p-2.5 sm:p-3 bg-[#1E3524] text-[#FAF8F5] rounded-full hover:bg-[#152519] transition-all duration-300 active:scale-95 shadow-md"
               aria-label="Shopping Cart"
             >
@@ -1192,7 +1050,7 @@ ${productUrl}
       {/* SHOPPING CART SLIDE-OVER DRAWER */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setIsCartOpen(false)} />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => closeCart()} />
 
           <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
             <div className="w-screen max-w-md bg-[#FAF8F5] text-[#1C1917] shadow-2xl flex flex-col justify-between">
@@ -1203,7 +1061,7 @@ ${productUrl}
                   <ShoppingBag className="w-5 h-5 text-[#D4A017]" />
                   <h3 className="font-serif text-xl font-medium">Your Shopping Bag ({cartItemCount})</h3>
                 </div>
-                <button onClick={() => setIsCartOpen(false)} className="p-1 rounded-full hover:bg-white/10 text-[#FAF8F5]">
+                <button onClick={() => closeCart()} className="p-1 rounded-full hover:bg-white/10 text-[#FAF8F5]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -1252,14 +1110,14 @@ ${productUrl}
                             </span>
                             <div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5E0D8] rounded-full px-2 py-1">
                               <button
-                                onClick={() => updateCartQty(item.product._id, item.selectedVariant?.name, item.quantity - 1)}
+                                onClick={() => updateQuantity(item.product._id, item.selectedVariant?.name, item.quantity - 1)}
                                 className="text-stone-600 hover:text-black p-0.5"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
                               <span className="text-xs font-semibold px-1">{item.quantity}</span>
                               <button
-                                onClick={() => updateCartQty(item.product._id, item.selectedVariant?.name, item.quantity + 1)}
+                                onClick={() => updateQuantity(item.product._id, item.selectedVariant?.name, item.quantity + 1)}
                                 className="text-stone-600 hover:text-black p-0.5"
                               >
                                 <Plus className="w-3 h-3" />
@@ -1295,8 +1153,8 @@ ${productUrl}
 
                   <button
                     onClick={() => {
-                      setIsCartOpen(false);
-                      setIsCheckoutOpen(true);
+                      closeCart();
+                      openCheckout();
                     }}
                     className="w-full py-3.5 rounded-full bg-[#1E3524] text-[#FAF8F5] font-semibold text-xs hover:bg-[#152519] transition-all flex items-center justify-center gap-2 shadow-md"
                   >
@@ -1332,7 +1190,7 @@ ${productUrl}
               </div>
 
               <button
-                onClick={() => setIsCheckoutOpen(false)}
+                onClick={() => closeCheckout()}
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all shrink-0 z-10"
                 aria-label="Close checkout"
               >
@@ -1682,5 +1540,6 @@ ${productUrl}
       )}
 
     </div>
+    </LicenseGate>
   );
 }

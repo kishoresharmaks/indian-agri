@@ -153,7 +153,7 @@ export default function AllProductsPage() {
   // Restore Session State from localStorage on Mount
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('beeshub_cart');
+      const savedCart = localStorage.getItem('indianagri_cart');
       if (savedCart) {
         const parsed = JSON.parse(savedCart);
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -167,9 +167,9 @@ export default function AllProductsPage() {
   useEffect(() => {
     try {
       if (cart.length > 0) {
-        localStorage.setItem('beeshub_cart', JSON.stringify(cart));
+        localStorage.setItem('indianagri_cart', JSON.stringify(cart));
       } else {
-        localStorage.removeItem('beeshub_cart');
+        localStorage.removeItem('indianagri_cart');
       }
     } catch (err) { }
   }, [cart]);
@@ -247,13 +247,13 @@ export default function AllProductsPage() {
       );
 
       if (existingIndex > -1) {
-        const newQty = prevCart[existingIndex].quantity + quantityToAdd;
+        const newQty = prevCart[existingIndex]!.quantity + quantityToAdd;
         if (newQty > activeStock) {
           alert(`Sorry, only ${activeStock} items available for ${activeVariant ? activeVariant.name : 'this product'}.`);
           return prevCart;
         }
         const updated = [...prevCart];
-        updated[existingIndex] = { ...updated[existingIndex], quantity: newQty };
+        updated[existingIndex] = { ...updated[existingIndex]!, quantity: newQty };
         return updated;
       } else {
         if (quantityToAdd > activeStock) {
@@ -761,7 +761,7 @@ export default function AllProductsPage() {
                         {product.variants && product.variants.length > 0 && (
                           <div className="mt-3 flex flex-wrap gap-1.5">
                             {product.variants.map((v) => {
-                              const isSelected = selectedVar ? selectedVar.name === v.name : product.variants![0].name === v.name;
+                              const isSelected = selectedVar ? selectedVar.name === v.name : product.variants![0]!.name === v.name;
                               return (
                                 <button
                                   key={v.name}
