@@ -25,25 +25,21 @@ export interface CompanyConfig {
 
 export const getCompanyConfig = (): CompanyConfig => ({
   name: process.env.NEXT_PUBLIC_COMPANY_NAME || 'INDIAN AGRICULTURE',
-  owner: process.env.NEXT_PUBLIC_COMPANY_OWNER || 'JEYA SHAYANA DEVI.T',
-  address:
-    process.env.NEXT_PUBLIC_COMPANY_ADDRESS ||
-    'No 3/101, Mandukovil Street, S.Thummalapatti, Batlagundu, Dindigul Dist, Tamil Nadu – 624211.',
-  fssai: process.env.NEXT_PUBLIC_COMPANY_FSSAI || '22426046000077',
-  iec: process.env.NEXT_PUBLIC_COMPANY_IEC || 'AAOCB0453D',
-  manufacturing: process.env.NEXT_PUBLIC_COMPANY_MANUFACTURING || 'FMCG (Food)',
-  certifications:
-    process.env.NEXT_PUBLIC_COMPANY_CERTIFICATIONS ||
-    'GMP & ORGANIC CERTIFIED COMPANY | ISO 9001:2015 & ISO 22000:2018 COMPANY',
-  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || '9597250344',
-  email: process.env.NEXT_PUBLIC_COMPANY_EMAIL || 'Admin@indianagriculture.online',
-  gstin: process.env.NEXT_PUBLIC_COMPANY_GSTIN || '33CQHPP4937J1ZG',
-  state: process.env.NEXT_PUBLIC_COMPANY_STATE || '33-Tamil Nadu',
-  bankName: process.env.NEXT_PUBLIC_COMPANY_BANK_NAME || 'Axis Bank, Batlagundu [Tamil Nadu]',
-  bankAccountNo: process.env.NEXT_PUBLIC_COMPANY_BANK_ACC || '925020021307548',
-  bankIfsc: process.env.NEXT_PUBLIC_COMPANY_BANK_IFSC || 'UTIB0000405',
-  bankHolder: process.env.NEXT_PUBLIC_COMPANY_BANK_HOLDER || 'INDIAN AGRICULTURE',
-  upiId: process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || 'indianagriculturepvtltd@okicici',
+  owner: process.env.NEXT_PUBLIC_COMPANY_OWNER || '',
+  address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || '',
+  fssai: process.env.NEXT_PUBLIC_COMPANY_FSSAI || '',
+  iec: process.env.NEXT_PUBLIC_COMPANY_IEC || '',
+  manufacturing: process.env.NEXT_PUBLIC_COMPANY_MANUFACTURING || '',
+  certifications: process.env.NEXT_PUBLIC_COMPANY_CERTIFICATIONS || '',
+  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || '',
+  email: process.env.NEXT_PUBLIC_COMPANY_EMAIL || '',
+  gstin: process.env.NEXT_PUBLIC_COMPANY_GSTIN || '',
+  state: process.env.NEXT_PUBLIC_COMPANY_STATE || '',
+  bankName: process.env.NEXT_PUBLIC_COMPANY_BANK_NAME || '',
+  bankAccountNo: process.env.NEXT_PUBLIC_COMPANY_BANK_ACC || '',
+  bankIfsc: process.env.NEXT_PUBLIC_COMPANY_BANK_IFSC || '',
+  bankHolder: process.env.NEXT_PUBLIC_COMPANY_BANK_HOLDER || '',
+  upiId: process.env.NEXT_PUBLIC_MERCHANT_UPI_ID || '',
   logoUrl: process.env.NEXT_PUBLIC_COMPANY_LOGO_URL || '/logo.jpg',
 });
 

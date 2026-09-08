@@ -86,7 +86,8 @@ export async function POST(request: NextRequest) {
       token: updatedSetting.signedToken,
     });
 
-    console.log(`✅ Store activated with License Key: ${cleanKey} (${lic.businessName})`);
+    const maskedKey = cleanKey.length > 8 ? `${cleanKey.slice(0, 4)}****${cleanKey.slice(-4)}` : '****';
+    console.log(`✅ Store activated. Key: ${maskedKey} | Business: ${lic.businessName}`);
 
     return NextResponse.json({
       success: true,
