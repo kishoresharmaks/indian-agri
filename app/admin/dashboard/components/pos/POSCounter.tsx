@@ -5,7 +5,7 @@ import ProductGrid, { Product, ProductVariant } from './ProductGrid';
 import POSCart, { POSCartItem } from './POSCart';
 import PaymentPanel from './PaymentPanel';
 import POSReceipt from './POSReceipt';
-import { RefreshCw, Play, X, Maximize2, Minimize2, Store, Clock, UserCheck, ShieldCheck, Monitor, Smartphone, AlertTriangle, ChevronRight } from 'lucide-react';
+import { Play, X, Maximize2, Minimize2, Store, Clock, ShieldCheck, Monitor, Smartphone, AlertTriangle, ChevronRight } from 'lucide-react';
 
 interface POSCounterProps {
   products: Product[];

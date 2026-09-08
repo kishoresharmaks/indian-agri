@@ -10,14 +10,14 @@ export async function POST(request: NextRequest) {
   if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
   try {
     const body = await request.json();
-    let {
+    const {
       planId,
       razorpayOrderId,
       razorpayPaymentId,
       razorpaySignature,
       transactionId,
-      licenseKey,
     } = body;
+    let licenseKey = body.licenseKey;
 
     if (!licenseKey) {
       const activeLicense = await getActiveDatabaseLicense();

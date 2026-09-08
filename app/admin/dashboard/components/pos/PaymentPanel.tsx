@@ -31,7 +31,7 @@ export default function PaymentPanel({
   onUpdateTransactionId,
   customerName,
   customerPhone,
-  customerEmail,
+  customerEmail: _customerEmail,
   onUpdateCustomer,
   onSubmitPOS,
   isSubmitting,

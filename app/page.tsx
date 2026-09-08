@@ -253,6 +253,7 @@ export default function CustomerStore() {
   useEffect(() => {
     setCurrentPage(1);
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedCategory]);
 
   // Handle URL product link auto-open and highlight

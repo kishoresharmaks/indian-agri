@@ -7,14 +7,14 @@ export async function POST(request: NextRequest) {
   if (!(await isAuthenticatedAdmin(request))) return unauthenticatedResponse();
   try {
     const body = await request.json();
-    let {
+    const {
       planId,
       utrNumber,
       payerName,
       payerUpiOrAccount,
       manualNotes,
-      licenseKey,
     } = body;
+    let licenseKey = body.licenseKey;
 
     // If licenseKey was not explicitly passed in body, lookup from active DB setting
     if (!licenseKey) {

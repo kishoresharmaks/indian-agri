@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import connectToDatabase from '@/lib/db';
 import AdminSession from '@/models/AdminSession';

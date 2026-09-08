@@ -33,7 +33,6 @@ import {
   FileText,
   Lock,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 import POSCounter from './components/pos/POSCounter';
 import SubscriptionTab from '@/components/licensing/SubscriptionTab';
@@ -573,6 +572,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
     };
 
     checkSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   useEffect(() => {
@@ -830,10 +830,6 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
   };
 
   // Metrics
-  const onlineOrders = orders.filter((o) => o.orderType !== 'POS');
-  const posOrders = orders.filter((o) => o.orderType === 'POS');
-  const onlineRevenue = onlineOrders.reduce((sum, o) => sum + o.totalAmount, 0);
-  const posRevenue = posOrders.reduce((sum, o) => sum + o.totalAmount, 0);
   const totalRevenue = orders.reduce((sum, o) => sum + o.totalAmount, 0);
   const pendingOrdersCount = orders.filter((o) => o.status === 'Pending').length;
 

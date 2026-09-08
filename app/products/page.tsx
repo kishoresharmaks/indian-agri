@@ -143,7 +143,9 @@ export default function AllProductsPage() {
           enableCOD: data.data.enableCOD ?? true,
         });
       }
-    } catch (err) { }
+    } catch {
+      // ignore
+    }
   };
 
   useEffect(() => {
@@ -160,7 +162,9 @@ export default function AllProductsPage() {
           setCart(parsed);
         }
       }
-    } catch (err) { }
+    } catch {
+      // ignore
+    }
   }, []);
 
   // Persist Cart to localStorage
@@ -171,7 +175,9 @@ export default function AllProductsPage() {
       } else {
         localStorage.removeItem('indianagri_cart');
       }
-    } catch (err) { }
+    } catch {
+      // ignore
+    }
   }, [cart]);
 
   // Fetch Dynamic Categories
@@ -182,7 +188,9 @@ export default function AllProductsPage() {
       if (data.success) {
         setCategories(data.data);
       }
-    } catch (err) { }
+    } catch {
+      // ignore
+    }
   };
 
   // Fetch Dynamic Products
@@ -198,7 +206,9 @@ export default function AllProductsPage() {
       if (data.success) {
         setProducts(data.data);
       }
-    } catch (err) { } finally {
+    } catch {
+      // ignore
+    } finally {
       setLoading(false);
     }
   };
@@ -210,6 +220,7 @@ export default function AllProductsPage() {
   useEffect(() => {
     setCurrentPage(1);
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedCategory]);
 
   // Selected Variant State per Product

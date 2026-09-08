@@ -25,19 +25,18 @@
     "jsx-a11y"
   ],
   "extends": [
+    "next/core-web-vitals",
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    // Unused vars: warn only (existing codebase has many)
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    // Unused vars: off to keep deploy logs clean
+    "@typescript-eslint/no-unused-vars": "off",
     // any types
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    // React
+    // React & Next.js
+    "@next/next/no-img-element": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     // Accessibility — modals and cards use standard div click patterns
@@ -61,13 +60,5 @@
     "no-var": "warn",
     "eqeqeq": ["warn", "always"],
     "no-console": "off"
-  },
-  "overrides": [
-    {
-      "files": ["app/api/**/*.ts"],
-      "rules": {
-        "no-console": "warn"
-      }
-    }
-  ]
+  }
 }

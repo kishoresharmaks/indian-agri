@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Plus, Tag, Layers, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Search, Plus, AlertCircle } from 'lucide-react';
 
 export interface ProductVariant {
   _id?: string;

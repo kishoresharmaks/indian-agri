@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, User, ArrowRight, ShieldCheck, RefreshCw, AlertCircle } from 'lucide-react';
+import { Lock, User, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();

@@ -9,7 +9,6 @@ import {
   PieChart,
   ArrowLeft,
   RefreshCw,
-  Plus,
   Users,
   Eye,
   Edit,
