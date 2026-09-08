@@ -78,9 +78,9 @@ export default function AdminBillingPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <img
-              src="/logo.jpg"
+              src="/logo-nav.png"
               alt="INDIAN AGRICULTURE Logo"
-              className="w-9 h-9 object-contain rounded-xl border border-[#E8EDF2]"
+              className="w-11 h-11 object-contain rounded-xl border border-[#D4A017]/40 bg-[#FFFDE7] p-0.5"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
               }}

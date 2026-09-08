@@ -153,11 +153,14 @@ export default function Footer({
 
               {/* Logo */}
               <div className="flex items-center gap-4">
-                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#D4A017]/60 bg-white p-1 shadow-[0_8px_30px_rgba(212,160,23,0.12)]">
+                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#D4A017]/60 bg-[#FFFDE7] p-1 shadow-[0_8px_30px_rgba(212,160,23,0.15)]">
                   <img
-                    src="/logo.jpg"
+                    src="/logo-nav.png"
                     alt="Indian Agriculture Logo"
                     className="h-full w-full rounded-xl object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/logo.jpg';
+                    }}
                   />
 
                   <div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-[#07130a] bg-[#25D366]">

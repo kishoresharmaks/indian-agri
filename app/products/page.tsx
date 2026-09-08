@@ -505,7 +505,7 @@ export default function AllProductsPage() {
         <div
           className="mx-auto flex items-center justify-between gap-3 sm:gap-6 px-3 sm:px-5 lg:px-7"
           style={{
-            height: '4rem',
+            minHeight: '4.25rem',
             background: 'rgba(250, 248, 245, 0.96)',
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
@@ -515,22 +515,22 @@ export default function AllProductsPage() {
             maxWidth: '1200px',
           }}
         >
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-[#1E3524]/60 bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
+          <Link href="/" className="flex items-center gap-3 sm:gap-3.5 group flex-shrink-0 py-1">
+            <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full overflow-hidden flex items-center justify-center shadow-md border border-[#D4A017]/50 bg-[#FFFDE7] group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
               <img
-                src="/logo.jpg"
+                src="/logo-nav.png"
                 alt="Indian Agriculture Logo"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-contain p-0.5"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = '/logo.jpg';
                 }}
               />
             </div>
             <div className="min-w-0">
-              <span className="font-serif font-extrabold text-[13px] sm:text-[17px] tracking-tight text-[#1B2E1E] block leading-none">
+              <span className="font-serif font-black text-[14px] sm:text-[18px] tracking-tight text-[#1B2E1E] block leading-tight">
                 INDIAN AGRICULTURE
               </span>
-              <span className="hidden sm:block text-[9px] uppercase tracking-[0.18em] text-[#7A8F7A] font-semibold mt-1">
+              <span className="hidden sm:block text-[9.5px] uppercase tracking-[0.2em] text-[#3D5A3E] font-bold mt-0.5">
                 PREMIUM B2B ORGANIC
               </span>
             </div>

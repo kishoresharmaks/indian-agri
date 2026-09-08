@@ -45,9 +45,9 @@ export default function AdminLoginPage() {
 
         <div className="text-center space-y-2">
           <img
-            src="/logo.jpg"
+            src="/logo-nav.png"
             alt="INDIAN AGRICULTURE Admin Logo"
-            className="w-16 h-16 object-contain rounded-2xl mx-auto shadow-md border border-[#E8EDF2]"
+            className="w-20 h-20 object-contain rounded-2xl mx-auto shadow-md border border-[#D4A017]/40 bg-[#FFFDE7] p-1"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}

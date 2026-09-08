@@ -890,9 +890,9 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img
-              src="/logo.jpg"
+              src="/logo-nav.png"
               alt="INDIAN AGRICULTURE Admin Logo"
-              className="w-10 h-10 object-contain rounded-xl shadow-xs border border-[#E8EDF2]"
+              className="w-12 h-12 object-contain rounded-xl shadow-xs border border-[#D4A017]/40 bg-[#FFFDE7] p-0.5"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
               }}
