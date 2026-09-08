@@ -1,20 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" width="120" height="80">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 85" width="120" height="85">
   <defs>
-    <linearGradient id="isoGold2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#D4A017"/>
-      <stop offset="50%" style="stop-color:#F5C842"/>
-      <stop offset="100%" style="stop-color:#D4A017"/>
+    <linearGradient id="gold22000" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8B820"/>
+      <stop offset="40%" style="stop-color:#FFD54F"/>
+      <stop offset="100%" style="stop-color:#C89818"/>
     </linearGradient>
   </defs>
-  <!-- Background -->
-  <rect x="2" y="2" width="116" height="76" rx="6" fill="#0e2413" stroke="url(#isoGold2)" stroke-width="2"/>
-  <!-- ISO Text -->
-  <text x="60" y="22" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="url(#isoGold2)" text-anchor="middle">ISO</text>
-  <!-- 22000 -->
-  <text x="60" y="42" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="white" text-anchor="middle">22000</text>
-  <!-- Food Safety text -->
-  <text x="60" y="54" font-family="Arial, sans-serif" font-size="7" fill="#a0cfa7" text-anchor="middle">FOOD SAFETY</text>
-  <text x="60" y="63" font-family="Arial, sans-serif" font-size="7" fill="#a0cfa7" text-anchor="middle">MANAGEMENT</text>
-  <!-- Year -->
-  <text x="60" y="73" font-family="Arial, sans-serif" font-size="6" fill="#9eb8a2" text-anchor="middle">2018</text>
+
+  <!-- Main oval badge background -->
+  <rect x="3" y="3" width="114" height="79" rx="14" fill="#0b1e0f"/>
+
+  <!-- Gold outer border -->
+  <rect x="3" y="3" width="114" height="79" rx="14" fill="none" stroke="url(#gold22000)" stroke-width="2.2"/>
+
+  <!-- Inner thin border -->
+  <rect x="8" y="8" width="104" height="69" rx="10" fill="none" stroke="#D4A017" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- ISO letters - bold, spaced -->
+  <text x="60" y="27" font-family="'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="900" fill="url(#gold22000)" text-anchor="middle" letter-spacing="4">ISO</text>
+
+  <!-- 22000 in large bold white -->
+  <text x="60" y="52" font-family="'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">22000</text>
+
+  <!-- Thin gold divider -->
+  <line x1="22" y1="58" x2="98" y2="58" stroke="#D4A017" stroke-width="0.8" opacity="0.7"/>
+
+  <!-- Food Safety Management - three lines -->
+  <text x="60" y="67" font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="700" fill="#B0CCB6" text-anchor="middle" letter-spacing="1.2">FOOD</text>
+  <text x="60" y="76" font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="700" fill="#B0CCB6" text-anchor="middle" letter-spacing="1.2">SAFETY</text>
+  <text x="60" y="83" font-family="Arial, Helvetica, sans-serif" font-size="6.5" font-weight="700" fill="#B0CCB6" text-anchor="middle" letter-spacing="1">MANAGEMENT</text>
 </svg>
