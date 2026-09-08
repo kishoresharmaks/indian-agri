@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, CheckCircle2, UserPlus, FileText, X } from 'lucide-react';
+import { Trash2, CheckCircle2, UserPlus, X } from 'lucide-react';
 import PartyModal from '../shared/PartyModal';
 
 interface SaleInvoiceFormProps {
@@ -27,7 +27,7 @@ export default function SaleInvoiceForm({
   const [items, setItems] = useState<any[]>([]);
   const [paidAmount, setPaidAmount] = useState('0');
   const [paymentMethod, setPaymentMethod] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE' | 'CREDIT'>('CASH');
-  const [notes, setNotes] = useState('');
+  const notes = '';
 
   const [isPartyModalOpen, setIsPartyModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

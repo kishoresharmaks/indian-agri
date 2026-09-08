@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   Award,
   Recycle,
-  HeartHandshake,
   Users,
   Sparkles,
 } from 'lucide-react';

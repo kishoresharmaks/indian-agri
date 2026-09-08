@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Plus, Layers, CheckCircle2 } from 'lucide-react';
+import { X, Plus, Layers } from 'lucide-react';
 
 interface ExpenseCategoryManagerProps {
   categories: any[];

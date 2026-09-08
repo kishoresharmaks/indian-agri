@@ -6,11 +6,8 @@ import {
   ShieldCheck,
   AlertCircle,
   ArrowRight,
-  Lock,
   CheckCircle2,
-  Phone,
   Mail,
-  HelpCircle,
   MessageSquare,
 } from 'lucide-react';
 import { IClientLicenseState } from '@/lib/licensing/licenseTypes';

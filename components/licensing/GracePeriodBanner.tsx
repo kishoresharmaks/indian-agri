@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AlertTriangle, Clock, ArrowRight, ShieldAlert } from 'lucide-react';
+import { Clock, ArrowRight, ShieldAlert } from 'lucide-react';
 import { IClientLicenseState } from '@/lib/licensing/licenseTypes';
 
 interface GracePeriodBannerProps {

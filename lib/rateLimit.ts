@@ -7,7 +7,7 @@
  */
 
 import connectToDatabase from '@/lib/db';
-import RateLimit, { IRateLimit } from '@/models/RateLimit';
+import RateLimit from '@/models/RateLimit';
 
 export interface RateLimitResult {
   success: boolean;

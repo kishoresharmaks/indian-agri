@@ -9,8 +9,6 @@ import {
   CheckCircle2,
   Clock,
   MapPin,
-  Phone,
-  Mail,
   User,
   ShoppingBag,
   AlertCircle,

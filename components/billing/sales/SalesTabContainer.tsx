@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Plus, Printer, RefreshCw, Filter, FileText, ArrowRight, IndianRupee, Trash2 } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Plus, Printer, RefreshCw, FileText, IndianRupee, Trash2 } from 'lucide-react';
 import SaleInvoiceForm from './SaleInvoiceForm';
 import PaymentInModal from './PaymentInModal';
 import PrintableDocumentModal from '../shared/PrintableDocumentModal';
@@ -21,7 +21,7 @@ export default function SalesTabContainer({ products }: SalesTabContainerProps) 
   const [selectedDocForPrint, setSelectedDocForPrint] = useState<any | null>(null);
   const [selectedDocForPayment, setSelectedDocForPayment] = useState<any | null>(null);
 
-  const fetchSalesData = async () => {
+  const fetchSalesData = useCallback(async () => {
     try {
       setLoading(true);
       if (subTab === 'PAYMENT_IN') {
@@ -38,11 +38,11 @@ export default function SalesTabContainer({ products }: SalesTabContainerProps) 
     } finally {
       setLoading(false);
     }
-  };
+  }, [subTab]);
 
   useEffect(() => {
     fetchSalesData();
-  }, [subTab]);
+  }, [fetchSalesData]);
 
   const handleConvertToInvoice = async (docId: string) => {
     if (!confirm('Convert this document to an official Sale Invoice now? (Stock will be deducted)')) return;

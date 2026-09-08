@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, UserPlus, Phone, Mail, MapPin, FileText, CheckCircle2 } from 'lucide-react';
+import { X, UserPlus, CheckCircle2 } from 'lucide-react';
 
 interface PartyModalProps {
   initialData?: any;
@@ -26,7 +26,7 @@ export default function PartyModal({
   const [email, setEmail] = useState(initialData?.email === 'pos@indianagriculture.online' ? '' : (initialData?.email || ''));
   const [address, setAddress] = useState(initialData?.address || '');
   const [gstin, setGstin] = useState(initialData?.gstin || '');
-  const [openingBalance, setOpeningBalance] = useState(String(initialData?.openingBalance || 0));
+  const openingBalance = String(initialData?.openingBalance || 0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 

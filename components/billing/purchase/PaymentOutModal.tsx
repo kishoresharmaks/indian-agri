@@ -15,11 +15,10 @@ export default function PaymentOutModal({
   onSuccess,
 }: PaymentOutModalProps) {
   const [partyName, setPartyName] = useState(linkedDoc?.vendorName || '');
-  const [partyPhone, setPartyPhone] = useState(linkedDoc?.vendorPhone || '');
+  const partyPhone = linkedDoc?.vendorPhone || '';
   const [amount, setAmount] = useState(linkedDoc?.balanceAmount ? String(linkedDoc.balanceAmount) : '');
   const [paymentMode, setPaymentMode] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE'>('CASH');
   const [referenceNo, setReferenceNo] = useState('');
-  const [notes, setNotes] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +47,7 @@ export default function PaymentOutModal({
           referenceNo,
           docId: linkedDoc?._id || '',
           docNumber: linkedDoc?.docNumber || '',
-          notes,
+          notes: '',
         }),
       });
 

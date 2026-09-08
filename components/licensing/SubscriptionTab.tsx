@@ -2,12 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  ShieldCheck,
   ShieldAlert,
   Clock,
   Key,
   CheckCircle2,
-  Zap,
   CreditCard,
   QrCode,
   Sparkles,
@@ -17,8 +15,6 @@ import {
   HelpCircle,
   Phone,
   Mail,
-  ArrowRight,
-  ExternalLink,
   Lock,
 } from 'lucide-react';
 import { IClientLicenseState } from '@/lib/licensing/licenseTypes';
@@ -43,7 +39,6 @@ export default function SubscriptionTab({
     initialLicense || null
   );
   const [plans, setPlans] = useState<any[]>([]);
-  const [razorpayKeyId, setRazorpayKeyId] = useState('');
   const [manualConfig, setManualConfig] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(!initialLicense);
   const [isPayingRazorpay, setIsPayingRazorpay] = useState<string | null>(null);
@@ -64,7 +59,6 @@ export default function SubscriptionTab({
       if (data.success) {
         setLicenseState(data.license);
         setPlans(data.plans || []);
-        setRazorpayKeyId(data.razorpayKeyId || '');
         setManualConfig(data.manualPaymentConfig || null);
       }
     } catch (err: any) {
@@ -94,6 +88,7 @@ export default function SubscriptionTab({
 
   // Online Renewal via Licensing Authority Server Hosted Razorpay Checkout
   const handlePayWithRazorpay = (plan: any) => {
+    setIsPayingRazorpay(plan.planId);
     const serverUrl =
       licenseState?.licensingServerUrl ||
       process.env.NEXT_PUBLIC_LICENSING_SERVER_URL ||
@@ -103,6 +98,7 @@ export default function SubscriptionTab({
     const returnUrl = encodeURIComponent(window.location.href);
     const checkoutUrl = `${serverUrl.replace(/\/$/, '')}/checkout?key=${encodeURIComponent(key)}&planId=${encodeURIComponent(plan.planId)}&returnUrl=${returnUrl}`;
     window.open(checkoutUrl, '_blank');
+    setTimeout(() => setIsPayingRazorpay(null), 1500);
   };
 
   const handleOpenManualPayment = (plan: any) => {
@@ -120,7 +116,6 @@ export default function SubscriptionTab({
   }
 
   const daysLeft = licenseState?.daysRemaining ?? 0;
-  const isExpiring = daysLeft <= 7 && daysLeft >= 0;
   const isGrace = licenseState?.isGracePeriod;
 
   return (

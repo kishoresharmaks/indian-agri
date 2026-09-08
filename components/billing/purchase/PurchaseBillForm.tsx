@@ -27,7 +27,7 @@ export default function PurchaseBillForm({
   const [items, setItems] = useState<any[]>([]);
   const [paidAmount, setPaidAmount] = useState('0');
   const [paymentMethod, setPaymentMethod] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE' | 'CREDIT'>('CASH');
-  const [notes, setNotes] = useState('');
+  const notes = '';
 
   const [isPartyModalOpen, setIsPartyModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

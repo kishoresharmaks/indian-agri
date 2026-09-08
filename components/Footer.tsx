@@ -9,7 +9,6 @@ import {
   FileText,
   Sparkles,
   MapPin,
-  ExternalLink,
   Heart,
   Sprout,
   ArrowUpRight,
@@ -32,33 +31,8 @@ interface FooterProps {
 }
 
 export default function Footer({
-  products: initialProducts = [],
   onOpenTrackModal,
 }: FooterProps) {
-  const [productList, setProductList] =
-    React.useState<any[]>(initialProducts);
-
-  React.useEffect(() => {
-    if (initialProducts && initialProducts.length > 0) {
-      setProductList(initialProducts);
-      return;
-    }
-
-    fetch('/api/products')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.data && data.data.length > 0) {
-          setProductList(data.data);
-        }
-      })
-      .catch(() => {});
-  }, [initialProducts]);
-
-  const displayProducts =
-    productList && productList.length > 0
-      ? productList.slice(0, 4)
-      : [];
-
   return (
     <footer
       className="relative overflow-hidden bg-[#07130a] text-[#FAF8F5]"

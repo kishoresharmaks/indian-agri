@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { RefreshCw, TrendingUp, TrendingDown, DollarSign, PieChart, ShieldCheck, Printer } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { RefreshCw, TrendingUp, TrendingDown, ShieldCheck, Printer } from 'lucide-react';
 import PrintablePnLModal from './PrintablePnLModal';
 
 export default function PnLReportView() {
@@ -11,7 +11,7 @@ export default function PnLReportView() {
   const [endDate, setEndDate] = useState('');
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
-  const fetchPnL = async () => {
+  const fetchPnL = useCallback(async () => {
     try {
       setLoading(true);
       let url = '/api/billing/reports/pnl';
@@ -28,11 +28,11 @@ export default function PnLReportView() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [startDate, endDate]);
 
   useEffect(() => {
     fetchPnL();
-  }, []);
+  }, [fetchPnL]);
 
   if (loading) {
     return (

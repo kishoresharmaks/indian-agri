@@ -19,8 +19,6 @@ export default function ExpenseFormModal({
   const [amount, setAmount] = useState('');
   const [paymentMode, setPaymentMode] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE'>('CASH');
   const [paidTo, setPaidTo] = useState('');
-  const [referenceNo, setReferenceNo] = useState('');
-  const [notes, setNotes] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -45,8 +43,8 @@ export default function ExpenseFormModal({
           amount: Number(amount),
           paymentMode,
           paidTo,
-          referenceNo,
-          notes,
+          referenceNo: '',
+          notes: '',
         }),
       });
 

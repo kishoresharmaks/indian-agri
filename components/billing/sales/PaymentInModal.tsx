@@ -15,11 +15,10 @@ export default function PaymentInModal({
   onSuccess,
 }: PaymentInModalProps) {
   const [partyName, setPartyName] = useState(linkedDoc?.customerName || '');
-  const [partyPhone, setPartyPhone] = useState(linkedDoc?.customerPhone || '');
+  const partyPhone = linkedDoc?.customerPhone || '';
   const [amount, setAmount] = useState(linkedDoc?.balanceAmount ? String(linkedDoc.balanceAmount) : '');
   const [paymentMode, setPaymentMode] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE'>('CASH');
   const [referenceNo, setReferenceNo] = useState('');
-  const [notes, setNotes] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +47,7 @@ export default function PaymentInModal({
           referenceNo,
           docId: linkedDoc?._id || '',
           docNumber: linkedDoc?.docNumber || '',
-          notes,
+          notes: '',
         }),
       });
 

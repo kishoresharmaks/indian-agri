@@ -93,13 +93,15 @@ export default function CheckoutForm({
 
   // Auto-select valid payment method if current one is disabled
   useEffect(() => {
-    if (!form.paymentMethod) return;
-    if (form.paymentMethod === 'UPI' && !paymentSettings.enableUPI && paymentSettings.enableCOD) {
-      setForm((f) => ({ ...f, paymentMethod: 'COD' }));
-    }
-    if (form.paymentMethod === 'COD' && !paymentSettings.enableCOD && paymentSettings.enableUPI) {
-      setForm((f) => ({ ...f, paymentMethod: 'UPI' }));
-    }
+    setForm((f) => {
+      if (f.paymentMethod === 'UPI' && !paymentSettings.enableUPI && paymentSettings.enableCOD) {
+        return { ...f, paymentMethod: 'COD' };
+      }
+      if (f.paymentMethod === 'COD' && !paymentSettings.enableCOD && paymentSettings.enableUPI) {
+        return { ...f, paymentMethod: 'UPI' };
+      }
+      return f;
+    });
   }, [paymentSettings]);
 
   const updateField = (field: keyof CheckoutFormState, value: string) => {
@@ -192,7 +194,16 @@ export default function CheckoutForm({
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') onClose();
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label="Close checkout modal"
+      />
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { X, RefreshCw, ShoppingBag, Receipt, Printer, Phone, Mail, MapPin, ExternalLink, Calendar, CheckCircle2, Clock } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { X, RefreshCw, ShoppingBag, Printer, Phone, Mail, MapPin } from 'lucide-react';
 import PrintableDocumentModal from '../shared/PrintableDocumentModal';
 import POSReceipt from '@/app/admin/dashboard/components/pos/POSReceipt';
 
@@ -16,24 +16,24 @@ export default function CustomerLedgerModal({ party, onClose }: CustomerLedgerMo
   const [selectedDoc, setSelectedDoc] = useState<any>(null);
   const [selectedPosOrder, setSelectedPosOrder] = useState<any>(null);
 
-  const fetchCustomerHistory = async () => {
+  const fetchCustomerHistory = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/billing/parties/history?phone=${encodeURIComponent(party.phone)}&partyId=${party._id || ''}`);
+      const res = await fetch(`/api/billing/parties/history?phone=${encodeURIComponent(party?.phone || '')}&partyId=${party?._id || ''}`);
       const data = await res.json();
       if (data.success) {
         setTransactions(data.data);
       }
-    } catch (err) {
-      console.error('Failed to fetch customer history:', err);
+    } catch {
+      // ignore
     } finally {
       setLoading(false);
     }
-  };
+  }, [party]);
 
   useEffect(() => {
     fetchCustomerHistory();
-  }, [party]);
+  }, [fetchCustomerHistory]);
 
   const handlePrintItem = (tx: any) => {
     if (tx.type === 'POS_SALE') {

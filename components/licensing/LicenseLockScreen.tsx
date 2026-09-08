@@ -1,17 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Lock,
-  ShieldAlert,
   CreditCard,
   QrCode,
-  CheckCircle2,
-  RefreshCw,
-  Phone,
-  Mail,
   AlertCircle,
-  Key,
 } from 'lucide-react';
 import { IClientLicenseState } from '@/lib/licensing/licenseTypes';
 import ManualPaymentModal from './ManualPaymentModal';
@@ -29,15 +23,13 @@ export default function LicenseLockScreen({
   const [plans, setPlans] = useState<any[]>([]);
   const [razorpayKeyId, setRazorpayKeyId] = useState('');
   const [manualConfig, setManualConfig] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isPayingRazorpay, setIsPayingRazorpay] = useState<string | null>(null);
   const [selectedPlanForManual, setSelectedPlanForManual] = useState<any>(null);
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  const fetchPlansAndConfig = async () => {
+  const fetchPlansAndConfig = useCallback(async () => {
     try {
-      setIsLoading(true);
       const res = await fetch('/api/license/status');
       const data = await res.json();
       if (data.success) {
@@ -51,10 +43,8 @@ export default function LicenseLockScreen({
       }
     } catch (err) {
       console.error('Failed to load lock screen status', err);
-    } finally {
-      setIsLoading(false);
     }
-  };
+  }, [onUnlocked]);
 
   useEffect(() => {
     fetchPlansAndConfig();
@@ -65,7 +55,7 @@ export default function LicenseLockScreen({
       script.async = true;
       document.body.appendChild(script);
     }
-  }, []);
+  }, [fetchPlansAndConfig]);
 
   // Start license heartbeat once license is confirmed active
   useEffect(() => {

@@ -3,15 +3,12 @@
 import React, { useState } from 'react';
 import {
   QrCode,
-  Building,
   Copy,
   Check,
   CheckCircle2,
   AlertCircle,
-  Clock,
   X,
   ArrowRight,
-  ShieldCheck,
 } from 'lucide-react';
 
 interface ManualPaymentModalProps {

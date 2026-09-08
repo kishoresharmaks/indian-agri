@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, RefreshCw, Filter, Receipt, Trash2, Layers } from 'lucide-react';
 import ExpenseFormModal from './ExpenseFormModal';
 import ExpenseCategoryManager from './ExpenseCategoryManager';
@@ -14,7 +14,7 @@ export default function ExpenseTabContainer() {
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
-  const fetchExpenses = async () => {
+  const fetchExpenses = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/billing/expenses?category=${selectedCategory}`);
@@ -25,7 +25,7 @@ export default function ExpenseTabContainer() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
 
   const fetchCategories = async () => {
     try {
@@ -43,7 +43,7 @@ export default function ExpenseTabContainer() {
 
   useEffect(() => {
     fetchExpenses();
-  }, [selectedCategory]);
+  }, [fetchExpenses]);
 
   const handleDeleteExpense = async (id: string) => {
     if (!confirm('Are you sure you want to delete this expense entry?')) return;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Printer, RefreshCw, FileText, IndianRupee } from 'lucide-react';
 import PurchaseBillForm from './PurchaseBillForm';
 import PaymentOutModal from './PaymentOutModal';
@@ -20,7 +20,7 @@ export default function PurchaseTabContainer({ products }: PurchaseTabContainerP
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedDocForPrint, setSelectedDocForPrint] = useState<any | null>(null);
 
-  const fetchPurchaseData = async () => {
+  const fetchPurchaseData = useCallback(async () => {
     try {
       setLoading(true);
       if (subTab === 'PAYMENT_OUT') {
@@ -37,11 +37,11 @@ export default function PurchaseTabContainer({ products }: PurchaseTabContainerP
     } finally {
       setLoading(false);
     }
-  };
+  }, [subTab]);
 
   useEffect(() => {
     fetchPurchaseData();
-  }, [subTab]);
+  }, [fetchPurchaseData]);
 
   const handleConvertToBill = async (docId: string) => {
     if (!confirm('Convert this PO to an official Purchase Bill now? (Inward stock will be added to inventory)')) return;

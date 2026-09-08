@@ -12,7 +12,6 @@
 import React, { useState, useEffect } from 'react';
 import CheckoutForm from '@/components/store/CheckoutForm';
 import type { CartItem } from '@/hooks/useCart';
-import type { Product, ProductVariant } from '@/hooks/useCart';
 
 export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([]);

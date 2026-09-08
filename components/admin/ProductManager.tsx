@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Plus, Edit, Trash2, Search, Upload, RefreshCw, Image as ImageIcon,
-  ChevronLeft, ChevronRight, Check, X, Layers, Tag,
+  Plus, Edit, Trash2, Search, RefreshCw, Image as ImageIcon,
+  ChevronLeft, ChevronRight, X,
 } from 'lucide-react';
 
 interface ProductVariant {

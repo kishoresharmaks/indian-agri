@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/db';
-import LicenseSetting from '@/models/LicenseSetting';
 import { getLicensingServerUrl, computeClientLicenseState } from '@/lib/licensing/licenseClient';
 import { getActiveDatabaseLicense } from '@/lib/licensing/licenseDb';
 import { invalidateLicenseCache } from '@/lib/licensing/validateLicenseRoute';
