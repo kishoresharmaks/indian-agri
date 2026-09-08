@@ -4,7 +4,7 @@ import { getActiveDatabaseLicense } from '@/lib/licensing/licenseDb';
 import { isAuthenticatedAdmin, unauthenticatedResponse } from '@/lib/authCheck';
 
 export async function POST(request: NextRequest) {
-  if (!isAuthenticatedAdmin(request)) return unauthenticatedResponse();
+  if (!(await isAuthenticatedAdmin(request))) return unauthenticatedResponse();
   try {
     const body = await request.json();
     let {
