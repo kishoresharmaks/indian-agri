@@ -249,11 +249,13 @@ export default function Footer({
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.035] px-2.5 py-1.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
-                    <img
-                      src="/iso-9001.svg"
-                      alt="ISO 9001"
-                      className="h-7 w-8 shrink-0 object-contain"
-                    />
+                    <div className="flex h-7 w-8 shrink-0 items-center justify-center">
+                      <img
+                        src="/iso-9001.svg"
+                        alt="ISO 9001"
+                        className="h-7 w-8 object-contain"
+                      />
+                    </div>
 
                     <div>
                       <p className="text-[9.5px] font-bold text-white">
@@ -266,11 +268,13 @@ export default function Footer({
                   </div>
 
                   <div className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.035] px-2.5 py-1.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
-                    <img
-                      src="/iso-22000.svg"
-                      alt="ISO 22000"
-                      className="h-7 w-8 shrink-0 object-contain"
-                    />
+                    <div className="flex h-7 w-8 shrink-0 items-center justify-center">
+                      <img
+                        src="/iso-22000.svg"
+                        alt="ISO 22000"
+                        className="h-7 w-8 object-contain"
+                      />
+                    </div>
 
                     <div>
                       <p className="text-[9.5px] font-bold text-white">
@@ -283,11 +287,14 @@ export default function Footer({
                   </div>
 
                   <div className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.035] px-2.5 py-1.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
-                    <img
-                      src="/GMP_CERTIFIED.jpg"
-                      alt="GMP Certified"
-                      className="h-7.5 w-7.5 shrink-0 rounded-md bg-white p-0.5 object-contain"
-                    />
+                    <div className="flex h-7 w-8 shrink-0 items-center justify-center">
+                      <img
+                        src="/GMP_CERTIFIED.jpg"
+                        alt="GMP Certified"
+                        className="h-7 w-7 rounded-sm bg-white p-0.5 object-contain"
+                        style={{ width: '28px', height: '28px', maxWidth: '28px', maxHeight: '28px' }}
+                      />
+                    </div>
 
                     <div>
                       <p className="text-[9.5px] font-bold text-white">
@@ -300,11 +307,14 @@ export default function Footer({
                   </div>
 
                   <div className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.035] px-2.5 py-1.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
-                    <img
-                      src="/best_quality.jpg"
-                      alt="Best Quality"
-                      className="h-7.5 w-7.5 shrink-0 rounded-md bg-white p-0.5 object-contain"
-                    />
+                    <div className="flex h-7 w-8 shrink-0 items-center justify-center">
+                      <img
+                        src="/best_quality.jpg"
+                        alt="Best Quality"
+                        className="h-7 w-7 rounded-sm bg-white p-0.5 object-contain"
+                        style={{ width: '28px', height: '28px', maxWidth: '28px', maxHeight: '28px' }}
+                      />
+                    </div>
 
                     <div>
                       <p className="text-[9.5px] font-bold text-white">
