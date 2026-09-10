@@ -41,25 +41,37 @@ export async function GET(req: NextRequest) {
                 : 'Active',
       }));
 
-      const mappedOrders = orders.map((ord: any) => ({
-        _id: String(ord._id),
-        docType: 'SALE_INVOICE',
-        docNumber: ord.invoiceNumber || ord.orderNumber || `BH-POS-${String(ord._id).slice(-6).toUpperCase()}`,
-        customerName: ord.customerName || 'Walk-in Guest',
-        customerPhone: ord.customerPhone || '0000000000',
-        customerEmail: ord.customerEmail || '',
-        items: ord.items || [],
-        subtotal: ord.subtotal || ord.totalAmount,
-        totalGst: ord.totalGst || 0,
-        grandTotal: ord.totalAmount,
-        paidAmount: ord.paymentStatus === 'Paid' ? ord.totalAmount : ord.cashReceived || 0,
-        balanceAmount: ord.paymentStatus === 'Paid' ? 0 : Math.max(0, ord.totalAmount - (ord.cashReceived || 0)),
-        paymentMethod: ord.paymentMethod || 'CASH',
-        paymentStatus: ord.paymentStatus || 'Paid',
-        status: 'Completed',
-        orderSource: ord.orderType || 'ONLINE',
-        createdAt: ord.createdAt,
-      }));
+      const mappedOrders = orders.map((ord: any) => {
+        const isPaid = ord.paymentStatus === 'Paid';
+        const docNumber =
+          ord.invoiceNumber ||
+          ord.orderId ||
+          (ord.orderType === 'POS'
+            ? `BH-POS-${String(ord._id).slice(-6).toUpperCase()}`
+            : `ORD-${String(ord._id).slice(-6).toUpperCase()}`);
+
+        return {
+          _id: String(ord._id),
+          docType: 'SALE_INVOICE',
+          docNumber,
+          customerName: ord.customerName || (ord.orderType === 'POS' ? 'Walk-in Guest' : 'Online Customer'),
+          customerPhone: ord.customerPhone || '0000000000',
+          customerEmail: ord.customerEmail || '',
+          billingAddress: ord.shippingAddress || '',
+          shippingAddress: ord.shippingAddress || '',
+          items: ord.items || [],
+          subtotal: ord.subtotal !== undefined ? ord.subtotal : (ord.totalAmount - (ord.totalGst || 0)),
+          totalGst: ord.totalGst || 0,
+          grandTotal: ord.totalAmount,
+          paidAmount: isPaid ? ord.totalAmount : (ord.cashReceived || 0),
+          balanceAmount: isPaid ? 0 : Math.max(0, ord.totalAmount - (ord.cashReceived || 0)),
+          paymentMethod: ord.paymentMethod || (ord.orderType === 'POS' ? 'CASH' : 'ONLINE'),
+          paymentStatus: ord.paymentStatus || (ord.orderType === 'POS' ? 'Paid' : 'Pending'),
+          status: ord.status || (isPaid ? 'Completed' : 'Active'),
+          orderSource: ord.orderType || 'ONLINE',
+          createdAt: ord.createdAt,
+        };
+      });
 
       const combined = [...mappedDocs, ...mappedOrders].sort(
         (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -77,25 +89,35 @@ export async function GET(req: NextRequest) {
         .sort({ createdAt: -1 })
         .lean();
 
-      const mappedSaleOrders = saleOrders.map((ord: any) => ({
-        _id: String(ord._id),
-        docType: 'SALE_ORDER',
-        docNumber: ord.orderNumber || ord.invoiceNumber || `BH-ORD-${String(ord._id).slice(-6).toUpperCase()}`,
-        customerName: ord.customerName || 'Online Customer',
-        customerPhone: ord.customerPhone || '0000000000',
-        customerEmail: ord.customerEmail || '',
-        items: ord.items || [],
-        subtotal: ord.subtotal || ord.totalAmount,
-        totalGst: ord.totalGst || 0,
-        grandTotal: ord.totalAmount,
-        paidAmount: ord.paymentStatus === 'Paid' ? ord.totalAmount : 0,
-        balanceAmount: ord.paymentStatus === 'Paid' ? 0 : ord.totalAmount,
-        paymentMethod: ord.paymentMethod || 'COD',
-        paymentStatus: ord.paymentStatus || 'Pending',
-        status: ord.status || 'Active',
-        orderSource: ord.orderType || 'ONLINE',
-        createdAt: ord.createdAt,
-      }));
+      const mappedSaleOrders = saleOrders.map((ord: any) => {
+        const isPaid = ord.paymentStatus === 'Paid';
+        const docNumber =
+          ord.orderId ||
+          ord.invoiceNumber ||
+          `ORD-${String(ord._id).slice(-6).toUpperCase()}`;
+
+        return {
+          _id: String(ord._id),
+          docType: 'SALE_ORDER',
+          docNumber,
+          customerName: ord.customerName || 'Online Customer',
+          customerPhone: ord.customerPhone || '0000000000',
+          customerEmail: ord.customerEmail || '',
+          billingAddress: ord.shippingAddress || '',
+          shippingAddress: ord.shippingAddress || '',
+          items: ord.items || [],
+          subtotal: ord.subtotal !== undefined ? ord.subtotal : (ord.totalAmount - (ord.totalGst || 0)),
+          totalGst: ord.totalGst || 0,
+          grandTotal: ord.totalAmount,
+          paidAmount: isPaid ? ord.totalAmount : 0,
+          balanceAmount: isPaid ? 0 : ord.totalAmount,
+          paymentMethod: ord.paymentMethod || 'COD',
+          paymentStatus: ord.paymentStatus || 'Pending',
+          status: ord.status || 'Active',
+          orderSource: ord.orderType || 'ONLINE',
+          createdAt: ord.createdAt,
+        };
+      });
 
       const combined = [...docs, ...mappedSaleOrders].sort(
         (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
