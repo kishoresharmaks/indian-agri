@@ -751,7 +751,7 @@ export async function calculateGstr1(options?: {
         cgst,
         sgst,
         cess,
-        doc.customerGstin ? doc.stateName : '',
+        doc.placeOfSupply || '33-Tamil Nadu',
       ]);
 
       gstr1SumVal += val;

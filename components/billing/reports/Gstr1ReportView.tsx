@@ -539,6 +539,25 @@ function renderSheetContent(sheetKey: string, data: Gstr1Data) {
           </tbody>
         </table>
       </div>
+
+      {sheetKey === 'b2cs' && (
+        <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-xl text-xs text-blue-900 space-y-1">
+          <p className="font-bold flex items-center gap-1.5 text-blue-800">
+            <HelpCircle className="w-4 h-4 text-blue-600 shrink-0" /> GST Portal &amp; Offline Utility Rules for B2CS (Table 7):
+          </p>
+          <ul className="list-disc list-inside space-y-1 text-blue-800/90 pl-1 text-[11px]">
+            <li>
+              <strong>Type &ldquo;OE&rdquo;</strong>: Direct customer sales from your own store / website (Other than 3rd-party E-Commerce marketplaces).
+            </li>
+            <li>
+              <strong>Applicable % of Tax Rate</strong>: Correctly left blank per GST portal schema for standard 100% tax rate supplies. It is only filled if claiming a concessional 65% rate.
+            </li>
+            <li>
+              <strong>E-Commerce GSTIN</strong>: Must remain blank for &ldquo;OE&rdquo; direct supplies. Under GST Section 52, it is only required when selling through a 3rd-party marketplace operator (e.g. Amazon, Flipkart) where Type is &ldquo;E&rdquo;.
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
