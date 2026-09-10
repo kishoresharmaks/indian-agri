@@ -1672,7 +1672,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
                               </div>
                               <div className="text-right">
                                 <span className="font-bold text-[#163B5C]">
-                                  ₹{item.price.toLocaleString('en-IN')} × {item.quantity}
+                                  ₹{item.price.toLocaleString('en-IN', { minimumFractionDigits: item.price % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })} × {item.quantity}
                                 </span>
                               </div>
                             </div>
@@ -1682,11 +1682,11 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
                         {/* Bill Breakdown */}
                         <div className="flex items-center justify-between pt-2 border-t border-[#E8EDF2] font-bold text-xs">
                           <span className="text-[#64748B]">
-                            Subtotal: ₹{order.subtotal.toLocaleString('en-IN')} | GST: ₹
-                            {order.totalGst.toLocaleString('en-IN')}
+                            Subtotal: ₹{order.subtotal?.toLocaleString('en-IN', { minimumFractionDigits: (order.subtotal || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })} | GST: ₹
+                            {order.totalGst?.toLocaleString('en-IN', { minimumFractionDigits: (order.totalGst || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                           </span>
                           <span className="text-sm font-black text-[#ED3500]">
-                            Total Paid: ₹{order.totalAmount.toLocaleString('en-IN')}
+                            Total Paid: ₹{order.totalAmount?.toLocaleString('en-IN', { minimumFractionDigits: (order.totalAmount || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                           </span>
                         </div>
                       </div>

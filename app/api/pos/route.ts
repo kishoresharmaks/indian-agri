@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
 
       const lineSubtotal = itemPrice * qty;
       const gstPercentage = product.gst !== undefined ? product.gst : 0;
-      const lineGst = Math.round(lineSubtotal * (gstPercentage / 100));
+      const lineGst = Number((lineSubtotal * (gstPercentage / 100)).toFixed(2));
 
       calculatedSubtotal += lineSubtotal;
       calculatedTotalGst += lineGst;
@@ -94,36 +94,39 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    calculatedSubtotal = Number(calculatedSubtotal.toFixed(2));
+    calculatedTotalGst = Number(calculatedTotalGst.toFixed(2));
+
     // 3. Server-side Discount Recalculation
     let discountAmount = 0;
     const numericDiscountValue = Math.max(0, Number(discountValue || 0));
 
     if (discountType === 'PERCENTAGE') {
-      discountAmount = Math.round(calculatedSubtotal * (numericDiscountValue / 100));
+      discountAmount = Number((calculatedSubtotal * (numericDiscountValue / 100)).toFixed(2));
     } else {
-      discountAmount = Math.round(numericDiscountValue);
+      discountAmount = Number(numericDiscountValue.toFixed(2));
     }
     // Cap discount to not exceed subtotal
     discountAmount = Math.min(discountAmount, calculatedSubtotal);
 
-    const calculatedFinalTotal = Math.max(0, calculatedSubtotal + calculatedTotalGst - discountAmount);
+    const calculatedFinalTotal = Number(Math.max(0, calculatedSubtotal + calculatedTotalGst - discountAmount).toFixed(2));
 
     // 4. Server-side CASH / UPI Payment Validation
     let finalCashReceived = 0;
     let finalChangeReturned = 0;
 
     if (paymentMethod === 'CASH') {
-      finalCashReceived = Number(cashReceived || 0);
+      finalCashReceived = Number(Number(cashReceived || 0).toFixed(2));
       if (finalCashReceived < calculatedFinalTotal) {
         return NextResponse.json(
           {
             success: false,
-            message: `Insufficient cash received. Required: ₹${calculatedFinalTotal.toLocaleString('en-IN')}, Received: ₹${finalCashReceived.toLocaleString('en-IN')}`,
+            message: `Insufficient cash received. Required: ₹${calculatedFinalTotal.toLocaleString('en-IN', { minimumFractionDigits: calculatedFinalTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}, Received: ₹${finalCashReceived.toLocaleString('en-IN', { minimumFractionDigits: finalCashReceived % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}`,
           },
           { status: 400 }
         );
       }
-      finalChangeReturned = Math.round(finalCashReceived - calculatedFinalTotal);
+      finalChangeReturned = Number((finalCashReceived - calculatedFinalTotal).toFixed(2));
     } else {
       // UPI Payment
       finalCashReceived = calculatedFinalTotal;

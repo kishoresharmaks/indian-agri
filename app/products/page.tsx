@@ -311,20 +311,21 @@ export default function AllProductsPage() {
   };
 
   // Calculations
-  const cartSubtotal = cart.reduce(
-    (sum, item) =>
-      sum + (item.selectedVariant ? item.selectedVariant.price : item.product.price) * item.quantity,
-    0
+  const cartSubtotal = Number(
+    cart.reduce(
+      (sum, item) =>
+        sum + (item.selectedVariant ? item.selectedVariant.price : item.product.price) * item.quantity,
+      0
+    ).toFixed(2)
   );
-  const cartGstTotal = cart.reduce(
-    (sum, item) => {
+  const cartGstTotal = Number(
+    cart.reduce((sum, item) => {
       const unitPrice = item.selectedVariant ? item.selectedVariant.price : item.product.price;
       const gstRate = item.product.gst !== undefined ? item.product.gst : 0;
       return sum + ((unitPrice * item.quantity) * gstRate) / 100;
-    },
-    0
+    }, 0).toFixed(2)
   );
-  const cartGrandTotal = Math.round(cartSubtotal + cartGstTotal);
+  const cartGrandTotal = Number((cartSubtotal + cartGstTotal).toFixed(2));
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   // Sorting & Pagination
@@ -343,7 +344,7 @@ export default function AllProductsPage() {
   const dynamicCategoryList = ['All', ...categories.map((c) => c.name)];
 
   const qrCodeImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(
-    `upi://pay?pa=${merchantUpiId}&pn=INDIAN_AGRICULTURE&am=${cartGrandTotal}&cu=INR`
+    `upi://pay?pa=${merchantUpiId}&pn=INDIAN_AGRICULTURE&am=${cartGrandTotal.toFixed(2)}&cu=INR`
   )}`;
 
   const handleCopyUpi = () => {
@@ -464,8 +465,9 @@ export default function AllProductsPage() {
   };
 
   const getWhatsAppSupportLink = (order: any) => {
-    const text = `Hi, I placed an order #${order.orderId} for ₹${order.totalAmount}. Please help with tracking.`;
-    return `https://wa.me/919999999999?text=${encodeURIComponent(text)}`;
+    const formattedAmt = order.totalAmount?.toLocaleString('en-IN', { minimumFractionDigits: order.totalAmount % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 }) || '0';
+    const text = `Hi, I placed an order #${order.orderId} for ₹${formattedAmt}. Please help with tracking.`;
+    return `https://wa.me/919597250344?text=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -908,7 +910,7 @@ export default function AllProductsPage() {
 
                           <div className="flex items-center justify-between mt-2">
                             <span className="font-serif font-bold text-sm text-[#1B2E1E]">
-                              ₹{(price * item.quantity).toLocaleString('en-IN')}
+                              ₹{(price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: (price * item.quantity) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                             </span>
                             <div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5E0D8] rounded-full px-2 py-1">
                               <button
@@ -938,17 +940,23 @@ export default function AllProductsPage() {
                   <div className="space-y-1.5 text-xs text-[#5A655A]">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
-                      <span className="text-[#1C1917]">₹{cartSubtotal.toLocaleString('en-IN')}</span>
+                      <span className="text-[#1C1917]">
+                        ₹{cartSubtotal.toLocaleString('en-IN', { minimumFractionDigits: cartSubtotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+                      </span>
                     </div>
                     {cartGstTotal > 0 && (
                       <div className="flex justify-between">
                         <span>GST</span>
-                        <span className="text-[#1C1917]">₹{cartGstTotal.toLocaleString('en-IN')}</span>
+                        <span className="text-[#1C1917]">
+                          ₹{cartGstTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
                       </div>
                     )}
                     <div className="flex justify-between font-bold text-sm text-[#1B2E1E] pt-2 border-t border-[#E5E0D8]">
                       <span>Grand Total</span>
-                      <span className="font-serif text-lg">₹{cartGrandTotal.toLocaleString('en-IN')}</span>
+                      <span className="font-serif text-lg">
+                        ₹{cartGrandTotal.toLocaleString('en-IN', { minimumFractionDigits: cartGrandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+                      </span>
                     </div>
                   </div>
 
@@ -1188,7 +1196,7 @@ export default function AllProductsPage() {
                     Total Amount Payable
                   </span>
                   <span className="font-serif text-2xl sm:text-3xl font-normal text-[#183B24]">
-                    ₹{cartGrandTotal.toLocaleString('en-IN')}
+                    ₹{cartGrandTotal.toLocaleString('en-IN', { minimumFractionDigits: cartGrandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                   </span>
                 </div>
 
@@ -1307,7 +1315,9 @@ export default function AllProductsPage() {
               </div>
               <div className="flex justify-between items-center pb-2.5 border-b border-[#E8E4DA]">
                 <span className="text-[#5C665E] font-medium">Total Paid:</span>
-                <span className="font-sans font-extrabold text-[#183B24] text-base sm:text-lg">₹{orderSuccess.totalAmount?.toLocaleString('en-IN')}</span>
+                <span className="font-sans font-extrabold text-[#183B24] text-base sm:text-lg">
+                  ₹{orderSuccess.totalAmount?.toLocaleString('en-IN', { minimumFractionDigits: orderSuccess.totalAmount % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#5C665E] font-medium">Payment Mode:</span>

@@ -138,9 +138,9 @@ export async function POST(request: Request) {
       }
     }
 
-    subtotal = Math.round(subtotal);
-    totalGst = Math.round(totalGst);
-    const totalAmount = subtotal + totalGst;
+    subtotal = Number(subtotal.toFixed(2));
+    totalGst = Number(totalGst.toFixed(2));
+    const totalAmount = Number((subtotal + totalGst).toFixed(2));
 
     // Generate strictly sequential order ID starting from ORD-1001
     const orderCount = await Order.countDocuments();

@@ -138,7 +138,7 @@ export default function CartDrawer({
                   {/* Line Total */}
                   <div className="shrink-0 text-right">
                     <p className="text-sm font-bold text-[#163B5C]">
-                      ₹{(unitPrice * item.quantity).toLocaleString('en-IN')}
+                      ₹{(unitPrice * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: (unitPrice * item.quantity) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                     </p>
                   </div>
                 </div>
@@ -152,15 +152,21 @@ export default function CartDrawer({
           <div className="border-t border-[#E8EDF2] px-5 py-4 space-y-3 bg-white">
             <div className="flex justify-between text-sm">
               <span className="text-[#64748B]">Subtotal</span>
-              <span className="font-medium text-[#163B5C]">₹{subtotal.toLocaleString('en-IN')}</span>
+              <span className="font-medium text-[#163B5C]">
+                ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: subtotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-[#64748B]">GST (incl.)</span>
-              <span className="font-medium text-[#163B5C]">₹{gstTotal.toLocaleString('en-IN')}</span>
+              <span className="font-medium text-[#163B5C]">
+                ₹{gstTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
             </div>
             <div className="flex justify-between text-base font-bold">
               <span className="text-[#163B5C]">Grand Total</span>
-              <span className="text-[#ED3500]">₹{grandTotal.toLocaleString('en-IN')}</span>
+              <span className="text-[#ED3500]">
+                ₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: grandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+              </span>
             </div>
             <button
               onClick={onCheckout}

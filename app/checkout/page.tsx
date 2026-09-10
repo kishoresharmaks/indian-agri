@@ -55,18 +55,22 @@ export default function CheckoutPage() {
     );
   }
 
-  const subtotal = cart.reduce((sum, item) => {
-    const price = item.selectedVariant ? item.selectedVariant.price : item.product.price;
-    return sum + price * item.quantity;
-  }, 0);
+  const subtotal = Number(
+    cart.reduce((sum, item) => {
+      const price = item.selectedVariant ? item.selectedVariant.price : item.product.price;
+      return sum + price * item.quantity;
+    }, 0).toFixed(2)
+  );
 
-  const gstTotal = cart.reduce((sum, item) => {
-    const price = item.selectedVariant ? item.selectedVariant.price : item.product.price;
-    const gstRate = item.product.gst || 18;
-    return sum + (price * item.quantity * gstRate) / 100;
-  }, 0);
+  const gstTotal = Number(
+    cart.reduce((sum, item) => {
+      const price = item.selectedVariant ? item.selectedVariant.price : item.product.price;
+      const gstRate = item.product.gst !== undefined ? item.product.gst : 18;
+      return sum + (price * item.quantity * gstRate) / 100;
+    }, 0).toFixed(2)
+  );
 
-  const grandTotal = subtotal + gstTotal;
+  const grandTotal = Number((subtotal + gstTotal).toFixed(2));
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] py-8 px-4">

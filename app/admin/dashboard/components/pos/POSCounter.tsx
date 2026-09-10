@@ -189,21 +189,23 @@ export default function POSCounter({
   };
 
   // Calculate Subtotal & Totals for Payment Panel
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const totalGst = cartItems.reduce(
-    (sum, item) => sum + Math.round(item.price * item.quantity * (item.gst / 100)),
+  const rawSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = Number(rawSubtotal.toFixed(2));
+  const rawTotalGst = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity * (item.gst / 100),
     0
   );
+  const totalGst = Number(rawTotalGst.toFixed(2));
 
   let discountAmount = 0;
   if (discountType === 'PERCENTAGE') {
-    discountAmount = Math.round(subtotal * (discountValue / 100));
+    discountAmount = Number((subtotal * (discountValue / 100)).toFixed(2));
   } else {
-    discountAmount = Math.round(discountValue);
+    discountAmount = Number((Number(discountValue) || 0).toFixed(2));
   }
   discountAmount = Math.min(discountAmount, subtotal);
 
-  const finalTotal = Math.max(0, subtotal + totalGst - discountAmount);
+  const finalTotal = Number(Math.max(0, subtotal + totalGst - discountAmount).toFixed(2));
 
   // Submit POS Order
   const handleSubmitPOS = async () => {

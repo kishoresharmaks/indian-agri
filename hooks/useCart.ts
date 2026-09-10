@@ -137,15 +137,22 @@ export function useCart(): UseCartReturn {
       const unitPrice = item.selectedVariant ? item.selectedVariant.price : item.product.price;
       const gstRate = item.product.gst ?? 0;
 
-      subtotal += unitPrice * item.quantity;
-      gstTotal += (unitPrice * item.quantity * gstRate) / 100;
+      const lineTotal = unitPrice * item.quantity;
+      const lineGst = (lineTotal * gstRate) / 100;
+
+      subtotal += lineTotal;
+      gstTotal += lineGst;
       itemCount += item.quantity;
     }
 
+    const cleanSubtotal = Number(subtotal.toFixed(2));
+    const cleanGstTotal = Number(gstTotal.toFixed(2));
+    const cleanGrandTotal = Number((cleanSubtotal + cleanGstTotal).toFixed(2));
+
     return {
-      subtotal,
-      gstTotal,
-      grandTotal: Math.round(subtotal + gstTotal),
+      subtotal: cleanSubtotal,
+      gstTotal: cleanGstTotal,
+      grandTotal: cleanGrandTotal,
       itemCount,
     };
   })();

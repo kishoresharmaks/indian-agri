@@ -165,7 +165,7 @@ Visit: https://INDIANAGRICULTURE.online`;
                 </span>
                 <span className="col-span-2 text-center">{it.quantity}</span>
                 <span className="col-span-4 text-right font-bold">
-                  ₹{(it.price * it.quantity).toLocaleString('en-IN')}
+                  ₹{(it.price * it.quantity).toLocaleString('en-IN', { minimumFractionDigits: (it.price * it.quantity) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                 </span>
               </div>
             ))}
@@ -175,21 +175,21 @@ Visit: https://INDIANAGRICULTURE.online`;
           <div className="space-y-1 text-xs pt-1">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
-              <span>₹{(order.subtotal || 0).toLocaleString('en-IN')}</span>
+              <span>₹{(order.subtotal || 0).toLocaleString('en-IN', { minimumFractionDigits: (order.subtotal || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
             </div>
             <div className="flex justify-between text-gray-600">
               <span>GST Tax:</span>
-              <span>₹{(order.totalGst || 0).toLocaleString('en-IN')}</span>
+              <span>₹{(order.totalGst || 0).toLocaleString('en-IN', { minimumFractionDigits: (order.totalGst || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
             </div>
             {order.discountAmount > 0 && (
               <div className="flex justify-between text-emerald-600 font-semibold">
                 <span>Discount Applied:</span>
-                <span>-₹{order.discountAmount.toLocaleString('en-IN')}</span>
+                <span>-₹{order.discountAmount.toLocaleString('en-IN', { minimumFractionDigits: order.discountAmount % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
               </div>
             )}
             <div className="flex justify-between text-sm font-bold pt-2 border-t border-black">
               <span>FINAL GRAND TOTAL:</span>
-              <span>₹{(order.totalAmount || 0).toLocaleString('en-IN')}</span>
+              <span>₹{(order.totalAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: (order.totalAmount || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
             </div>
 
             {/* Payment Details */}
@@ -202,11 +202,11 @@ Visit: https://INDIANAGRICULTURE.online`;
                 <>
                   <div className="flex justify-between">
                     <span>Cash Received:</span>
-                    <span>₹{(order.cashReceived || 0).toLocaleString('en-IN')}</span>
+                    <span>₹{(order.cashReceived || 0).toLocaleString('en-IN', { minimumFractionDigits: (order.cashReceived || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="flex justify-between text-emerald-700 font-bold">
                     <span>Change Returned:</span>
-                    <span>₹{(order.changeReturned || 0).toLocaleString('en-IN')}</span>
+                    <span>₹{(order.changeReturned || 0).toLocaleString('en-IN', { minimumFractionDigits: (order.changeReturned || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
                   </div>
                 </>
               )}

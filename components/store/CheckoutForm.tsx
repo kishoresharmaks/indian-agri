@@ -116,7 +116,7 @@ export default function CheckoutForm({
   };
 
   const upiIntentUrl =
-    `upi://pay?pa=${encodeURIComponent(merchantUpiId)}&pn=${encodeURIComponent('INDIAN AGRICULTURE')}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('Indian Agriculture Order')}`;
+    `upi://pay?pa=${encodeURIComponent(merchantUpiId)}&pn=${encodeURIComponent('INDIAN AGRICULTURE')}&am=${grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Indian Agriculture Order')}`;
   const qrCodeImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiIntentUrl)}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -223,7 +223,7 @@ export default function CheckoutForm({
               <p className="text-sm text-[#64748B]">{cart.length} item(s) in cart</p>
               <div className="flex justify-between text-sm">
                 <span className="text-[#64748B]">Subtotal + GST</span>
-                <span className="font-bold text-[#163B5C]">₹{grandTotal.toLocaleString('en-IN')}</span>
+                <span className="font-bold text-[#163B5C]">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: grandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
 
@@ -316,7 +316,7 @@ export default function CheckoutForm({
               {form.paymentMethod === 'UPI' && paymentSettings.enableUPI && (
                 <div className="bg-[#FAF8F5] rounded-xl p-4 space-y-4">
                   <p className="text-sm text-[#64748B]">
-                    Pay <strong className="text-[#ED3500]">₹{grandTotal.toLocaleString('en-IN')}</strong> using UPI
+                    Pay <strong className="text-[#ED3500]">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: grandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}</strong> using UPI
                   </p>
                   <div className="flex items-center justify-center">
                     <img
@@ -369,7 +369,7 @@ export default function CheckoutForm({
                 disabled={submitting}
                 className="flex-1 py-2.5 bg-[#ED3500] hover:bg-[#D02E00] text-white font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitting ? 'Placing Order...' : `Place Order — ₹${grandTotal.toLocaleString('en-IN')}`}
+                {submitting ? 'Placing Order...' : `Place Order — ₹${grandTotal.toLocaleString('en-IN', { minimumFractionDigits: grandTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}`}
               </button>
             </div>
           </form>

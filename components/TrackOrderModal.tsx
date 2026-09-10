@@ -255,7 +255,7 @@ export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProp
                         <div className="text-right">
                           <span className="text-[11px] text-[#5C665E] font-sans block">Total Amount</span>
                           <span className="font-sans text-base font-bold text-[#273B24]">
-                            ₹{ord.totalAmount?.toLocaleString('en-IN')}
+                            ₹{ord.totalAmount?.toLocaleString('en-IN', { minimumFractionDigits: (ord.totalAmount || 0) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                           </span>
                         </div>
                       </div>
@@ -348,7 +348,7 @@ export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProp
                                   </div>
                                 </div>
                                 <span className="font-semibold text-[#273B24]">
-                                  ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                                  ₹{(item.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: (item.price * item.quantity) % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
                                 </span>
                               </div>
                             ))

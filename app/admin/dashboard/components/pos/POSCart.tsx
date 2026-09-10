@@ -40,21 +40,21 @@ export default function POSCart({
 }: POSCartProps) {
   // Calculations
   const totalItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const totalGst = items.reduce(
-    (sum, item) => sum + Math.round(item.price * item.quantity * (item.gst / 100)),
+  const subtotal = Number(items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2));
+  const totalGst = Number(items.reduce(
+    (sum, item) => sum + item.price * item.quantity * (item.gst / 100),
     0
-  );
+  ).toFixed(2));
 
   let discountAmount = 0;
   if (discountType === 'PERCENTAGE') {
-    discountAmount = Math.round(subtotal * (discountValue / 100));
+    discountAmount = Number((subtotal * (discountValue / 100)).toFixed(2));
   } else {
-    discountAmount = Math.round(discountValue);
+    discountAmount = Number(discountValue.toFixed(2));
   }
   discountAmount = Math.min(discountAmount, subtotal);
 
-  const finalTotal = Math.max(0, subtotal + totalGst - discountAmount);
+  const finalTotal = Number(Math.max(0, subtotal + totalGst - discountAmount).toFixed(2));
 
   return (
     <div className="bg-white rounded-2xl border border-[#E8EDF2] flex flex-col h-full shadow-sm overflow-hidden">
@@ -220,16 +220,22 @@ export default function POSCart({
           <div className="space-y-1 text-xs text-[#64748B]">
             <div className="flex justify-between">
               <span>Subtotal ({totalItemCount} items):</span>
-              <span className="font-bold text-[#163B5C]">₹{subtotal.toLocaleString('en-IN')}</span>
+              <span className="font-bold text-[#163B5C]">
+                ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: subtotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+              </span>
             </div>
             <div className="flex justify-between">
               <span>GST Tax Split:</span>
-              <span className="font-bold text-[#163B5C]">₹{totalGst.toLocaleString('en-IN')}</span>
+              <span className="font-bold text-[#163B5C]">
+                ₹{totalGst.toLocaleString('en-IN', { minimumFractionDigits: totalGst % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+              </span>
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-emerald-600 font-bold">
                 <span>Discount Applied:</span>
-                <span>-₹{discountAmount.toLocaleString('en-IN')}</span>
+                <span>
+                  -₹{discountAmount.toLocaleString('en-IN', { minimumFractionDigits: discountAmount % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
+                </span>
               </div>
             )}
             <div className="flex justify-between items-baseline pt-2 border-t border-[#E8EDF2]">
@@ -237,7 +243,7 @@ export default function POSCart({
                 FINAL BILL TOTAL:
               </span>
               <span className="text-xl font-black text-[#ED3500]">
-                ₹{finalTotal.toLocaleString('en-IN')}
+                ₹{finalTotal.toLocaleString('en-IN', { minimumFractionDigits: finalTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
               </span>
             </div>
           </div>

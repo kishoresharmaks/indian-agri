@@ -41,7 +41,7 @@ export default function PaymentPanel({
   const [isGuest, setIsGuest] = useState(true);
   const [showUpiQr, setShowUpiQr] = useState(false);
 
-  const changeReturned = cashReceived >= finalTotal ? Math.round(cashReceived - finalTotal) : 0;
+  const changeReturned = cashReceived >= finalTotal ? Number((cashReceived - finalTotal).toFixed(2)) : 0;
 
   // Show insufficient cash alert ONLY if cashier actually typed an amount > 0 that is less than total
   const isCashEnteredLessThanTotal =
@@ -57,7 +57,7 @@ export default function PaymentPanel({
 
   const upiIntentUrl = `upi://pay?pa=${encodeURIComponent(merchantUpiId)}&pn=${encodeURIComponent(
     'INDIAN AGRICULTURE'
-  )}&am=${finalTotal}&cu=INR&tn=POS%20Bill`;
+  )}&am=${finalTotal.toFixed(2)}&cu=INR&tn=POS%20Bill`;
   const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiIntentUrl)}`;
 
   return (
@@ -218,7 +218,7 @@ export default function PaymentPanel({
                   onClick={() => onUpdateCashReceived(finalTotal)}
                   className="px-2.5 py-1 rounded-lg bg-[#ED3500] text-white text-[10px] font-extrabold shadow-2xs hover:bg-[#D02E00] transition-colors"
                 >
-                  Exact (₹{finalTotal})
+                  Exact (₹{finalTotal.toLocaleString('en-IN', { minimumFractionDigits: finalTotal % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })})
                 </button>
               )}
               {quickCashOptions.map((amount) => (
@@ -241,7 +241,7 @@ export default function PaymentPanel({
                   isCashEnteredLessThanTotal ? 'text-rose-600' : 'text-emerald-700'
                 }`}
               >
-                ₹{changeReturned.toLocaleString('en-IN')}
+                ₹{changeReturned.toLocaleString('en-IN', { minimumFractionDigits: changeReturned % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2 })}
               </span>
             </div>
 
