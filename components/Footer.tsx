@@ -174,7 +174,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="WhatsApp"
                     title="WhatsApp"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-[#25D366]/20 bg-[#25D366]/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#25D366]/60 hover:bg-[#25D366]/20 hover:shadow-[0_4px_15px_rgba(37,211,102,0.15)]"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-[#25D366]/20 bg-[#25D366]/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#25D366]/60 hover:bg-[#25D366]/20 hover:shadow-[0_4px_15px_rgba(37,211,102,0.15)]"
                   >
                     <FaWhatsapp className="h-4 w-4 text-[#25D366] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -186,7 +186,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="Instagram"
                     title="Instagram"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E1306C]/50 hover:bg-[#E1306C]/10"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E1306C]/50 hover:bg-[#E1306C]/10"
                   >
                     <FaInstagram className="h-4 w-4 text-[#E1306C] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -198,7 +198,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="YouTube"
                     title="YouTube"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FF0000]/50 hover:bg-[#FF0000]/10"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FF0000]/50 hover:bg-[#FF0000]/10"
                   >
                     <FaYoutube className="h-4 w-4 text-[#FF0000] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -210,7 +210,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="Pinterest"
                     title="Pinterest"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E60023]/50 hover:bg-[#E60023]/10"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E60023]/50 hover:bg-[#E60023]/10"
                   >
                     <FaPinterest className="h-4 w-4 text-[#E60023] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -222,7 +222,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="Facebook"
                     title="Facebook"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1877F2]/50 hover:bg-[#1877F2]/10"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1877F2]/50 hover:bg-[#1877F2]/10"
                   >
                     <FaFacebook className="h-4 w-4 text-[#1877F2] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -234,7 +234,7 @@ export default function Footer({
                     rel="noreferrer"
                     aria-label="Google Business"
                     title="Google Business"
-                    className="group flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4285F4]/50 hover:bg-[#4285F4]/10"
+                    className="group flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4285F4]/50 hover:bg-[#4285F4]/10"
                   >
                     <FaGoogle className="h-4 w-4 text-[#4285F4] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -261,7 +261,7 @@ export default function Footer({
                       <p className="text-[9.5px] font-bold text-white">
                         ISO 9001
                       </p>
-                      <p className="text-[7.5px] text-[#8da593]">
+                      <p className="text-[7.5px] text-[#A3B8A6]">
                         Quality
                       </p>
                     </div>
@@ -280,7 +280,7 @@ export default function Footer({
                       <p className="text-[9.5px] font-bold text-white">
                         ISO 22000
                       </p>
-                      <p className="text-[7.5px] text-[#8da593]">
+                      <p className="text-[7.5px] text-[#A3B8A6]">
                         Food Safety
                       </p>
                     </div>
@@ -300,7 +300,7 @@ export default function Footer({
                       <p className="text-[9.5px] font-bold text-white">
                         GMP
                       </p>
-                      <p className="text-[7.5px] text-[#8da593]">
+                      <p className="text-[7.5px] text-[#A3B8A6]">
                         Certified
                       </p>
                     </div>
@@ -320,7 +320,7 @@ export default function Footer({
                       <p className="text-[9.5px] font-bold text-white">
                         Best Quality
                       </p>
-                      <p className="text-[7.5px] text-[#8da593]">
+                      <p className="text-[7.5px] text-[#A3B8A6]">
                         100% Original
                       </p>
                     </div>

@@ -218,7 +218,8 @@ export default function OrganicCatalogSection({
 
                             <button
                               onClick={() => onAddToCart && onAddToCart(product, 1)}
-                              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#183B24] text-white flex items-center justify-center hover:bg-[#C99A2E] hover:text-[#183B24] transition-all shadow-md active:scale-95 shrink-0"
+                              aria-label={`Add ${product.name} to cart`}
+                              className="w-11 h-11 sm:w-10 sm:h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#183B24] text-white flex items-center justify-center hover:bg-[#C99A2E] hover:text-[#183B24] transition-all shadow-md active:scale-95 shrink-0"
                               title="Add to Cart"
                             >
                               <Plus className="w-4 h-4 stroke-[3]" />

@@ -124,6 +124,7 @@ export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProp
           </div>
           <button
             onClick={onClose}
+            aria-label="Close track order modal"
             className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
           >
             <X className="w-5 h-5" />
@@ -139,6 +140,7 @@ export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProp
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A554D]" />
               <input
                 type="text"
+                aria-label="Search Order ID, Mobile Number or Email"
                 placeholder="Enter Order ID, Mobile Number or Email..."
                 value={trackQuery}
                 onChange={(e) => setTrackQuery(e.target.value)}

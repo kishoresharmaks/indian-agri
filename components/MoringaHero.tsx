@@ -229,9 +229,9 @@ export default function MoringaHero({
                     <Star className="w-3.5 h-3.5 fill-[#D4A017]" />
                     <span className="text-white font-bold text-[10px] sm:text-[11px] ml-1 font-sans">4.8 / 5.0 Rating</span>
                   </div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-white truncate mt-0.5 font-sans">
+                  <p className="font-extrabold text-xs sm:text-sm text-white truncate mt-0.5 font-sans">
                     {featuredProduct?.name || 'Organic Moringa Oleifera Powder'}
-                  </h4>
+                  </p>
                   <p className="text-[10px] sm:text-[11px] text-[#E0ECE1] truncate font-semibold font-sans">
                     Stem-free dehydrated leaves ·{' '}
                     <span className="text-[#D4A017] font-extrabold font-sans">
@@ -241,7 +241,8 @@ export default function MoringaHero({
                 </div>
                 <a
                   href="#products-section"
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#D4A017] text-[#183B24] flex items-center justify-center hover:scale-110 transition-transform shrink-0 shadow-md"
+                  aria-label="View featured product in store"
+                  className="w-10 h-10 sm:w-10 sm:h-10 min-w-[40px] min-h-[40px] rounded-full bg-[#D4A017] text-[#183B24] flex items-center justify-center hover:scale-110 transition-transform shrink-0 shadow-md"
                 >
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </a>
@@ -299,9 +300,9 @@ export default function MoringaHero({
                     {currentSlide.tagline}
                   </span>
 
-                  <h3 className="font-serif text-xl sm:text-3xl text-[#1C2A1E] font-normal leading-snug">
+                  <h2 className="font-serif text-xl sm:text-3xl text-[#1C2A1E] font-normal leading-snug">
                     {currentSlide.title}
-                  </h3>
+                  </h2>
 
                   <p className="text-xs sm:text-sm text-[#4A554D] font-light leading-relaxed font-sans">
                     {currentSlide.subtitle}
@@ -346,7 +347,16 @@ export default function MoringaHero({
                 {sidePreviews.map((prev, idx) => (
                   <div
                     key={prev.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Switch to slide ${prev.title}`}
                     onClick={() => setCurrentSlideIndex(idx % slides.length)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setCurrentSlideIndex(idx % slides.length);
+                      }
+                    }}
                     className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center gap-3 bg-white/90 backdrop-blur-md shadow-2xs hover:shadow-md w-full xl:w-52 ${currentSlideIndex === idx % slides.length
                       ? 'border-[#273B24] ring-2 ring-[#273B24]/30 bg-white shadow-sm'
                       : 'border-[#E6E2D8] hover:border-slate-300'
@@ -378,7 +388,7 @@ export default function MoringaHero({
             <div className="sm:hidden mt-4 bg-white/90 backdrop-blur-md rounded-2xl p-3 border border-[#E6E2D8] space-y-2.5 shadow-xs">
               <div className="flex items-center justify-between text-xs font-bold text-[#1C2A1E] font-sans px-1">
                 <span>Explore Our Goodness</span>
-                <a href="#products-section" className="text-[11px] font-bold text-[#C4922A]">
+                <a href="#products-section" className="text-[11px] font-bold text-[#875C0A] hover:text-[#5F4005] underline underline-offset-2">
                   View All →
                 </a>
               </div>
@@ -386,7 +396,16 @@ export default function MoringaHero({
                 {sidePreviews.map((prev, idx) => (
                   <div
                     key={prev.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Switch to slide ${prev.title}`}
                     onClick={() => setCurrentSlideIndex(idx % slides.length)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setCurrentSlideIndex(idx % slides.length);
+                      }
+                    }}
                     className={`flex flex-col items-center text-center p-1.5 rounded-xl border transition-all cursor-pointer ${currentSlideIndex === idx % slides.length
                       ? 'border-[#273B24] bg-white ring-2 ring-[#273B24]/30 shadow-xs'
                       : 'border-[#E6E2D8] bg-white/70'

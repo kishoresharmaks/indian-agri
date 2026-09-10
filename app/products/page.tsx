@@ -561,7 +561,8 @@ export default function AllProductsPage() {
           <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
             <button
               onClick={() => setIsTrackModalOpen(true)}
-              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#1E3524] hover:text-[#FAF8F5] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all shadow-xs"
+              aria-label="Track Order"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-5 py-2.5 bg-[#F5F2EB] hover:bg-[#1E3524] hover:text-[#FAF8F5] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all shadow-xs min-h-[40px]"
             >
               <PackageCheck className="w-4 h-4 text-[#1E3524]" />
               <span className="hidden sm:inline">Track Order</span>
@@ -661,13 +662,20 @@ export default function AllProductsPage() {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A655A]" />
               <input
                 type="text"
+                aria-label="Search all products"
                 placeholder="Search all products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 bg-[#F5F2EB] border border-[#E5E0D8] rounded-full text-xs text-[#1C1917] focus:outline-none focus:border-[#1E3524] transition-all"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#5A655A]">✕</button>
+                <button
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear search query"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#5A655A] p-1"
+                >
+                  ✕
+                </button>
               )}
             </div>
           </div>
@@ -692,6 +700,8 @@ export default function AllProductsPage() {
             <div className="flex items-center gap-2 flex-shrink-0">
               <SlidersHorizontal className="w-4 h-4 text-[#5A655A]" />
               <select
+                id="sort-products-select"
+                aria-label="Sort products"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-[#F5F2EB] border border-[#E5E0D8] text-xs text-[#1C1917] rounded-full px-4 py-2 focus:outline-none"
@@ -748,6 +758,7 @@ export default function AllProductsPage() {
                       </div>
                       <button
                         onClick={() => setSelectedProduct(product)}
+                        aria-label={`Quick view ${product.name}`}
                         className="absolute bottom-4 right-4 p-2.5 bg-[#FAF8F5] text-[#1B2E1E] rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:scale-110"
                         title="Quick View"
                       >
@@ -833,6 +844,7 @@ export default function AllProductsPage() {
               <button
                 onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                 disabled={currentPage === 1}
+                aria-label="Previous page"
                 className="p-3 rounded-full bg-[#F5F2EB] border border-[#E5E0D8] text-[#1B2E1E] disabled:opacity-40"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -843,6 +855,7 @@ export default function AllProductsPage() {
               <button
                 onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                 disabled={currentPage === totalPages}
+                aria-label="Next page"
                 className="p-3 rounded-full bg-[#F5F2EB] border border-[#E5E0D8] text-[#1B2E1E] disabled:opacity-40"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -866,7 +879,7 @@ export default function AllProductsPage() {
                   <ShoppingBag className="w-5 h-5 text-[#D4A017]" />
                   <h3 className="font-serif text-xl font-light">Shopping Bag ({cartItemCount})</h3>
                 </div>
-                <button onClick={() => setIsCartOpen(false)} className="p-1 text-[#FAF8F5] hover:opacity-80">
+                <button onClick={() => setIsCartOpen(false)} aria-label="Close shopping bag" className="p-1 text-[#FAF8F5] hover:opacity-80">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -896,7 +909,8 @@ export default function AllProductsPage() {
                               </h5>
                               <button
                                 onClick={() => removeFromCart(item.product._id, item.selectedVariant?.name)}
-                                className="text-stone-400 hover:text-rose-600"
+                                aria-label={`Remove ${item.product.name} from cart`}
+                                className="text-stone-400 hover:text-rose-600 p-1"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -915,14 +929,16 @@ export default function AllProductsPage() {
                             <div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5E0D8] rounded-full px-2 py-1">
                               <button
                                 onClick={() => updateCartQty(item.product._id, item.selectedVariant?.name, item.quantity - 1)}
-                                className="text-stone-600 hover:text-black p-0.5"
+                                aria-label="Decrease quantity"
+                                className="text-stone-600 hover:text-black p-1"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
                               <span className="text-xs font-semibold px-1">{item.quantity}</span>
                               <button
                                 onClick={() => updateCartQty(item.product._id, item.selectedVariant?.name, item.quantity + 1)}
-                                className="text-stone-600 hover:text-black p-0.5"
+                                aria-label="Increase quantity"
+                                className="text-stone-600 hover:text-black p-1"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
@@ -1228,6 +1244,7 @@ export default function AllProductsPage() {
           <div className="bg-[#FAF8F5] text-[#1C1917] w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-[#E5E0D8] relative">
             <button
               onClick={() => setSelectedProduct(null)}
+              aria-label="Close product details"
               className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#FAF8F5] text-[#1B2E1E] hover:scale-110 transition-transform shadow-md"
             >
               <X className="w-5 h-5" />

@@ -578,7 +578,8 @@ ${productUrl}
             {/* Request Quote Button */}
             <a
               href="#b2b-rfq-section"
-              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2 sm:py-2.5 bg-[#1E3524] hover:bg-[#152519] text-[#FAF8F5] rounded-full transition-all duration-300 shadow-sm active:scale-95 border border-[#D4A017]/40"
+              aria-label="Request Quote"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2.5 bg-[#1E3524] hover:bg-[#152519] text-[#FAF8F5] rounded-full transition-all duration-300 shadow-sm active:scale-95 border border-[#D4A017]/40 min-h-[40px]"
             >
               <Leaf className="w-3.5 h-3.5 text-[#D4A017]" />
               <span className="hidden xs:inline sm:inline">Request Quote</span>
@@ -587,7 +588,8 @@ ${productUrl}
             {/* Track Order Button */}
             <button
               onClick={() => setIsTrackModalOpen(true)}
-              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2 sm:py-2.5 bg-[#F5F2EB] hover:bg-[#E5E0D8] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all duration-300 shadow-xs active:scale-95"
+              aria-label="Track Order"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-2.5 bg-[#F5F2EB] hover:bg-[#E5E0D8] text-[#1B2E1E] rounded-full border border-[#E5E0D8] transition-all duration-300 shadow-xs active:scale-95 min-h-[40px]"
             >
               <PackageCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1E3524]" />
               <span className="hidden sm:inline">Track Order</span>
@@ -639,6 +641,7 @@ ${productUrl}
                   <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#5A655A]" />
                   <input
                     type="text"
+                    aria-label="Search organic solutions"
                     placeholder="Search organic solutions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -967,8 +970,9 @@ ${productUrl}
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Company / Brand *</label>
+                        <label htmlFor="rfq-company" className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Company / Brand *</label>
                         <input
+                          id="rfq-company"
                           name="company"
                           type="text"
                           required
@@ -977,8 +981,9 @@ ${productUrl}
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Contact Name *</label>
+                        <label htmlFor="rfq-name" className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Contact Name *</label>
                         <input
+                          id="rfq-name"
                           name="name"
                           type="text"
                           required
@@ -990,9 +995,11 @@ ${productUrl}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Target Product *</label>
+                        <label htmlFor="rfq-product" className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Target Product *</label>
                         <select
+                          id="rfq-product"
                           name="product"
+                          aria-label="Target Product"
                           className="w-full px-4 py-3 rounded-xl bg-[#F5F2EB] border border-[#E5E0D8] text-xs font-bold text-[#1C2A1E] focus:outline-none focus:border-[#1C2A1E] font-sans"
                         >
                           {products && products.length > 0 ? (
@@ -1016,8 +1023,9 @@ ${productUrl}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Volume (Kg / Tons) *</label>
+                        <label htmlFor="rfq-quantity" className="block text-xs font-bold text-[#1C2A1E] uppercase mb-1 font-sans">Volume (Kg / Tons) *</label>
                         <input
+                          id="rfq-quantity"
                           name="quantity"
                           type="text"
                           required
@@ -1062,7 +1070,7 @@ ${productUrl}
                   <ShoppingBag className="w-5 h-5 text-[#D4A017]" />
                   <h3 className="font-serif text-xl font-medium">Your Shopping Bag ({cartItemCount})</h3>
                 </div>
-                <button onClick={() => closeCart()} className="p-1 rounded-full hover:bg-white/10 text-[#FAF8F5]">
+                <button onClick={() => closeCart()} aria-label="Close shopping bag" className="p-1 rounded-full hover:bg-white/10 text-[#FAF8F5]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -1093,7 +1101,8 @@ ${productUrl}
                               </h5>
                               <button
                                 onClick={() => removeFromCart(item.product._id, item.selectedVariant?.name)}
-                                className="text-stone-400 hover:text-rose-600"
+                                aria-label={`Remove ${item.product.name} from cart`}
+                                className="text-stone-400 hover:text-rose-600 p-1"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -1112,14 +1121,16 @@ ${productUrl}
                             <div className="flex items-center gap-2 bg-[#FAF8F5] border border-[#E5E0D8] rounded-full px-2 py-1">
                               <button
                                 onClick={() => updateQuantity(item.product._id, item.selectedVariant?.name, item.quantity - 1)}
-                                className="text-stone-600 hover:text-black p-0.5"
+                                aria-label="Decrease quantity"
+                                className="text-stone-600 hover:text-black p-1"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
                               <span className="text-xs font-semibold px-1">{item.quantity}</span>
                               <button
                                 onClick={() => updateQuantity(item.product._id, item.selectedVariant?.name, item.quantity + 1)}
-                                className="text-stone-600 hover:text-black p-0.5"
+                                aria-label="Increase quantity"
+                                className="text-stone-600 hover:text-black p-1"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
@@ -1425,6 +1436,7 @@ ${productUrl}
           <div className="bg-[#FAF8F5] text-[#1C1917] w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-[#E5E0D8] relative">
             <button
               onClick={() => setSelectedProduct(null)}
+              aria-label="Close product details"
               className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#FAF8F5] text-[#1B2E1E] hover:scale-110 transition-transform shadow-md"
             >
               <X className="w-5 h-5" />
