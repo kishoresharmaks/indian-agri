@@ -59,9 +59,9 @@ export const metadata: Metadata = {
     description: "Premier B2B organic raw materials & moringa bulk supplier direct from Indian farms.",
     images: ["/logo.jpg"],
   },
-  metadataBase: new URL("https://INDIANAGRICULTURE.online"),
+  metadataBase: new URL("https://indianagriculture.online"),
   alternates: {
-    canonical: "https://INDIANAGRICULTURE.online",
+    canonical: "https://indianagriculture.online",
   },
 };
 
@@ -70,6 +70,56 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "INDIAN AGRICULTURE",
+      "legalName": "Indian Agriculture Pvt. Ltd.",
+      "url": "https://indianagriculture.online",
+      "logo": "https://indianagriculture.online/logo.jpg",
+      "sameAs": [
+        "https://www.instagram.com/indian_agriculture_pvt?stkn=bTlsY3pxdDNnampt",
+        "https://youtube.com/@indianagriculturepvtltd?si=k4SxOPJr1EiebDRS",
+        "https://pin.it/1J93BoPq8",
+        "https://www.facebook.com/share/18GynvVubk/",
+        "https://share.google/Gjio1PWvVXsbz2iNL"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9597250344",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Tamil", "Hindi"]
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "INDIAN AGRICULTURE",
+      "url": "https://indianagriculture.online",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://indianagriculture.online/products?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "INDIAN AGRICULTURE",
+      "image": "https://indianagriculture.online/logo.jpg",
+      "@id": "https://indianagriculture.online",
+      "url": "https://indianagriculture.online",
+      "priceRange": "₹₹",
+      "telephone": "+91-9597250344",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      }
+    }
+  ];
+
   return (
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`}>
       <head>
@@ -78,19 +128,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Store",
-              "name": "INDIAN AGRICULTURE",
-              "image": "https://INDIANAGRICULTURE.online/logo.jpg",
-              "@id": "https://INDIANAGRICULTURE.online",
-              "url": "https://INDIANAGRICULTURE.online",
-              "priceRange": "₹₹",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "IN"
-              }
-            })
+            __html: JSON.stringify(structuredData)
           }}
         />
       </head>

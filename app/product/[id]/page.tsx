@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       openGraph: {
         title: `${product.name} | INDIAN AGRICULTURE`,
         description,
-        url: `https://INDIANAGRICULTURE.online/product/${params.id}`,
+        url: `https://indianagriculture.online/product/${params.id}`,
         siteName: 'INDIAN AGRICULTURE',
         images: product.image
           ? [
@@ -50,6 +50,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         images: product.image ? [product.image] : ['/logo.jpg'],
       },
+      alternates: {
+        canonical: `https://indianagriculture.online/product/${params.id}`,
+      },
     };
   } catch (error) {
     return {
@@ -58,6 +61,47 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function ProductPage({ params }: Props) {
-  return <ProductClientRedirect id={params.id} />;
+export default async function ProductPage({ params }: Props) {
+  let productJsonLd: any = null;
+
+  try {
+    await connectToDatabase();
+    const product = await Product.findById(params.id).lean();
+
+    if (product) {
+      productJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.name,
+        image: product.image || 'https://indianagriculture.online/logo.jpg',
+        description: product.description || `Buy ${product.name} direct from farm.`,
+        brand: {
+          '@type': 'Brand',
+          name: 'INDIAN AGRICULTURE',
+        },
+        offers: {
+          '@type': 'Offer',
+          url: `https://indianagriculture.online/product/${params.id}`,
+          priceCurrency: 'INR',
+          price: product.price,
+          availability: (product.quantity && product.quantity > 0) ? 'https://schema.org/InStock' : 'https://schema.org/InStock',
+          itemCondition: 'https://schema.org/NewCondition',
+        },
+      };
+    }
+  } catch (e) {
+    // Ignore error for jsonld
+  }
+
+  return (
+    <>
+      {productJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        />
+      )}
+      <ProductClientRedirect id={params.id} />
+    </>
+  );
 }
