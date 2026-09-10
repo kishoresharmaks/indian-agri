@@ -254,8 +254,7 @@ export default function SalesTabContainer({ products }: SalesTabContainerProps) 
                     <td className="p-4 text-right space-x-2">
                       {/* Convert 1-Click Action */}
                       {(d.docType === 'QUOTATION' || d.docType === 'PROFORMA' || d.docType === 'SALE_ORDER') &&
-                        d.status !== 'Converted' &&
-                        d.status !== 'Completed' && (
+                        d.status !== 'Converted' && (
                           <button
                             onClick={() => handleConvertToInvoice(d._id)}
                             className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold border border-emerald-200"
@@ -265,17 +264,18 @@ export default function SalesTabContainer({ products }: SalesTabContainerProps) 
                           </button>
                         )}
 
-                      {/* Record Payment Action for unpaid/partial invoices */}
-                      {d.docType === 'SALE_INVOICE' && d.paymentStatus !== 'Paid' && (
+                      {/* Record Payment / Advance Action for unpaid/partial documents */}
+                      {d.paymentStatus !== 'Paid' && d.status !== 'Cancelled' && d.status !== 'Converted' && (
                         <button
                           onClick={() => {
                             setSelectedDocForPayment(d);
                             setIsPaymentModalOpen(true);
                           }}
-                          className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs"
-                          title="Record customer payment for this invoice"
+                          className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition-all"
+                          title={d.docType === 'SALE_INVOICE' ? 'Record customer payment for this invoice' : 'Record advance payment for this document'}
                         >
-                          <IndianRupee className="w-3.5 h-3.5 inline mr-0.5" /> Record Pay
+                          <IndianRupee className="w-3.5 h-3.5 inline mr-0.5" />{' '}
+                          {d.docType === 'SALE_INVOICE' ? 'Record Pay' : 'Record Advance'}
                         </button>
                       )}
 

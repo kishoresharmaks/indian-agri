@@ -164,16 +164,18 @@ export async function POST(req: NextRequest) {
       notes: body.notes || '',
     });
 
+    let saleDoc: any = null;
     // Update document balance if docId supplied
     if (docId) {
       if (paymentType === 'PAYMENT_IN') {
-        const saleDoc = await SaleDocument.findById(docId);
+        saleDoc = await SaleDocument.findById(docId);
         if (saleDoc) {
           saleDoc.paidAmount += Number(amount);
           saleDoc.balanceAmount = Math.max(0, saleDoc.grandTotal - saleDoc.paidAmount);
           saleDoc.paymentStatus =
             saleDoc.paidAmount >= saleDoc.grandTotal ? 'Paid' : 'Partial';
-          if (saleDoc.paidAmount >= saleDoc.grandTotal) {
+          // Only finalize status for actual Sale Invoices; Quotations/Proformas/Orders remain Active so they can still be converted
+          if (saleDoc.paidAmount >= saleDoc.grandTotal && saleDoc.docType === 'SALE_INVOICE') {
             saleDoc.status = 'Completed';
           }
           await saleDoc.save();
@@ -205,8 +207,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Update party balance if partyId supplied
-    if (body.partyId) {
+    // Update party balance: for invoices and direct payments, adjust balance immediately.
+    // For advance payments on unconverted Quotations/Proformas, balance is settled when converted to Sale Invoice.
+    if (body.partyId && (!docId || !saleDoc || saleDoc.docType === 'SALE_INVOICE')) {
       const balanceAdj = paymentType === 'PAYMENT_IN' ? -Number(amount) : Number(amount);
       await Party.findByIdAndUpdate(body.partyId, { $inc: { currentBalance: balanceAdj } });
     }

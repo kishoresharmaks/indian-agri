@@ -14,11 +14,19 @@ export default function PaymentInModal({
   onClose,
   onSuccess,
 }: PaymentInModalProps) {
+  const isAdvance = Boolean(linkedDoc && linkedDoc.docType !== 'SALE_INVOICE');
   const [partyName, setPartyName] = useState(linkedDoc?.customerName || '');
-  const partyPhone = linkedDoc?.customerPhone || '';
+  const [partyPhone, setPartyPhone] = useState(linkedDoc?.customerPhone || '');
   const [amount, setAmount] = useState(linkedDoc?.balanceAmount ? String(linkedDoc.balanceAmount) : '');
   const [paymentMode, setPaymentMode] = useState<'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CHEQUE'>('CASH');
   const [referenceNo, setReferenceNo] = useState('');
+  const [notes, setNotes] = useState(
+    isAdvance
+      ? `Advance payment against ${linkedDoc.docType?.replace('_', ' ') || 'Document'} #${linkedDoc.docNumber}`
+      : linkedDoc
+      ? `Payment against #${linkedDoc.docNumber}`
+      : ''
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -39,7 +47,7 @@ export default function PaymentInModal({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           paymentType: 'PAYMENT_IN',
-          partyId: linkedDoc?.partyId || '',
+          partyId: linkedDoc?.partyId?._id || linkedDoc?.partyId || '',
           partyName,
           partyPhone,
           amount: Number(amount),
@@ -47,7 +55,7 @@ export default function PaymentInModal({
           referenceNo,
           docId: linkedDoc?._id || '',
           docNumber: linkedDoc?.docNumber || '',
-          notes: '',
+          notes,
         }),
       });
 
@@ -81,9 +89,13 @@ export default function PaymentInModal({
             <IndianRupee className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-extrabold text-base text-[#163B5C]">Record Customer Payment In</h3>
+            <h3 className="font-extrabold text-base text-[#163B5C]">
+              {isAdvance ? 'Record Advance Payment' : 'Record Customer Payment In'}
+            </h3>
             <p className="text-xs text-[#64748B]">
-              {linkedDoc ? `Linked to Invoice #${linkedDoc.docNumber}` : 'Record customer payment credit'}
+              {linkedDoc
+                ? `Linked to ${linkedDoc.docType?.replace('_', ' ') || 'Document'} #${linkedDoc.docNumber}`
+                : 'Record customer payment credit'}
             </p>
           </div>
         </div>
@@ -108,17 +120,25 @@ export default function PaymentInModal({
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-[#163B5C] uppercase">Amount Received (₹) *</label>
+            <label className="text-xs font-bold text-[#163B5C] uppercase">
+              {isAdvance ? 'Advance Amount Received (₹) *' : 'Amount Received (₹) *'}
+            </label>
             <input
               type="number"
               required
               min="0.01"
               step="any"
-              placeholder="e.g. 1500"
+              placeholder="e.g. 500000"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-[#E8EDF2] text-sm font-black text-emerald-700 focus:outline-none focus:border-[#ED3500]"
             />
+            {linkedDoc?.grandTotal && (
+              <p className="text-[11px] text-gray-500">
+                Document Total: ₹{linkedDoc.grandTotal.toLocaleString('en-IN')} (Balance: ₹
+                {linkedDoc.balanceAmount?.toLocaleString('en-IN')})
+              </p>
+            )}
           </div>
 
           <div className="space-y-1">
@@ -128,9 +148,9 @@ export default function PaymentInModal({
               onChange={(e: any) => setPaymentMode(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-[#E8EDF2] text-xs font-semibold bg-white"
             >
-              <option value="CASH">Cash</option>
+              <option value="BANK_TRANSFER">Bank Transfer / NEFT / RTGS</option>
               <option value="UPI">Online UPI (GPay/PhonePe)</option>
-              <option value="BANK_TRANSFER">Bank Transfer / NEFT</option>
+              <option value="CASH">Cash</option>
               <option value="CHEQUE">Cheque</option>
             </select>
           </div>
@@ -139,9 +159,20 @@ export default function PaymentInModal({
             <label className="text-xs font-bold text-[#163B5C] uppercase">Reference No / UTR (Optional)</label>
             <input
               type="text"
-              placeholder="e.g. UPI Ref 304918274"
+              placeholder="e.g. UTR / NEFT Reference or Cheque No"
               value={referenceNo}
               onChange={(e) => setReferenceNo(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-xl border border-[#E8EDF2] text-xs font-semibold"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-[#163B5C] uppercase">Notes / Remarks</label>
+            <input
+              type="text"
+              placeholder="e.g. 50% advance before dispatch"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-[#E8EDF2] text-xs font-semibold"
             />
           </div>
@@ -160,7 +191,7 @@ export default function PaymentInModal({
               className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" />
-              {isSubmitting ? 'Saving...' : 'Save Payment In'}
+              {isSubmitting ? 'Saving...' : isAdvance ? 'Save Advance' : 'Save Payment In'}
             </button>
           </div>
         </form>
