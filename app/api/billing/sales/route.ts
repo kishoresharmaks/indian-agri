@@ -172,6 +172,26 @@ export async function POST(req: NextRequest) {
               },
             }
           );
+
+          // If variant quantity was de-synced from master product stock, but master product has enough stock:
+          if (res.modifiedCount === 0) {
+            const currentProd = await Product.findById(item.productId);
+            if (currentProd && currentProd.quantity >= item.quantity) {
+              const matchedVar = currentProd.variants?.find((v: any) => v.name === item.variantName);
+              const newVarQty = matchedVar ? Math.max(0, matchedVar.quantity - item.quantity) : 0;
+              res = await Product.updateOne(
+                {
+                  _id: item.productId,
+                  'variants.name': item.variantName,
+                  quantity: { $gte: item.quantity },
+                },
+                {
+                  $set: { 'variants.$.quantity': newVarQty },
+                  $inc: { quantity: -item.quantity },
+                }
+              );
+            }
+          }
         } else {
           res = await Product.updateOne(
             { _id: item.productId, quantity: { $gte: item.quantity } },
@@ -353,6 +373,26 @@ export async function PUT(req: NextRequest) {
               },
             }
           );
+
+          // If variant quantity was de-synced from master product stock, but master product has enough stock:
+          if (res.modifiedCount === 0) {
+            const currentProd = await Product.findById(item.productId);
+            if (currentProd && currentProd.quantity >= item.quantity) {
+              const matchedVar = currentProd.variants?.find((v: any) => v.name === item.variantName);
+              const newVarQty = matchedVar ? Math.max(0, matchedVar.quantity - item.quantity) : 0;
+              res = await Product.updateOne(
+                {
+                  _id: item.productId,
+                  'variants.name': item.variantName,
+                  quantity: { $gte: item.quantity },
+                },
+                {
+                  $set: { 'variants.$.quantity': newVarQty },
+                  $inc: { quantity: -item.quantity },
+                }
+              );
+            }
+          }
         } else {
           res = await Product.updateOne(
             { _id: item.productId, quantity: { $gte: item.quantity } },

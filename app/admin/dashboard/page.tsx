@@ -703,7 +703,10 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
             name: v.name.trim(),
             mrp: Number(v.mrp),
             price: Number(v.price),
-            quantity: Number(v.quantity || 10),
+            quantity:
+              productForm.variants.length === 1
+                ? Number(productForm.quantity)
+                : Number(v.quantity || 10),
           })),
         }),
       });
