@@ -897,7 +897,7 @@ ${productUrl}
           </div>
 
           {/* MAIN RFQ CONTENT BLOCK */}
-          <div className="bg-[#09180b] py-10 sm:py-16 relative">
+          <div className="bg-[#09180b] pt-8 pb-4 sm:pt-12 sm:pb-6 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
