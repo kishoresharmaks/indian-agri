@@ -247,12 +247,12 @@ export default function Footer({
                   Certified Standards
                 </p>
 
-                <div className="flex gap-3">
-                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
                     <img
                       src="/iso-9001.svg"
                       alt="ISO 9001"
-                      className="h-9 w-12 object-contain"
+                      className="h-9 w-10 shrink-0 object-contain"
                     />
 
                     <div>
@@ -265,11 +265,11 @@ export default function Footer({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2">
+                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
                     <img
                       src="/iso-22000.svg"
                       alt="ISO 22000"
-                      className="h-9 w-12 object-contain"
+                      className="h-9 w-10 shrink-0 object-contain"
                     />
 
                     <div>
@@ -278,6 +278,40 @@ export default function Footer({
                       </p>
                       <p className="text-[8px] text-[#8da593]">
                         Food Safety
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
+                    <img
+                      src="/GMP_CERTIFIED.jpg"
+                      alt="GMP Certified"
+                      className="h-9 w-9 shrink-0 rounded-lg bg-white p-0.5 object-contain"
+                    />
+
+                    <div>
+                      <p className="text-[10px] font-bold text-white">
+                        GMP
+                      </p>
+                      <p className="text-[8px] text-[#8da593]">
+                        Certified
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
+                    <img
+                      src="/best_quality.jpg"
+                      alt="Best Quality"
+                      className="h-9 w-9 shrink-0 rounded-lg bg-white p-0.5 object-contain"
+                    />
+
+                    <div>
+                      <p className="text-[10px] font-bold text-white">
+                        Best Quality
+                      </p>
+                      <p className="text-[8px] text-[#8da593]">
+                        100% Original
                       </p>
                     </div>
                   </div>
