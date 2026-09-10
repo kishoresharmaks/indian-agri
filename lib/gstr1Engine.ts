@@ -1090,7 +1090,7 @@ export async function calculateGstr1(options?: {
       const key = `${item.hsn}_${item.uqc}_${item.rate}`;
       const curr = hsnB2bMap.get(key) || {
         hsn: item.hsn,
-        desc: '',
+        desc: item.name || 'Organic Agricultural Produce',
         uqc: item.uqc,
         qty: 0,
         val: 0,
@@ -1101,6 +1101,9 @@ export async function calculateGstr1(options?: {
         sgst: 0,
         cess: 0,
       };
+      if (curr.desc && item.name && !curr.desc.includes(item.name) && curr.desc.length + item.name.length < 120) {
+        curr.desc = `${curr.desc}, ${item.name}`;
+      }
       curr.qty += item.quantity;
       curr.val += item.lineTotal;
       curr.taxable += item.taxableValue;
@@ -1176,7 +1179,7 @@ export async function calculateGstr1(options?: {
       const key = `${item.hsn}_${item.uqc}_${item.rate}`;
       const curr = hsnB2cMap.get(key) || {
         hsn: item.hsn,
-        desc: '',
+        desc: item.name || 'Organic Agricultural Produce',
         uqc: item.uqc,
         qty: 0,
         val: 0,
@@ -1187,6 +1190,9 @@ export async function calculateGstr1(options?: {
         sgst: 0,
         cess: 0,
       };
+      if (curr.desc && item.name && !curr.desc.includes(item.name) && curr.desc.length + item.name.length < 120) {
+        curr.desc = `${curr.desc}, ${item.name}`;
+      }
       curr.qty += item.quantity;
       curr.val += item.lineTotal;
       curr.taxable += item.taxableValue;
