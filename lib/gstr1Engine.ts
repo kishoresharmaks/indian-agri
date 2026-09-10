@@ -411,9 +411,10 @@ export async function calculateGstr1(options?: {
     if (pr._id) productMapById.set(String(pr._id), pr);
   }
 
-  // Query SaleDocuments
+  // Query SaleDocuments (only finalized tax invoices and credit note returns, excluding quotations and estimates)
   const saleDocs = await SaleDocument.find({
     status: { $ne: 'Cancelled' },
+    docType: { $in: ['SALE_INVOICE', 'SALE_RETURN'] },
     createdAt: { $gte: start, $lte: end },
   })
     .sort({ createdAt: 1 })

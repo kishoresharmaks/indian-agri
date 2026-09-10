@@ -7,7 +7,7 @@ import PrintablePnLModal from './PrintablePnLModal';
 const formatCur = (val: number | undefined | null) => {
   const n = Number(val || 0);
   return n.toLocaleString('en-IN', {
-    minimumFractionDigits: n % 1 !== 0 ? 2 : 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 };

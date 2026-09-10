@@ -1099,7 +1099,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
                 Total Revenue
               </span>
               <span className="text-2xl font-black text-[#ED3500]">
-                ₹{totalRevenue.toLocaleString('en-IN')}
+                ₹{totalRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
           </div>
