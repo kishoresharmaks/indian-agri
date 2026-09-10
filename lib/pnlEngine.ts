@@ -48,18 +48,24 @@ export async function calculatePnL(startDate?: string, endDate?: string): Promis
     }
   }
 
-  // 1. Sales Calculation
+function round2(num: number): number {
+  return Math.round((Number(num) || 0) * 100) / 100;
+}
+
+  // 1. Sales Calculation (Net Taxable Revenue excluding GST)
   const saleDocs = await SaleDocument.find(queryFilter).lean();
   let b2bSaleInvoiceTotal = 0;
   let salesReturnTotal = 0;
   let saleOutputGst = 0;
 
   for (const doc of saleDocs) {
+    const netDocTaxable = Math.max(0, (doc.subtotal || 0) - (doc.discountAmount || 0));
     if (doc.docType === 'SALE_INVOICE') {
-      b2bSaleInvoiceTotal += doc.grandTotal || 0;
+      b2bSaleInvoiceTotal += netDocTaxable;
       saleOutputGst += doc.totalGst || 0;
     } else if (doc.docType === 'SALE_RETURN') {
-      salesReturnTotal += doc.grandTotal || 0;
+      salesReturnTotal += netDocTaxable;
+      saleOutputGst -= doc.totalGst || 0;
     }
   }
 
@@ -74,34 +80,47 @@ export async function calculatePnL(startDate?: string, endDate?: string): Promis
   let posCounterSales = 0;
 
   for (const ord of allOrders) {
+    const netOrderTaxable = Math.max(0, (ord.subtotal || 0) - (ord.discountAmount || 0));
     if (ord.orderType === 'POS') {
-      posCounterSales += ord.totalAmount || 0;
+      posCounterSales += netOrderTaxable;
     } else {
-      onlineStoreSales += ord.totalAmount || 0;
+      onlineStoreSales += netOrderTaxable;
     }
-    saleOutputGst += ord.totalGst || 0;
+
+    // Exact GST liability from items or totalGst
+    const orderGst =
+      ord.items && ord.items.length > 0
+        ? ord.items.reduce(
+            (sum: number, itm: any) =>
+              sum + (Number(itm.price || 0) * Number(itm.quantity || 1) * Number(itm.gst || 0)) / 100,
+            0
+          )
+        : ord.totalGst || 0;
+    saleOutputGst += orderGst;
   }
 
-  const grossSalesRevenue = b2bSaleInvoiceTotal + onlineStoreSales + posCounterSales;
-  const netSalesRevenue = Math.max(0, grossSalesRevenue - salesReturnTotal);
+  const grossSalesRevenue = round2(b2bSaleInvoiceTotal + onlineStoreSales + posCounterSales);
+  const netSalesRevenue = round2(Math.max(0, grossSalesRevenue - salesReturnTotal));
 
-  // 2. Purchases Calculation (COGS)
+  // 2. Purchases Calculation (COGS - Net Taxable Cost excluding ITC GST)
   const purchaseDocs = await PurchaseDocument.find(queryFilter).lean();
   let purchaseBillTotal = 0;
   let purchaseReturnTotal = 0;
   let purchaseInputGst = 0;
 
   for (const doc of purchaseDocs) {
+    const netPurchaseTaxable = Math.max(0, (doc.subtotal || 0) - (doc.discountAmount || 0));
     if (doc.docType === 'PURCHASE_BILL') {
-      purchaseBillTotal += doc.grandTotal || 0;
+      purchaseBillTotal += netPurchaseTaxable;
       purchaseInputGst += doc.totalGst || 0;
     } else if (doc.docType === 'PURCHASE_RETURN') {
-      purchaseReturnTotal += doc.grandTotal || 0;
+      purchaseReturnTotal += netPurchaseTaxable;
+      purchaseInputGst -= doc.totalGst || 0;
     }
   }
 
-  const costOfGoodsSold = Math.max(0, purchaseBillTotal - purchaseReturnTotal);
-  const grossProfit = netSalesRevenue - costOfGoodsSold;
+  const costOfGoodsSold = round2(Math.max(0, purchaseBillTotal - purchaseReturnTotal));
+  const grossProfit = round2(netSalesRevenue - costOfGoodsSold);
 
   // 3. Operating Expenses Calculation
   const expFilter: any = {};
@@ -122,34 +141,35 @@ export async function calculatePnL(startDate?: string, endDate?: string): Promis
 
   const expenseByCategory = Object.keys(categoryMap).map((cat) => ({
     category: cat,
-    amount: categoryMap[cat] ?? 0,
+    amount: round2(categoryMap[cat] ?? 0),
   }));
 
   // 4. Net Profit / Loss
-  const netProfit = grossProfit - totalExpenses;
+  totalExpenses = round2(totalExpenses);
+  const netProfit = round2(grossProfit - totalExpenses);
   const isProfit = netProfit >= 0;
 
   // 5. Net GST Payable (Output GST - Input Tax Credit)
-  const netGstPayable = Math.max(0, saleOutputGst - purchaseInputGst);
+  const netGstPayable = round2(Math.max(0, saleOutputGst - purchaseInputGst));
 
   return {
     startDate,
     endDate,
     grossSalesRevenue,
-    onlineStoreSales,
-    posCounterSales,
-    salesReturnTotal,
+    onlineStoreSales: round2(onlineStoreSales),
+    posCounterSales: round2(posCounterSales),
+    salesReturnTotal: round2(salesReturnTotal),
     netSalesRevenue,
-    purchaseBillTotal,
-    purchaseReturnTotal,
+    purchaseBillTotal: round2(purchaseBillTotal),
+    purchaseReturnTotal: round2(purchaseReturnTotal),
     costOfGoodsSold,
     grossProfit,
     totalExpenses,
     expenseByCategory,
     netProfit,
     isProfit,
-    outputGstCollected: saleOutputGst,
-    inputGstCredit: purchaseInputGst,
+    outputGstCollected: round2(saleOutputGst),
+    inputGstCredit: round2(purchaseInputGst),
     netGstPayable,
   };
 }

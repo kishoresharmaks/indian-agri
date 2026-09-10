@@ -17,6 +17,14 @@ import {
 } from 'lucide-react';
 import { Gstr1Data } from '@/lib/gstr1Engine';
 
+const formatCur = (val: number | undefined | null) => {
+  const n = Number(val || 0);
+  return n.toLocaleString('en-IN', {
+    minimumFractionDigits: n % 1 !== 0 ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
+};
+
 export default function Gstr1ReportView() {
   const currentDate = new Date();
   const [filterMode, setFilterMode] = useState<'MONTH' | 'CUSTOM'>('MONTH');
@@ -276,7 +284,7 @@ export default function Gstr1ReportView() {
             <div className="h-8 w-px bg-white/20" />
             <div>
               <p className="text-[10px] text-white/70 uppercase tracking-wider font-bold">Gross Value</p>
-              <p className="text-xl font-black">₹{reportData.summary.totalValue.toLocaleString('en-IN')}</p>
+              <p className="text-xl font-black">₹{formatCur(reportData.summary.totalValue)}</p>
             </div>
           </div>
         </div>
@@ -287,7 +295,7 @@ export default function Gstr1ReportView() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <div className="bg-white border border-[#E8EDF2] p-4 rounded-xl shadow-2xs">
             <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Taxable Value</p>
-            <p className="text-lg font-black text-[#163B5C] mt-1">₹{reportData.summary.totalTaxableValue.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-black text-[#163B5C] mt-1">₹{formatCur(reportData.summary.totalTaxableValue)}</p>
             <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded mt-1 inline-block">
               Net Tax Base
             </span>
@@ -295,7 +303,7 @@ export default function Gstr1ReportView() {
 
           <div className="bg-white border border-[#E8EDF2] p-4 rounded-xl shadow-2xs">
             <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Central Tax (CGST)</p>
-            <p className="text-lg font-black text-[#163B5C] mt-1">₹{reportData.summary.totalCgst.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-black text-[#163B5C] mt-1">₹{formatCur(reportData.summary.totalCgst)}</p>
             <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mt-1 inline-block">
               Intra-state
             </span>
@@ -303,7 +311,7 @@ export default function Gstr1ReportView() {
 
           <div className="bg-white border border-[#E8EDF2] p-4 rounded-xl shadow-2xs">
             <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">State Tax (SGST)</p>
-            <p className="text-lg font-black text-[#163B5C] mt-1">₹{reportData.summary.totalSgst.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-black text-[#163B5C] mt-1">₹{formatCur(reportData.summary.totalSgst)}</p>
             <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mt-1 inline-block">
               Intra-state
             </span>
@@ -311,7 +319,7 @@ export default function Gstr1ReportView() {
 
           <div className="bg-white border border-[#E8EDF2] p-4 rounded-xl shadow-2xs">
             <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Integrated Tax (IGST)</p>
-            <p className="text-lg font-black text-[#163B5C] mt-1">₹{reportData.summary.totalIgst.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-black text-[#163B5C] mt-1">₹{formatCur(reportData.summary.totalIgst)}</p>
             <span className="text-[10px] font-semibold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded mt-1 inline-block">
               Inter-state
             </span>
@@ -320,7 +328,7 @@ export default function Gstr1ReportView() {
           <div className="bg-white border border-[#E8EDF2] p-4 rounded-xl shadow-2xs">
             <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Total Tax</p>
             <p className="text-lg font-black text-[#ED3500] mt-1">
-              ₹{(reportData.summary.totalCgst + reportData.summary.totalSgst + reportData.summary.totalIgst).toLocaleString('en-IN')}
+              ₹{formatCur(reportData.summary.totalCgst + reportData.summary.totalSgst + reportData.summary.totalIgst)}
             </p>
             <span className="text-[10px] font-semibold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded mt-1 inline-block">
               Output Liability

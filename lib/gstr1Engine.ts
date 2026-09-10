@@ -486,18 +486,19 @@ export async function calculateGstr1(options?: {
       const rate = Number(item.gst || 0);
       const qty = Number(item.quantity || 1);
       const taxable = round2(Number(item.lineSubtotal || item.price * qty));
-      const total = round2(Number(item.lineTotal || taxable + (taxable * rate) / 100));
+      const taxAmount = round2(Number(item.lineGst || (taxable * rate) / 100));
 
       let igst = 0;
       let cgst = 0;
       let sgst = 0;
 
       if (isInterState) {
-        igst = round2((taxable * rate) / 100);
+        igst = taxAmount;
       } else {
-        cgst = round2((taxable * (rate / 2)) / 100);
-        sgst = round2((taxable * (rate / 2)) / 100);
+        cgst = round2(taxAmount / 2);
+        sgst = round2(taxAmount - cgst);
       }
+      const total = round2(Number(item.lineTotal || taxable + (isInterState ? igst : cgst + sgst)));
 
       normItems.push({
         name: item.name,
@@ -587,20 +588,21 @@ export async function calculateGstr1(options?: {
       const uqc = (item as any)?.uqc || (pObj as any)?.uqc || hsnInfo.uqc;
       const rate = Number(item.gst || 0);
       const qty = Number(item.quantity || 1);
-      const total = round2(item.price * qty);
-      const taxable = rate > 0 ? round2(total / (1 + rate / 100)) : total;
+      const taxable = round2(item.price * qty);
+      const taxAmount = round2((taxable * rate) / 100);
 
       let igst = 0;
       let cgst = 0;
       let sgst = 0;
 
       if (isInterState) {
-        igst = round2(total - taxable);
+        igst = taxAmount;
       } else {
-        const half = round2((total - taxable) / 2);
-        cgst = half;
-        sgst = half;
+        cgst = round2(taxAmount / 2);
+        sgst = round2(taxAmount - cgst);
       }
+
+      const total = round2(taxable + (isInterState ? igst : cgst + sgst));
 
       normItems.push({
         name: item.name,
@@ -638,7 +640,7 @@ export async function calculateGstr1(options?: {
       stateName: stateName || 'Tamil Nadu',
       placeOfSupply: `${stateCode}-${stateName || 'Tamil Nadu'}`,
       isInterState,
-      totalValue: round2(ord.totalAmount || ordValue),
+      totalValue: round2(ordValue || ord.totalAmount),
       taxableValue: round2(ordTaxable),
       igst: round2(ordIgst),
       cgst: round2(ordCgst),

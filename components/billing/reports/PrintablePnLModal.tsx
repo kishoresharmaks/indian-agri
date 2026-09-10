@@ -11,6 +11,14 @@ interface PrintablePnLModalProps {
   onClose: () => void;
 }
 
+const formatCur = (val: number | undefined | null) => {
+  const n = Number(val || 0);
+  return n.toLocaleString('en-IN', {
+    minimumFractionDigits: n % 1 !== 0 ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
+};
+
 export default function PrintablePnLModal({
   report,
   startDate,
@@ -233,7 +241,7 @@ export default function PrintablePnLModal({
                   NET BUSINESS FINANCIAL PERFORMANCE RESULT
                 </span>
                 <span className="text-2xl font-black">
-                  {report.isProfit ? '+' : '-'} ₹{Math.abs(report.netProfit || 0).toLocaleString('en-IN')}
+                  {report.isProfit ? '+' : '-'} ₹{formatCur(Math.abs(report.netProfit || 0))}
                 </span>
               </div>
               <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-white border border-current">
@@ -264,25 +272,25 @@ export default function PrintablePnLModal({
                   <tr>
                     <td className="p-2.5 pl-6 text-slate-700 border border-slate-200">Online E-Commerce Sales Revenue</td>
                     <td className="p-2.5 text-right font-semibold text-slate-900 border border-slate-200">
-                      ₹{report.onlineStoreSales?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.onlineStoreSales)}
                     </td>
                   </tr>
                   <tr>
                     <td className="p-2.5 pl-6 text-slate-700 border border-slate-200">POS Counter Billing Sales Revenue</td>
                     <td className="p-2.5 text-right font-semibold text-slate-900 border border-slate-200">
-                      ₹{report.posCounterSales?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.posCounterSales)}
                     </td>
                   </tr>
                   <tr className="text-rose-600">
                     <td className="p-2.5 pl-6 border border-slate-200">Less: Sales Returns & Credit Notes Issued</td>
                     <td className="p-2.5 text-right font-semibold border border-slate-200">
-                      - ₹{report.salesReturnTotal?.toLocaleString('en-IN')}
+                      - ₹{formatCur(report.salesReturnTotal)}
                     </td>
                   </tr>
                   <tr className="font-black bg-emerald-50 border-t-2 border-slate-300">
                     <td className="p-2.5 text-slate-900 border border-slate-200">NET SALES REVENUE (GROSS INCOME)</td>
                     <td className="p-2.5 text-right text-emerald-800 text-sm border border-slate-200">
-                      ₹{report.netSalesRevenue?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.netSalesRevenue)}
                     </td>
                   </tr>
 
@@ -295,25 +303,25 @@ export default function PrintablePnLModal({
                   <tr>
                     <td className="p-2.5 pl-6 text-slate-700 border border-slate-200">Inward Inventory Purchase Bills</td>
                     <td className="p-2.5 text-right font-semibold text-slate-900 border border-slate-200">
-                      ₹{report.purchaseBillTotal?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.purchaseBillTotal)}
                     </td>
                   </tr>
                   <tr className="text-emerald-600">
                     <td className="p-2.5 pl-6 border border-slate-200">Less: Purchase Returns to Vendors</td>
                     <td className="p-2.5 text-right font-semibold border border-slate-200">
-                      - ₹{report.purchaseReturnTotal?.toLocaleString('en-IN')}
+                      - ₹{formatCur(report.purchaseReturnTotal)}
                     </td>
                   </tr>
                   <tr className="font-bold border-t">
                     <td className="p-2.5 text-slate-900 border border-slate-200">TOTAL COST OF GOODS SOLD (COGS)</td>
                     <td className="p-2.5 text-right font-extrabold text-slate-900 border border-slate-200">
-                      ₹{report.costOfGoodsSold?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.costOfGoodsSold)}
                     </td>
                   </tr>
                   <tr className="font-black bg-slate-100 border-t-2 border-slate-300">
                     <td className="p-2.5 text-slate-900 border border-slate-200">GROSS PROFIT (NET SALES - COGS)</td>
                     <td className="p-2.5 text-right text-slate-900 text-sm border border-slate-200">
-                      ₹{report.grossProfit?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.grossProfit)}
                     </td>
                   </tr>
 
@@ -334,7 +342,7 @@ export default function PrintablePnLModal({
                       <tr key={cat.category}>
                         <td className="p-2.5 pl-6 text-slate-700 border border-slate-200">{cat.category}</td>
                         <td className="p-2.5 text-right font-semibold text-slate-900 border border-slate-200">
-                          ₹{cat.amount?.toLocaleString('en-IN')}
+                          ₹{formatCur(cat.amount)}
                         </td>
                       </tr>
                     ))
@@ -342,7 +350,7 @@ export default function PrintablePnLModal({
                   <tr className="font-bold text-rose-700 bg-rose-50/50 border-t-2 border-slate-300">
                     <td className="p-2.5 border border-slate-200">TOTAL OPERATING EXPENSES</td>
                     <td className="p-2.5 text-right font-extrabold border border-slate-200">
-                      ₹{report.totalExpenses?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.totalExpenses)}
                     </td>
                   </tr>
 
@@ -350,7 +358,7 @@ export default function PrintablePnLModal({
                   <tr className="font-black bg-slate-900 text-white text-sm">
                     <td className="p-3 uppercase">NET FINANCIAL RESULT (GROSS PROFIT - EXPENSES)</td>
                     <td className={`p-3 text-right ${report.isProfit ? 'text-emerald-400' : 'text-rose-400'}`}>
-                      {report.isProfit ? '+' : '-'} ₹{Math.abs(report.netProfit || 0).toLocaleString('en-IN')}
+                      {report.isProfit ? '+' : '-'} ₹{formatCur(Math.abs(report.netProfit || 0))}
                     </td>
                   </tr>
                 </tbody>
@@ -374,19 +382,19 @@ export default function PrintablePnLModal({
                   <tr>
                     <td className="p-2.5 text-slate-700 border border-slate-200">Output GST Collected on Customer Sales</td>
                     <td className="p-2.5 text-right font-bold text-amber-800 border border-slate-200">
-                      ₹{report.outputGstCollected?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.outputGstCollected)}
                     </td>
                   </tr>
                   <tr>
                     <td className="p-2.5 text-slate-700 border border-slate-200">Input Tax Credit (ITC) Paid on Vendor Purchases</td>
                     <td className="p-2.5 text-right font-bold text-emerald-800 border border-slate-200">
-                      ₹{report.inputGstCredit?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.inputGstCredit)}
                     </td>
                   </tr>
                   <tr className="font-black bg-amber-50 text-slate-900 border-t-2 border-amber-300">
                     <td className="p-2.5 border border-slate-200">NET GST PAYABLE TO GOVERNMENT</td>
                     <td className="p-2.5 text-right text-amber-900 text-sm border border-slate-200">
-                      ₹{report.netGstPayable?.toLocaleString('en-IN')}
+                      ₹{formatCur(report.netGstPayable)}
                     </td>
                   </tr>
                 </tbody>

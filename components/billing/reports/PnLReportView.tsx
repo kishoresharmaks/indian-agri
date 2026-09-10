@@ -4,6 +4,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { RefreshCw, TrendingUp, TrendingDown, ShieldCheck, Printer } from 'lucide-react';
 import PrintablePnLModal from './PrintablePnLModal';
 
+const formatCur = (val: number | undefined | null) => {
+  const n = Number(val || 0);
+  return n.toLocaleString('en-IN', {
+    minimumFractionDigits: n % 1 !== 0 ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
+};
+
 export default function PnLReportView() {
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -98,7 +106,7 @@ export default function PnLReportView() {
               Final Net Business Financial Result
             </span>
             <h2 className="text-3xl font-black">
-              {report.isProfit ? '+' : '-'} ₹{Math.abs(report.netProfit).toLocaleString('en-IN')}
+              {report.isProfit ? '+' : '-'} ₹{formatCur(Math.abs(report.netProfit))}
             </h2>
             <span className="text-xs font-bold opacity-90">
               {report.isProfit ? '🎉 Net Profit Earned' : '⚠️ Net Loss Recorded'}
@@ -107,9 +115,9 @@ export default function PnLReportView() {
         </div>
 
         <div className="text-left sm:text-right text-xs space-y-1 bg-white/10 p-3.5 rounded-2xl border border-white/20">
-          <div>Net Sales: <strong>₹{report.netSalesRevenue?.toLocaleString('en-IN')}</strong></div>
-          <div>COGS Purchases: <strong>₹{report.costOfGoodsSold?.toLocaleString('en-IN')}</strong></div>
-          <div>Operating Expenses: <strong>₹{report.totalExpenses?.toLocaleString('en-IN')}</strong></div>
+          <div>Net Sales: <strong>₹{formatCur(report.netSalesRevenue)}</strong></div>
+          <div>COGS Purchases: <strong>₹{formatCur(report.costOfGoodsSold)}</strong></div>
+          <div>Operating Expenses: <strong>₹{formatCur(report.totalExpenses)}</strong></div>
         </div>
       </div>
 
@@ -119,20 +127,20 @@ export default function PnLReportView() {
         <div className="bg-white p-5 rounded-3xl border border-[#E8EDF2] shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-[#E8EDF2] pb-3">
             <span className="font-extrabold text-xs text-[#163B5C] uppercase tracking-wider">1. Sales Revenue</span>
-            <span className="text-xs font-black text-emerald-600">₹{report.netSalesRevenue?.toLocaleString('en-IN')}</span>
+            <span className="text-xs font-black text-emerald-600">₹{formatCur(report.netSalesRevenue)}</span>
           </div>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between text-[#64748B]">
               <span>Online E-Commerce Sales:</span>
-              <span className="font-bold text-[#163B5C]">₹{report.onlineStoreSales?.toLocaleString('en-IN')}</span>
+              <span className="font-bold text-[#163B5C]">₹{formatCur(report.onlineStoreSales)}</span>
             </div>
             <div className="flex justify-between text-[#64748B]">
               <span>POS Counter Billing Sales:</span>
-              <span className="font-bold text-[#163B5C]">₹{report.posCounterSales?.toLocaleString('en-IN')}</span>
+              <span className="font-bold text-[#163B5C]">₹{formatCur(report.posCounterSales)}</span>
             </div>
             <div className="flex justify-between text-rose-600 font-semibold pt-1 border-t">
               <span>Less: Sales Returns:</span>
-              <span>- ₹{report.salesReturnTotal?.toLocaleString('en-IN')}</span>
+              <span>- ₹{formatCur(report.salesReturnTotal)}</span>
             </div>
           </div>
         </div>
@@ -141,20 +149,20 @@ export default function PnLReportView() {
         <div className="bg-white p-5 rounded-3xl border border-[#E8EDF2] shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-[#E8EDF2] pb-3">
             <span className="font-extrabold text-xs text-[#163B5C] uppercase tracking-wider">2. Cost of Goods (COGS)</span>
-            <span className="text-xs font-black text-rose-600">₹{report.costOfGoodsSold?.toLocaleString('en-IN')}</span>
+            <span className="text-xs font-black text-rose-600">₹{formatCur(report.costOfGoodsSold)}</span>
           </div>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between text-[#64748B]">
               <span>Inward Purchase Bills:</span>
-              <span className="font-bold text-[#163B5C]">₹{report.purchaseBillTotal?.toLocaleString('en-IN')}</span>
+              <span className="font-bold text-[#163B5C]">₹{formatCur(report.purchaseBillTotal)}</span>
             </div>
             <div className="flex justify-between text-emerald-600 font-semibold pt-1 border-t">
               <span>Less: Purchase Returns:</span>
-              <span>- ₹{report.purchaseReturnTotal?.toLocaleString('en-IN')}</span>
+              <span>- ₹{formatCur(report.purchaseReturnTotal)}</span>
             </div>
             <div className="flex justify-between text-[#163B5C] font-black pt-2 border-t text-sm">
               <span>Gross Profit:</span>
-              <span className="text-emerald-700">₹{report.grossProfit?.toLocaleString('en-IN')}</span>
+              <span className="text-emerald-700">₹{formatCur(report.grossProfit)}</span>
             </div>
           </div>
         </div>
@@ -163,7 +171,7 @@ export default function PnLReportView() {
         <div className="bg-white p-5 rounded-3xl border border-[#E8EDF2] shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-[#E8EDF2] pb-3">
             <span className="font-extrabold text-xs text-[#163B5C] uppercase tracking-wider">3. Daily Expenses</span>
-            <span className="text-xs font-black text-rose-600">₹{report.totalExpenses?.toLocaleString('en-IN')}</span>
+            <span className="text-xs font-black text-rose-600">₹{formatCur(report.totalExpenses)}</span>
           </div>
           <div className="space-y-2 text-xs max-h-36 overflow-y-auto pr-1">
             {report.expenseByCategory?.length === 0 ? (
@@ -172,7 +180,7 @@ export default function PnLReportView() {
               report.expenseByCategory?.map((cat: any) => (
                 <div key={cat.category} className="flex justify-between text-[#64748B]">
                   <span>{cat.category}:</span>
-                  <span className="font-bold text-[#163B5C]">₹{cat.amount?.toLocaleString('en-IN')}</span>
+                  <span className="font-bold text-[#163B5C]">₹{formatCur(cat.amount)}</span>
                 </div>
               ))
             )}
@@ -190,17 +198,17 @@ export default function PnLReportView() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
             <span className="text-[#64748B] block font-bold">Output GST (Collected on Sales):</span>
-            <span className="text-xl font-black text-amber-800">₹{report.outputGstCollected?.toLocaleString('en-IN')}</span>
+            <span className="text-xl font-black text-amber-800">₹{formatCur(report.outputGstCollected)}</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
             <span className="text-[#64748B] block font-bold">Input Tax Credit (Paid on Purchases):</span>
-            <span className="text-xl font-black text-emerald-800">₹{report.inputGstCredit?.toLocaleString('en-IN')}</span>
+            <span className="text-xl font-black text-emerald-800">₹{formatCur(report.inputGstCredit)}</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-[#FFF8F5] border border-[#ED3500]/30">
             <span className="text-[#64748B] block font-bold">Net GST Payable to Govt:</span>
-            <span className="text-xl font-black text-[#ED3500]">₹{report.netGstPayable?.toLocaleString('en-IN')}</span>
+            <span className="text-xl font-black text-[#ED3500]">₹{formatCur(report.netGstPayable)}</span>
           </div>
         </div>
       </div>
