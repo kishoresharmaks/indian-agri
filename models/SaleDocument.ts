@@ -4,6 +4,7 @@ export interface ISaleDocItem {
   productId: string;
   name: string;
   variantName?: string;
+  hsnCode?: string;
   price: number;
   quantity: number;
   gst: number;
@@ -42,6 +43,7 @@ const SaleDocItemSchema = new Schema({
   productId: { type: String, required: true },
   name: { type: String, required: true },
   variantName: { type: String, default: '' },
+  hsnCode: { type: String, trim: true, default: '' },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true, min: 1 },
   gst: { type: Number, default: 0 },

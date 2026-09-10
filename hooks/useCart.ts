@@ -20,6 +20,7 @@ export interface Product {
   name: string;
   description: string;
   image: string;
+  hsnCode?: string;
   mrp: number;
   price: number;
   discount: number;

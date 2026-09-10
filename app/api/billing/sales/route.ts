@@ -213,6 +213,11 @@ export async function POST(req: NextRequest) {
     const balanceAmount = Math.max(0, grandTotal - Number(paidAmount || 0));
     const paymentStatus = Number(paidAmount || 0) >= grandTotal ? 'Paid' : Number(paidAmount || 0) > 0 ? 'Partial' : 'Pending';
 
+    const processedItems = items.map((i: any) => ({
+      ...i,
+      hsnCode: i.hsnCode ? String(i.hsnCode).trim() : '',
+    }));
+
     // 4. Create Document with automatic rollback protection
     let newDoc: any;
     try {
@@ -224,7 +229,7 @@ export async function POST(req: NextRequest) {
         customerPhone,
         customerEmail: body.customerEmail || '',
         billingAddress: body.billingAddress || '',
-        items,
+        items: processedItems,
         subtotal,
         totalGst,
         grandTotal,

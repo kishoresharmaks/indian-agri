@@ -72,6 +72,10 @@ export async function PUT(
       body.discount = Math.round(((body.mrp - body.price) / body.mrp) * 100);
     }
 
+    if (body.hsnCode !== undefined) {
+      body.hsnCode = String(body.hsnCode).trim();
+    }
+
     const updatedProduct = await Product.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,

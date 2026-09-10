@@ -481,8 +481,8 @@ export async function calculateGstr1(options?: {
     for (const item of doc.items || []) {
       const pObj = productMapById.get(item.productId);
       const hsnInfo = resolveHsnAndUqc(item.name, pObj?.category);
-      const hsn = (pObj as any)?.hsnCode || (item as any).hsnCode || hsnInfo.hsn;
-      const uqc = (pObj as any)?.uqc || (item as any).uqc || hsnInfo.uqc;
+      const hsn = (item as any)?.hsnCode || (pObj as any)?.hsnCode || hsnInfo.hsn;
+      const uqc = (item as any)?.uqc || (pObj as any)?.uqc || hsnInfo.uqc;
       const rate = Number(item.gst || 0);
       const qty = Number(item.quantity || 1);
       const taxable = round2(Number(item.lineSubtotal || item.price * qty));
@@ -583,8 +583,8 @@ export async function calculateGstr1(options?: {
     for (const item of ord.items || []) {
       const pObj = productMapById.get(item.productId);
       const hsnInfo = resolveHsnAndUqc(item.name, pObj?.category);
-      const hsn = (pObj as any)?.hsnCode || hsnInfo.hsn;
-      const uqc = (pObj as any)?.uqc || hsnInfo.uqc;
+      const hsn = (item as any)?.hsnCode || (pObj as any)?.hsnCode || hsnInfo.hsn;
+      const uqc = (item as any)?.uqc || (pObj as any)?.uqc || hsnInfo.uqc;
       const rate = Number(item.gst || 0);
       const qty = Number(item.quantity || 1);
       const total = round2(item.price * qty);

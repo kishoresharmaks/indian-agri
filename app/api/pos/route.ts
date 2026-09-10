@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
         productId: String(product._id),
         name: product.name,
         variantName,
+        hsnCode: (product as any).hsnCode || '',
         price: itemPrice,
         quantity: qty,
         gst: gstPercentage,

@@ -13,6 +13,7 @@ export interface IProduct extends Document {
   name: string;
   description: string;
   image: string;
+  hsnCode?: string;
   mrp: number;
   price: number;
   discount?: number;
@@ -45,6 +46,7 @@ const ProductSchema: Schema = new Schema(
     name: { type: String, required: true, trim: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
+    hsnCode: { type: String, trim: true, default: '' },
     mrp: { type: Number, required: true, min: 0 },
     price: { type: Number, required: true, min: 0 },
     discount: { type: Number, default: 0 },

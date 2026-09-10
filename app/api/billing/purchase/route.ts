@@ -98,6 +98,11 @@ export async function POST(req: NextRequest) {
     const balanceAmount = Math.max(0, grandTotal - Number(paidAmount || 0));
     const paymentStatus = Number(paidAmount || 0) >= grandTotal ? 'Paid' : Number(paidAmount || 0) > 0 ? 'Partial' : 'Pending';
 
+    const processedItems = items.map((i: any) => ({
+      ...i,
+      hsnCode: i.hsnCode ? String(i.hsnCode).trim() : '',
+    }));
+
     // 4. Create Purchase Document with rollback safety
     let newDoc: any;
     try {
@@ -109,7 +114,7 @@ export async function POST(req: NextRequest) {
         vendorPhone,
         vendorGstin: body.vendorGstin || '',
         vendorAddress: body.vendorAddress || '',
-        items,
+        items: processedItems,
         subtotal,
         totalGst,
         grandTotal,

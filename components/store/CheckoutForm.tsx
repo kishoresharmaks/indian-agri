@@ -159,6 +159,7 @@ export default function CheckoutForm({
             ? `${item.product.name} (${item.selectedVariant.name})`
             : item.product.name,
           variantName: item.selectedVariant ? item.selectedVariant.name : '',
+          hsnCode: item.product.hsnCode || '',
           price: item.selectedVariant ? item.selectedVariant.price : item.product.price,
           quantity: item.quantity,
           gst: item.product.gst ?? 0,

@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     await connectToDatabase();
     const body = await request.json();
 
-    const { name, description, image, mrp, price, quantity, gst, category, variants } = body;
+    const { name, description, image, mrp, price, quantity, gst, category, variants, hsnCode } = body;
 
     // Validation
     if (!name || !description || !image || mrp === undefined || price === undefined || quantity === undefined || gst === undefined) {
@@ -86,6 +86,7 @@ export async function POST(request: Request) {
       name,
       description,
       image,
+      hsnCode: hsnCode ? String(hsnCode).trim() : '',
       mrp: numMrp,
       price: numPrice,
       discount,

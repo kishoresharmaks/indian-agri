@@ -76,6 +76,7 @@ export default function SaleInvoiceForm({
         productId: p._id,
         name: p.name,
         variantName: variant ? variant.name : '',
+        hsnCode: p.hsnCode || '',
         price,
         quantity: qty,
         gst,
@@ -255,6 +256,7 @@ export default function SaleInvoiceForm({
                   <thead>
                     <tr className="bg-[#FFFCFB] border-b border-[#E8EDF2] text-[#64748B] font-bold uppercase">
                       <th className="p-3">Product Item</th>
+                      <th className="p-3 w-28">HSN / SAC</th>
                       <th className="p-3 w-28">Price (₹)</th>
                       <th className="p-3 w-20">Qty</th>
                       <th className="p-3 w-24">GST %</th>
@@ -270,6 +272,15 @@ export default function SaleInvoiceForm({
                           {item.variantName && (
                             <span className="text-[10px] text-[#64748B]">{item.variantName}</span>
                           )}
+                        </td>
+                        <td className="p-3">
+                          <input
+                            type="text"
+                            placeholder="e.g. 15159099"
+                            value={item.hsnCode || ''}
+                            onChange={(e) => handleUpdateItem(idx, 'hsnCode', e.target.value)}
+                            className="w-full px-2 py-1 border rounded text-xs font-semibold font-mono"
+                          />
                         </td>
                         <td className="p-3">
                           <input

@@ -127,11 +127,14 @@ export async function POST(request: Request) {
       subtotal += itemSubtotal;
       totalGst += itemGstAmount;
 
-      // Decrement product inventory if product exists
+      // Decrement product inventory if product exists and ensure hsnCode is set
       if (item.productId) {
-        await Product.findByIdAndUpdate(item.productId, {
+        const prod = await Product.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -itemQty },
         });
+        if (prod && !item.hsnCode && prod.hsnCode) {
+          item.hsnCode = prod.hsnCode;
+        }
       }
     }
 

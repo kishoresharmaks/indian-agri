@@ -20,6 +20,7 @@ interface Product {
   name: string;
   description: string;
   image: string;
+  hsnCode?: string;
   mrp: number;
   price: number;
   discount: number;
@@ -200,7 +201,14 @@ export default function ProductManager({ initialProducts = [], categories }: Pro
                     <span className="text-[#ED3500] font-bold text-sm">₹{product.price}</span>
                     <span className="text-[#94A3B8] text-xs line-through">₹{product.mrp}</span>
                   </div>
-                  <p className="text-xs text-[#94A3B8] mt-1 truncate">{product.category}</p>
+                  <div className="flex items-center justify-between text-xs text-[#94A3B8] mt-1">
+                    <span className="truncate">{product.category}</span>
+                    {product.hsnCode && (
+                      <span className="font-mono text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 shrink-0">
+                        HSN: {product.hsnCode}
+                      </span>
+                    )}
+                  </div>
                   <div className="flex gap-2 mt-3">
                     <button
                       onClick={() => handleEdit(product)}
@@ -278,6 +286,7 @@ function ProductFormModal({ product, categories, onSave, onClose, submitting, er
     name: product?.name ?? '',
     description: product?.description ?? '',
     image: product?.image ?? '',
+    hsnCode: product?.hsnCode ?? '',
     mrp: product?.mrp ?? 0,
     price: product?.price ?? 0,
     quantity: product?.quantity ?? 0,
@@ -373,21 +382,33 @@ function ProductFormModal({ product, categories, onSave, onClose, submitting, er
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-[#163B5C] mb-1">Category</label>
-            <select
-              value={form.category}
-              onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-              className="w-full px-4 py-2.5 border border-[#E8EDF2] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#ED3500]/30"
-            >
-              <option value="">Select category</option>
-              {categories.map(c => (
-                <option key={c._id} value={c.name}>{c.name}</option>
-              ))}
-              {form.category && !categories.find(c => c.name === form.category) && (
-                <option value={form.category}>{form.category}</option>
-              )}
-            </select>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-[#163B5C] mb-1">Category</label>
+              <select
+                value={form.category}
+                onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
+                className="w-full px-4 py-2.5 border border-[#E8EDF2] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#ED3500]/30"
+              >
+                <option value="">Select category</option>
+                {categories.map(c => (
+                  <option key={c._id} value={c.name}>{c.name}</option>
+                ))}
+                {form.category && !categories.find(c => c.name === form.category) && (
+                  <option value={form.category}>{form.category}</option>
+                )}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[#163B5C] mb-1">HSN / SAC Code</label>
+              <input
+                type="text"
+                value={form.hsnCode}
+                onChange={e => setForm(f => ({ ...f, hsnCode: e.target.value }))}
+                className="w-full px-4 py-2.5 border border-[#E8EDF2] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#ED3500]/30"
+                placeholder="e.g. 15159099"
+              />
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-[#163B5C] mb-1">Image URL</label>

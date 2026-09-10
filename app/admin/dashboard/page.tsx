@@ -62,6 +62,7 @@ interface Product {
   name: string;
   description: string;
   image: string;
+  hsnCode?: string;
   mrp: number;
   price: number;
   discount: number;
@@ -179,6 +180,7 @@ export default function AdminDashboard() {
     name: '',
     description: '',
     image: '',
+    hsnCode: '',
     mrp: '',
     price: '',
     quantity: '10',
@@ -628,6 +630,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
       name: product.name,
       description: product.description,
       image: product.image,
+      hsnCode: product.hsnCode || '',
       mrp: String(product.mrp),
       price: String(product.price),
       quantity: String(product.quantity),
@@ -647,6 +650,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
       name: '',
       description: '',
       image: '',
+      hsnCode: '',
       mrp: '',
       price: '',
       quantity: '10',
@@ -689,6 +693,7 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
           name: productForm.name,
           description: productForm.description,
           image: productForm.image,
+          hsnCode: productForm.hsnCode.trim(),
           mrp: Number(productForm.mrp),
           price: Number(productForm.price),
           quantity: Number(productForm.quantity),
@@ -1256,7 +1261,12 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
                             </div>
                           </td>
                           <td className="py-4 px-6 text-xs font-semibold text-[#64748B]">
-                            {p.category}
+                            <div>{p.category}</div>
+                            {p.hsnCode && (
+                              <span className="inline-block mt-1 font-mono text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200">
+                                HSN: {p.hsnCode}
+                              </span>
+                            )}
                           </td>
                           <td className="py-4 px-6 font-semibold line-through text-[#64748B]">
                             ₹{p.mrp.toLocaleString('en-IN')}
@@ -2179,7 +2189,21 @@ const compressImage = (file: File, maxWidth = 800, quality = 0.8): Promise<strin
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#163B5C] uppercase tracking-wider">
+                      HSN / SAC Code
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 15159099 / 08041030"
+                      value={productForm.hsnCode}
+                      onChange={(e) => setProductForm({ ...productForm, hsnCode: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl border border-[#E8EDF2] text-sm focus:outline-none focus:border-[#ED3500]"
+                    />
+                    <p className="text-[10px] text-[#64748B]">For GST & GSTR-1 Invoicing</p>
+                  </div>
+
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-[#163B5C] uppercase tracking-wider">
                       GST Percentage (%) *
